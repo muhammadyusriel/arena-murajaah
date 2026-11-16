@@ -35,7 +35,7 @@
           ".read": "auth != null && auth.uid === $uid",
           ".write": "auth != null && auth.uid === $uid",
           "profile": {
-            ".validate": "newData.hasChildren(['name', 'updated']) && newData.child('name').isString() && newData.child('name').val().length >= 2 && newData.child('name').val().length <= 40 && (!newData.child('nim').exists() || (newData.child('nim').isString() && newData.child('nim').val().length <= 20))"
+            ".validate": "newData.hasChildren(['name', 'nim', 'updated']) && newData.child('name').isString() && newData.child('name').val().length >= 2 && newData.child('name').val().length <= 40 && newData.child('nim').isString() && newData.child('nim').val().length >= 3 && newData.child('nim').val().length <= 20"
           },
           "sesi": {
             "$sid": {

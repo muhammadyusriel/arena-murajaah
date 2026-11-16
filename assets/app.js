@@ -662,11 +662,11 @@
     const online = !!(window.ARENA_FIREBASE && window.ARENA_FIREBASE.apiKey && window.ArenaLive);
     const me = { name: store.get("lat-name", ""), nim: store.get("lat-nim", "") };
     async function sendResult(rec) {
-      if (!online || !me.name) return "off";
+      if (!online || me.name.length < 2 || me.nim.length < 3) return "off";
       try {
         const net = await window.ArenaLive.initNet("firebase"); if (!net) return "off";
         const base = "latihan/w" + S.wahdah + "/" + net.uid;
-        const job = Promise.all([net.update(base + "/profile", { name: me.name, nim: me.nim || "", updated: net.TS }), net.set(base + "/sesi/" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), { ...rec, at: net.TS })]);
+        const job = Promise.all([net.update(base + "/profile", { name: me.name, nim: me.nim, updated: net.TS }), net.set(base + "/sesi/" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), { ...rec, at: net.TS })]);
         const r = await Promise.race([job.then(() => "ok"), new Promise((res) => setTimeout(() => res("wait"), 9000))]);
         return r;
       } catch (e) { return "fail"; }
@@ -679,14 +679,14 @@
       const avail = () => cfg.cats.reduce((a, c) => a + D().bank[c].filter(inScope(getScope())).length, 0);
       const info = h("p", { class: "sub", style: { textAlign: "center", margin: 0 } });
       const best = store.get(bestKey(), null);
-      const upd = () => { const n = avail(); const needName = online && me.name.length < 2; info.textContent = needName ? "Tulis namamu dulu agar latihan tercatat." : n + " soal tersedia" + (cfg.count && n < cfg.count ? " (semua akan dipakai)" : ""); startBtn.disabled = !n || needName; };
+      const upd = () => { const n = avail(); const needName = online && me.name.length < 2; const needNim = online && me.nim.length < 3; info.textContent = needName && needNim ? "Tulis nama dan NIM-mu dulu agar latihan tercatat." : needName ? "Tulis namamu dulu agar latihan tercatat." : needNim ? "Tulis NIM-mu dulu agar latihan tercatat." : n + " soal tersedia" + (cfg.count && n < cfg.count ? " (semua akan dipakai)" : ""); startBtn.disabled = !n || needName || needNim; };
       const cnt = dropdown([10, 20, 30, 0].map((v) => ({ value: v, label: v ? v + " soal" : "Semua soal" })), cfg.count, (v) => { cfg.count = v; store.set("lat-cfg", cfg); upd(); }, "Jumlah soal");
       const startBtn = h("button", { class: "btn primary", type: "button", style: { fontSize: "18px", padding: "14px" }, onclick: () => run(buildSet()) }, "Mulai latihan →");
       const nmI = h("input", { type: "text", id: "lat-name", maxlength: 40, placeholder: "Nama lengkap", value: me.name, autocomplete: "name", "aria-label": "Nama lengkap", oninput: (e) => { me.name = e.target.value.trim().replace(/\s+/g, " ").slice(0, 40); store.set("lat-name", me.name); upd(); } });
-      const nimI = h("input", { type: "text", id: "lat-nim", maxlength: 20, placeholder: "NIM (opsional)", value: me.nim, inputmode: "numeric", "aria-label": "NIM", oninput: (e) => { me.nim = e.target.value.trim().slice(0, 20); store.set("lat-nim", me.nim); } });
+      const nimI = h("input", { type: "text", id: "lat-nim", maxlength: 20, placeholder: "NIM", value: me.nim, autocomplete: "off", "aria-label": "NIM", required: true, oninput: (e) => { me.nim = e.target.value.replace(/\s+/g, "").slice(0, 20); store.set("lat-nim", me.nim); upd(); } });
       say(h("div", { class: "card-p" },
           h("p", { class: "qtext", dir: "rtl", style: { margin: 0 } }, D().title),
-          online ? h("div", { class: "lat-id" }, nmI, nimI, h("small", { class: "sub" }, "Hasil latihanmu tercatat untuk dosen dengan nama ini.")) : null,
+          online ? h("div", { class: "lat-id" }, nmI, nimI, h("small", { class: "sub" }, "Nama dan NIM wajib diisi. Hasil latihanmu tercatat untuk dosen dengan NIM ini.")) : null,
           wsel ? h("label", { class: "row" }, h("span", { class: "sub", style: { minWidth: "88px" } }, "Wahdah"), wsel) : h("p", { class: "status", style: { margin: 0 } }, "Wahdah " + S.wahdah),
           scopePicker(() => setup()),
           h("div", { class: "row" }, h("span", { class: "sub", style: { minWidth: "88px" } }, "Jumlah"), cnt),
@@ -765,8 +765,11 @@
     function rows() {
       const t0 = since(); const by = {};
       Object.entries(data).forEach(([uid, v]) => {
-        const pf = v.profile || {}; const name = (pf.name || "?").trim(); const nim = (pf.nim || "").trim(); const key = name.toLowerCase() + "|" + nim;
-        const st = by[key] || (by[key] = { key, name, nim, uids: [], sesi: [] }); st.uids.push(uid);
+        const pf = v.profile || {}; const name = (pf.name || "?").trim().replace(/\s+/g, " "); const nim = (pf.nim || "").trim(); const nk = nim.toUpperCase().replace(/[^0-9A-Z]/g, "");
+        const key = nk ? "nim:" + nk : "nama:" + name.toLowerCase();
+        const st = by[key] || (by[key] = { key, name, nim, names: [], upd: -1, uids: [], sesi: [] }); st.uids.push(uid);
+        if (!st.names.some((x) => x.toLowerCase() === name.toLowerCase())) st.names.push(name);
+        if ((pf.updated || 0) > st.upd) { st.upd = pf.updated || 0; st.name = name; st.nim = nim; }
         Object.values(v.sesi || {}).forEach((x) => { if ((x.at || 0) >= t0) st.sesi.push(x); });
       });
       return Object.values(by).filter((x) => x.sesi.length).map((x) => {
@@ -788,7 +791,7 @@
       list.forEach((x) => {
         const isOpen = open.has(x.key); const lv = x.avg < 50 ? "hard" : x.avg < 80 ? "mid" : "easy";
         table.append(h("button", { class: "pr " + lv + (isOpen ? " open" : ""), type: "button", onclick: () => { isOpen ? open.delete(x.key) : open.add(x.key); draw(); } },
-          h("span", { class: "pn" }, h("b", null, x.name), x.nim ? h("small", null, x.nim) : null),
+          h("span", { class: "pn" }, h("b", null, x.name), x.nim ? h("small", null, x.nim) : h("small", { class: "pwarn" }, "tanpa NIM"), x.names.length > 1 ? h("small", { class: "pwarn", title: x.names.join(" / ") }, "juga ditulis: " + x.names.filter((y) => y !== x.name).join(", ")) : null),
           h("span", null, x.sesi.length), h("span", null, x.n),
           h("span", { class: "pa" }, h("i", { class: "pm" }, h("i", { style: { width: Math.max(3, x.avg) + "%" } })), x.avg + "%"),
           h("span", null, x.best + "%"),
@@ -802,7 +805,7 @@
       const cnt = {}; list.forEach((x) => x.sesi.forEach((y) => (y.w || []).forEach((k) => (cnt[k] = (cnt[k] || 0) + 1))));
       const top = Object.entries(cnt).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([k, c]) => { const [cat, i] = k.split(":"); const q = (D().bank[cat] || [])[Number(i)]; return q ? { q, cat, c } : null; }).filter(Boolean);
       const csv = () => { const q3 = (v) => '"' + String(v == null ? "" : v).replace(/"/g, '""') + '"';
-        return ["Nama,NIM,Sesi,Soal Dijawab,Benar,Ketepatan %,Terbaik %,Bagian Dilatih,Total Menit,Terakhir Berlatih", ...list.map((x) => [q3(x.name), q3(x.nim), x.sesi.length, x.n, x.right, x.avg, x.best, q3(x.parts.map((b) => (b ? "B" + b : "Semua")).join(" ")), Math.round(x.dur / 60), q3(fmt(x.last))].join(","))].join("\n"); };
+        return ["Nama,NIM,Nama Lain,Sesi,Soal Dijawab,Benar,Ketepatan %,Terbaik %,Bagian Dilatih,Total Menit,Terakhir Berlatih", ...list.map((x) => [q3(x.name), q3(x.nim), q3(x.names.filter((y) => y !== x.name).join(" / ")), x.sesi.length, x.n, x.right, x.avg, x.best, q3(x.parts.map((b) => (b ? "B" + b : "Semua")).join(" ")), Math.round(x.dur / 60), q3(fmt(x.last))].join(","))].join("\n"); };
       body.innerHTML = "";
       body.append(
         h("div", { class: "row" }, h("span", { class: "sub" }, "Periode"), perSel, h("span", { class: "grow" }), h("span", { class: "sub" }, "Urutkan"), sortSel),

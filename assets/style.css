@@ -662,3 +662,4 @@ a.brand.link:hover .seal { transform: rotate(45deg) scale(1.05); }
   .pr > :nth-child(2), .pr > :nth-child(3), .pr > :nth-child(5), .pr > :nth-child(6) { display: none; }
   .ps { grid-template-columns: 1fr 1fr; }
 }
+.pr .pn small.pwarn { color: #F0B85A; font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
