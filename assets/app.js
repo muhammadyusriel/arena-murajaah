@@ -178,6 +178,7 @@
     wheel: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4"/></svg>',
     cards: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="11" height="14" rx="2"/><path d="M8 4h11a2 2 0 0 1 2 2v12"/></svg>',
     list: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 6h12M8 12h12M8 18h12"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></svg>',
+    home: '<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5.5h4V20"/></svg>',
     phone: '<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10.5 18.5h3"/><path d="M2 9a6 6 0 0 1 0 6M22 9a6 6 0 0 0 0 6" stroke-linecap="round"/></svg>',
   };
   const SHAPES = [
@@ -335,7 +336,11 @@
         mode("tasykil", "var(--violet)", I.pen, "رَتِّبْ وَشَكِّلْ", "Susun Kalimat & Tasykil", "Menyusun kata acak menjadi kalimat nash dan memilih harakat akhir yang benar.", "Maju ke depan"),
         mode("roda", "#4EA3E8", I.wheel, "عَجَلَةُ الْقِرَاءَةِ", "Roda Qiraah Jahriyyah", "Roda memilih mahasiswa untuk membaca nash, dinilai dengan rubrik singkat.", "Individu"),
         mode("kartu", "#E2558F", I.cards, "بِطَاقَاتُ الْمُفْرَدَاتِ", "Kartu Pasangan", "Mencocokkan kata dengan muradif atau mudhad-nya. Cocok untuk pemanasan.", "Pemanasan"),
-        mode("bank", "#9DBDBA", I.list, "بَنْكُ الْأَسْئِلَةِ", "Bank Soal", "Semua soal beserta kunci jawaban, untuk diperiksa dosen sebelum kelas." + (PIN ? " Dibuka dengan PIN." : ""), "Dosen")),
+        mode("bank", "#9DBDBA", I.list, "بَنْكُ الْأَسْئِلَةِ", "Bank Soal", "Semua soal beserta kunci jawaban, untuk diperiksa dosen sebelum kelas." + (PIN ? " Dibuka dengan PIN." : ""), "Dosen"),
+        h("button", { class: "mode live self", type: "button", style: { "--mc": "var(--teal)" }, onclick: () => go("latihanShare") },
+          h("span", { class: "ic", html: I.home }),
+          h("span", { class: "txt" }, h("span", { class: "ar", dir: "rtl" }, "التَّدْرِيبُ الذَّاتِيُّ"), h("span", { class: "t" }, "Latihan mandiri di HP"), h("span", { class: "d" }, "Mahasiswa mengulang soal sendiri di rumah tanpa ruang kuis: pilih bagian, langsung tahu benar-salah, lalu ulangi soal yang salah.")),
+          h("span", { class: "btn" }, "Bagikan ke mahasiswa →"))),
       h("p", { class: "footnote" }, "Tips: tekan F11 agar layar proyektor penuh. Skor kelompok tersimpan di perangkat ini.")));
   };
 
@@ -624,6 +629,103 @@
     drawKinds(); deal(); drawTeams();
   };
 
+  // ---------- LATIHAN MANDIRI ----------
+  const latihanUrl = () => location.origin + location.pathname + "?latihan=" + S.wahdah;
+  SCREENS.latihanShare = (root) => {
+    const url = latihanUrl(); const qr = h("div", { id: "qr-lat" });
+    root.append(h("div", { class: "wrap" }, topbar("التَّدْرِيبُ الذَّاتِيُّ", "Latihan mandiri"),
+      h("div", { class: "lobby" },
+        h("div", { class: "qrbox" }, h("b", null, "Pindai untuk latihan"), qr, h("div", { class: "url" }, url),
+          h("button", { class: "btn small", type: "button", style: { color: "#0A1B44", background: "#EEF3FF" }, onclick: () => copyText(url) }, "Salin tautan")),
+        h("div", { class: "panel", style: { display: "flex", flexDirection: "column", gap: "12px" } },
+          h("b", null, "Cara pakai"),
+          h("ol", { class: "steps" },
+            h("li", null, "Tampilkan QR ini di kelas, atau salin tautannya ke grup WhatsApp kelas."),
+            h("li", null, "Mahasiswa membuka tautan di HP, memilih bagian dan jenis soal, lalu berlatih."),
+            h("li", null, "Setiap jawaban langsung diberi tahu benar atau salah beserta catatannya. Di akhir, mereka bisa mengulang soal yang salah saja.")),
+          h("p", { class: "sub", style: { lineHeight: 1.6 } }, "Latihan tidak memerlukan ruang kuis dan tidak memakai kuota server. Hasilnya hanya tersimpan di HP masing-masing (skor terbaik), tidak terkirim ke dosen. Tautan ini membuka Wahdah " + S.wahdah + "; mahasiswa tetap bisa memilih wahdah lain yang sudah tersedia."),
+          h("div", { class: "row" }, h("button", { class: "btn primary", type: "button", onclick: () => go("latihan") }, "Coba latihan di layar ini →"))))));
+    if (window.QRCode) { try { new window.QRCode(qr, { text: url, width: 560, height: 560, colorDark: "#0A1B44", colorLight: "#ffffff", correctLevel: window.QRCode.CorrectLevel.M }); } catch (e) { /* */ } }
+    else qr.append(h("p", { class: "sub" }, "(QR tidak tersedia, gunakan tautan)"));
+  };
+
+  SCREENS.latihan = (root, student) => {
+    const box = h("div", { class: "player latihan" });
+    if (student) box.append(h("header", { class: "brand", html: SEAL + '<div><h1 class="ui-ar">Arena Muraja\'ah</h1><small>Latihan mandiri</small></div>' }, h("span", { class: "spacer", style: { flex: 1 } }), soundBtn()));
+    else root.append(h("div", { class: "wrap" }, topbar("التَّدْرِيبُ الذَّاتِيُّ", "Latihan mandiri")));
+    const body = h("div", { style: { display: "flex", flexDirection: "column", gap: "14px" } }); box.append(body); root.append(box);
+    const say = (...k) => { body.innerHTML = ""; body.append(...k); window.scrollTo(0, 0); };
+    const cfg = store.get("lat-cfg", { cats: CATS.map((c) => c.id), count: 10 });
+    const bestKey = () => "lat-best-" + S.wahdah + "-" + getScope();
+    const pct = (a, b) => (b ? Math.round((100 * a) / b) : 0);
+
+    function setup() {
+      const wsel = WAHDAH_LIST().length > 1 ? dropdown(WAHDAH_LIST().map((w) => ({ value: w, label: () => h("span", { class: "dd-w" }, h("b", null, "Wahdah " + w), h("span", { class: "ar" }, window.ARENA_DATA[w].title)) })), S.wahdah, (v) => { S.wahdah = v; store.set("wahdah", v); setup(); }, "Pilih wahdah") : null;
+      const catBox = h("div", { class: "chips-sel" });
+      const drawCats = () => { catBox.innerHTML = ""; CATS.forEach((c) => { const on = cfg.cats.includes(c.id); catBox.append(h("button", { class: "csel" + (on ? " on" : ""), type: "button", "aria-pressed": String(on), onclick: () => { cfg.cats = on ? cfg.cats.filter((x) => x !== c.id) : cfg.cats.concat(c.id); store.set("lat-cfg", cfg); drawCats(); upd(); } }, h("span", { class: "ar" }, c.ar), h("small", null, c.id_))); }); };
+      const avail = () => cfg.cats.reduce((a, c) => a + D().bank[c].filter(inScope(getScope())).length, 0);
+      const info = h("p", { class: "sub", style: { textAlign: "center", margin: 0 } });
+      const best = store.get(bestKey(), null);
+      const upd = () => { const n = avail(); info.textContent = n + " soal tersedia" + (cfg.count && n < cfg.count ? " (semua akan dipakai)" : ""); startBtn.disabled = !n; };
+      const cnt = dropdown([10, 20, 30, 0].map((v) => ({ value: v, label: v ? v + " soal" : "Semua soal" })), cfg.count, (v) => { cfg.count = v; store.set("lat-cfg", cfg); upd(); }, "Jumlah soal");
+      const startBtn = h("button", { class: "btn primary", type: "button", style: { fontSize: "18px", padding: "14px" }, onclick: () => run(buildSet()) }, "Mulai latihan →");
+      say(h("div", { class: "card-p" },
+          h("p", { class: "qtext", dir: "rtl", style: { margin: 0 } }, D().title),
+          wsel ? h("label", { class: "row" }, h("span", { class: "sub", style: { minWidth: "88px" } }, "Wahdah"), wsel) : h("p", { class: "status", style: { margin: 0 } }, "Wahdah " + S.wahdah),
+          scopePicker(() => setup()),
+          h("div", { class: "row" }, h("span", { class: "sub", style: { minWidth: "88px" } }, "Jumlah"), cnt),
+          h("div", null, h("div", { class: "sub", style: { marginBottom: "8px" } }, "Jenis soal"), catBox),
+          info, startBtn,
+          best ? h("p", { class: "status", style: { margin: 0 } }, "Skor terbaikmu di " + scopeName(getScope()).toLowerCase() + ": ", h("b", null, best.r + "/" + best.n + " (" + pct(best.r, best.n) + "%)")) : null));
+      drawCats(); upd();
+    }
+    function buildSet() {
+      const sc = getScope(); const all = shuffle(cfg.cats.flatMap((c) => D().bank[c].filter(inScope(sc)).map((q) => ({ q, c }))));
+      return (cfg.count ? all.slice(0, cfg.count) : all).map(({ q, c }) => prepare(q, c));
+    }
+    function run(set, retry) {
+      let k = 0, right = 0, streak = 0, ans = 0; const wrong = [];
+      const next = () => {
+        if (k >= set.length) return summary(set, right, wrong, retry);
+        const q = set[k]; let done = false;
+        const verdict = h("div", { class: "verdict" }); const after = h("div", { style: { display: "flex", flexDirection: "column", gap: "12px" } });
+        const opts = optButtons(q, (i) => {
+          if (done) return; done = true; ans++; revealOpts(opts, q.a, i); const ok = i === q.a;
+          if (ok) { right++; streak++; SFX.right(); } else { streak = 0; wrong.push({ q, picked: i }); SFX.wrong(); }
+          try { navigator.vibrate && navigator.vibrate(ok ? 50 : [80, 50, 80]); } catch (e) { /* */ }
+          verdict.className = "verdict " + (ok ? "ok" : "no"); verdict.textContent = ok ? "صَحِيحٌ! Benar" + (streak >= 3 ? "  🔥" + streak : "") : "Kurang tepat";
+          score.textContent = "✓ " + right;
+          after.append(...noteFor(q), h("button", { class: "btn primary", type: "button", id: "lat-next", style: { fontSize: "18px", padding: "14px" }, onclick: () => { k++; next(); } }, k + 1 < set.length ? "Berikutnya →" : "Lihat hasil →"));
+          const nb = after.querySelector("#lat-next"); nb && nb.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        });
+        const score = h("span", { class: "pill gold" }, "✓ " + right);
+        say(h("div", { class: "row" }, h("span", { class: "pill" }, "Soal " + (k + 1) + " / " + set.length), retry ? h("span", { class: "pill" }, "Ulang yang salah") : null, h("span", { class: "grow" }), score),
+          h("div", { class: "meter lat-meter" }, h("i", { style: { width: (100 * k) / set.length + "%" } })),
+          h("div", { class: "row" }, h("span", { class: "pill ar", style: { fontSize: "17px" } }, catOf(q.cat).ar), q.n ? h("span", { class: "pill" }, "Bagian " + q.n) : null),
+          h("div", { class: "card-p" }, ...renderQ(q), opts, verdict, after),
+          h("button", { class: "btn small ghost", type: "button", style: { alignSelf: "center" }, onclick: () => summary(set.slice(0, ans), right, wrong, retry) }, "Akhiri latihan"));
+      };
+      next();
+    }
+    function summary(set, right, wrong, retry) {
+      const n = set.length, p = pct(right, n);
+      if (!retry && n) { const b = store.get(bestKey(), null); if (!b || p > pct(b.r, b.n) || (p === pct(b.r, b.n) && n > b.n)) store.set(bestKey(), { r: right, n, at: Date.now() }); }
+      const [ar, idn] = p >= 90 ? ["مُمْتَازٌ", "Luar biasa!"] : p >= 75 ? ["جَيِّدٌ جِدًّا", "Bagus sekali!"] : p >= 60 ? ["جَيِّدٌ", "Bagus, tingkatkan lagi."] : ["حَاوِلْ مَرَّةً أُخْرَى", "Ayo ulangi, pasti bisa."];
+      if (p >= 75 && n) { confetti(); SFX.fanfare(); }
+      say(h("div", { class: "card-p", style: { alignItems: "center", textAlign: "center" } },
+          h("p", { class: "qtext", dir: "rtl", style: { margin: 0 } }, ar), h("div", { class: "lat-pct" }, p + "%"),
+          h("p", { class: "status", style: { margin: 0 } }, right + " dari " + n + " soal benar · " + idn),
+          h("div", { class: "row", style: { justifyContent: "center" } },
+            wrong.length ? h("button", { class: "btn primary", type: "button", onclick: () => run(shuffle(wrong.map((w) => prepare(w.q, w.q.cat))), true) }, "Ulangi yang salah (" + wrong.length + ")") : null,
+            h("button", { class: wrong.length ? "btn" : "btn primary", type: "button", onclick: () => run(buildSet()) }, "Latihan baru"),
+            h("button", { class: "btn ghost", type: "button", onclick: setup }, "Ubah pengaturan"))),
+        wrong.length ? h("h3", { style: { margin: "6px 0 0" } }, "Soal yang perlu diulang") : null,
+        ...wrong.map((w) => h("div", { class: "card-p lat-wrong" }, ...renderQ(w.q, { compact: true }),
+          h("div", { class: "rc-ans" }, h("span", null, "Jawabanmu: ", h("b", { class: "ar wr" }, w.q.o[w.picked])), h("span", null, "Kunci: ", h("b", { class: "ar" }, w.q.o[w.q.a]))), ...noteFor(w.q))));
+    }
+    setup();
+  };
+
   // ---------- BANK SOAL ----------
   SCREENS.bank = (root) => {
     let cat = "fahm", nf = 0;
@@ -652,6 +754,7 @@
     const params = new URLSearchParams(location.search);
     const room = params.get("room") || (location.hash.startsWith("#join") ? location.hash.slice(5).replace(/^-/, "") : null);
     if (params.has("room") || location.hash.startsWith("#join")) { (window.ArenaLive && ArenaLive.player) ? ArenaLive.player(app(), room) : app().append(h("p", { class: "empty" }, "Modul kuis langsung tidak dimuat.")); return; }
+    if (params.has("latihan")) { const w = Number(params.get("latihan")); if (WAHDAH_LIST().includes(w)) { S.wahdah = w; store.set("wahdah", w); } SCREENS.latihan(app(), true); return; }
     go("home");
   }
   SCREENS.liveHost = (root) => (window.ArenaLive ? ArenaLive.host(root) : root.append(h("p", { class: "empty" }, "Modul kuis langsung tidak dimuat.")));

@@ -588,3 +588,24 @@ a.brand.link:hover .seal { transform: rotate(45deg) scale(1.05); }
 .mode .tag .lk { display: inline-block; vertical-align: -1px; margin-inline-end: 4px; }
 .pin-in { border: 1px solid var(--edge); background: var(--sunken); box-shadow: inset 0 2px 6px rgba(0,0,0,.35); border-radius: 14px; color: #fff; outline: none; }
 .pin-in:focus { border-color: var(--saffron); box-shadow: inset 0 2px 6px rgba(0,0,0,.35), 0 0 0 3px rgba(226,184,98,.25); }
+
+/* Latihan mandiri */
+.mode.live.self { background: linear-gradient(100deg, #155E66 0%, #1D4A86 40%, #15306E 100%); border-color: color-mix(in srgb, var(--teal) 50%, var(--line)); animation: none; }
+.mode.live.self::before { background: radial-gradient(500px 160px at 0% 50%, rgba(32,179,159,.25), transparent 70%); }
+.mode.live.self .ic { animation: none; background: linear-gradient(180deg, #4FD4C0, #20B39F); color: #0A1B44; }
+.mode.live.self .btn { background: rgba(255,255,255,.1); }
+.steps { margin: 0; padding-inline-start: 20px; display: flex; flex-direction: column; gap: 8px; line-height: 1.6; }
+.latihan .brand { display: flex; align-items: center; gap: 12px; }
+.chips-sel { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.csel { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 10px 8px; border-radius: 14px; border: 1px solid var(--edge); background: rgba(255,255,255,.04); color: inherit; font: inherit; opacity: .55; transition: opacity .15s, background .15s, transform .15s var(--ease); }
+.csel .ar { font-size: 19px; line-height: 1.5; }
+.csel small { font-size: 12px; color: var(--muted); }
+.csel.on { opacity: 1; background: color-mix(in srgb, var(--teal) 22%, transparent); border-color: color-mix(in srgb, var(--teal) 60%, transparent); box-shadow: var(--sh-btn); }
+.csel:active { transform: scale(.97); }
+.lat-meter { height: 8px; border-radius: 99px; background: rgba(255,255,255,.08); overflow: hidden; }
+.lat-meter i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--teal), var(--saffron)); transition: width .4s var(--ease); }
+.lat-pct { font-size: 64px; font-weight: 800; color: var(--saffron); line-height: 1; font-variant-numeric: tabular-nums; }
+.lat-wrong { gap: 10px !important; }
+.lat-wrong .qtext { font-size: 22px; margin: 0; }
+.latihan .scope .dd-btn { min-width: 0; }
+.qrbox #qr-lat img, .qrbox #qr-lat canvas { width: 100% !important; max-width: 280px; height: auto !important; }
