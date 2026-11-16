@@ -127,7 +127,7 @@
     const order = shuffle(q.o.map((_, i) => i));
     return { ...base, o: order.map((i) => q.o[i]), a: order.indexOf(q.a) };
   }
-  window.ArenaCore = { h, shuffle, sample, rnd, arNum, store, toast, copyText, downloadText, SHAPES, CATS, catOf, prepare, D, S, nashTitle, getScope, inScope, scopeName, scopePicker, renderQ: null, timerEl: null, go: null, SEAL, I };
+  window.ArenaCore = { h, shuffle, sample, rnd, arNum, store, toast, copyText, downloadText, SHAPES, CATS, catOf, prepare, D, S, TEAM_NAMES, TEAM_COLORS, saveTeams, nashTitle, getScope, inScope, scopeName, scopePicker, renderQ: null, timerEl: null, go: null, SEAL, I };
 
   // ---------- render pertanyaan ----------
   function renderQ(q, { compact = false } = {}) {

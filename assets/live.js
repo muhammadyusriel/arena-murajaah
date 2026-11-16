@@ -63,6 +63,9 @@
     const cfgOK = !!(window.ARENA_FIREBASE && window.ARENA_FIREBASE.apiKey);
     const settings = store.get("live-settings", { count: 15, limit: 20, cats: ["makna", "muradif", "akmil", "fahm", "tarakib", "tasykil"] });
     const saved = store.get("live-session", null);
+    if (settings.teams == null) settings.teams = 0; if (!settings.assign) settings.assign = "auto";
+    const ensureTeams = (n) => { while (S.teams.length < n) { const k = S.teams.length; S.teams.push({ name: C.TEAM_NAMES[k], color: C.TEAM_COLORS[k], score: 0 }); } C.saveTeams(); };
+    let TM = null; // { list:[{name,color}], assign:"auto"|"self" } atau null (individu)
 
     function setup() {
       wrap.innerHTML = ""; wrap.append(C.topbar("الْمُسَابَقَةُ الْمُبَاشِرَةُ", "Kuis langsung via HP"));
@@ -70,15 +73,26 @@
         h("b", null, "Server kuis belum diatur."), h("p", { class: "sub", style: { lineHeight: 1.6 } }, "Isi berkas config.js dengan konfigurasi Firebase (lihat Panduan Setup), lalu unggah ulang aplikasi. Sambil menunggu, Ustadz bisa mencoba mode demo: buka tautan peserta di tab lain pada peramban yang sama."),
         h("button", { class: "btn", type: "button", onclick: () => start("demo") }, "Coba mode demo")));
       const catBoxes = CATS.map((c) => h("label", { class: "row", style: { gap: "8px" } }, h("input", { type: "checkbox", id: "cat-" + c.id, checked: settings.cats.includes(c.id), onchange: (e) => { settings.cats = settings.cats.filter((x) => x !== c.id); if (e.target.checked) settings.cats.push(c.id); store.set("live-settings", settings); } }), h("span", { class: "ar", style: { fontSize: "20px" } }, c.ar), h("span", { class: "sub" }, c.id_)));
-      const sel = (id, label, vals, key, fmt) => h("label", { class: "row" }, h("span", { style: { minWidth: "120px" } }, label), (() => { const dd = C.dropdown(vals.map((v) => ({ value: v, label: fmt(v) })), settings[key], (v) => { settings[key] = v; store.set("live-settings", settings); }, label); dd.id = id; return dd; })());
+      const sel = (id, label, vals, key, fmt, after) => h("label", { class: "row" }, h("span", { style: { minWidth: "120px" } }, label), (() => { const dd = C.dropdown(vals.map((v) => ({ value: v, label: fmt(v) })), settings[key], (v) => { settings[key] = v; store.set("live-settings", settings); after && after(v); }, label); dd.id = id; return dd; })());
+      const teamBox = h("div", { style: { display: "flex", flexDirection: "column", gap: "10px" } });
+      const drawTeamBox = () => {
+        teamBox.innerHTML = ""; const n = settings.teams; if (!n) return;
+        ensureTeams(n);
+        teamBox.append(sel("asg", "Pembagian", ["auto", "self"], "assign", (v) => (v === "auto" ? "Otomatis" : "Pilih sendiri")),
+          h("div", { class: "tnames" }, S.teams.slice(0, n).map((t, k) => h("label", { class: "tname", style: { "--tc": t.color } }, h("span", { class: "sw" }),
+            h("input", { type: "text", id: "tn-" + k, value: t.name, dir: "rtl", maxlength: 24, "aria-label": "Nama kelompok " + (k + 1), oninput: (e) => { S.teams[k].name = e.target.value; C.saveTeams(); } })))),
+          h("p", { class: "sub", style: { lineHeight: 1.6 } }, "Skor kelompok = rata-rata skor anggotanya, jadi kelompok yang anggotanya lebih sedikit tetap adil. Semua anggota perlu menjawab agar rata-ratanya tinggi."));
+      };
       wrap.append(h("div", { class: "lobby" },
         h("div", { class: "panel", style: { display: "flex", flexDirection: "column", gap: "12px" } }, h("b", null, "Pengaturan"),
           C.scopePicker(),
+          sel("tm", "Mode main", [0, 2, 3, 4, 5, 6], "teams", (v) => (v ? v + " kelompok" : "Individu"), () => drawTeamBox()), teamBox,
           sel("cnt", "Jumlah soal", [10, 15, 20, 25], "count", (v) => v + " soal"), sel("lim", "Waktu per soal", [15, 20, 30, 45], "limit", (v) => v + " detik"),
           h("button", { class: "btn primary", type: "button", disabled: !cfgOK, onclick: () => start("firebase") }, "Buat ruang kuis"),
           saved && Date.now() - saved.at < 4 * 3600e3 ? h("button", { class: "btn", type: "button", onclick: () => resume() }, "Lanjutkan ruang " + saved.code) : null),
         h("div", { class: "panel", style: { display: "flex", flexDirection: "column", gap: "10px" } }, h("b", null, "Jenis soal yang diikutkan"), ...catBoxes,
           h("p", { class: "sub" }, "Soal diambil acak dan merata dari jenis yang dipilih. Skor: jawaban benar 500–1000 poin, makin cepat makin tinggi."))));
+      drawTeamBox();
     }
 
     function buildQuestions() {
@@ -96,18 +110,41 @@
       if (!net) return toast("Server belum diatur");
       QS = buildQuestions(); if (!QS.length) return toast("Pilih minimal satu jenis soal");
       for (let t = 0; t < 8; t++) { code = String(1000 + rnd(9000)); const ex = await net.get("rooms/" + code + "/host"); if (!ex) break; }
-      await net.set("rooms/" + code, { host: net.uid, created: net.TS, wahdah: S.wahdah, title: D().title, state: { phase: "lobby" } });
+      TM = settings.teams ? { list: S.teams.slice(0, settings.teams).map((t, k) => ({ name: (t.name || "").trim() || C.TEAM_NAMES[k], color: t.color })), assign: settings.assign } : null;
+      await net.set("rooms/" + code, { host: net.uid, created: net.TS, wahdah: S.wahdah, title: D().title, state: { phase: "lobby" }, teams: TM });
       i = -1; persist(); lobby();
     }
     async function resume() {
       try { net = await initNet(saved.mode); } catch (e) { return toast("Tidak bisa terhubung"); }
-      code = saved.code; QS = saved.QS; i = saved.i; const h0 = await net.get("rooms/" + code + "/host");
+      code = saved.code; QS = saved.QS; i = saved.i; const h0 = await net.get("rooms/" + code + "/host"); TM = await net.get("rooms/" + code + "/teams");
       if (h0 !== net.uid) { store.set("live-session", null); toast("Ruang lama tidak bisa dilanjutkan"); return setup(); }
       if (i < 0) lobby(); else showBoard();
     }
     const persist = () => store.set("live-session", { code, QS, i, at: Date.now(), mode: net.kind });
     const R = (p) => "rooms/" + code + (p ? "/" + p : "");
-    function watchPlayers(cb) { offs.push(net.on(R("players"), (v) => { players = v || {}; cb && cb(); })); }
+    const pending = {};
+    function autoAssign() {
+      if (!TM || TM.assign !== "auto") return;
+      const cnt = TM.list.map(() => 0);
+      Object.entries(players).forEach(([u, p]) => { const t = p.team != null ? p.team : pending[u]; if (t != null && cnt[t] != null) cnt[t]++; });
+      Object.entries(players).sort((a, b) => (a[1].joined || 0) - (b[1].joined || 0)).forEach(([u, p]) => {
+        if (p.team != null || pending[u] != null) return;
+        const min = Math.min(...cnt); const opts = cnt.map((c, k) => (c === min ? k : -1)).filter((k) => k >= 0); const k = opts[rnd(opts.length)];
+        cnt[k]++; pending[u] = k; net.set(R("players/" + u + "/team"), k).catch(() => {}).then(() => delete pending[u]);
+      });
+    }
+    function watchPlayers(cb) { offs.push(net.on(R("players"), (v) => { players = v || {}; autoAssign(); cb && cb(); })); }
+    const teamOf = (uid) => { const p = players[uid]; return TM && p && p.team != null && TM.list[p.team] ? p.team : -1; };
+    function teamStats(scores) {
+      return TM.list.map((t, k) => {
+        const mem = Object.keys(players).filter((u) => teamOf(u) === k);
+        const total = mem.reduce((a, u) => a + ((scores[u] || {}).score || 0), 0);
+        return { k, name: t.name, color: t.color, n: mem.length, total, avg: mem.length ? Math.round(total / mem.length) : 0 };
+      }).sort((a, b) => b.avg - a.avg || b.total - a.total).map((s, r) => ({ ...s, rank: r + 1 }));
+    }
+    const teamRows = (ts, max) => ts.map((t) => h("div", { class: "r tteam", style: { "--tc": t.color } }, h("span", { class: "rk" }, t.rank),
+      h("span", { class: "nm" }, h("span", { class: "ar tnm" }, t.name), h("small", { class: "sub" }, "  " + t.n + " anggota"), h("span", { class: "tbar" }, h("i", { style: { width: (max ? Math.max(4, (t.avg / max) * 100) : 4) + "%" } }))),
+      h("b", null, t.avg)));
 
     function lobby() {
       wrap.innerHTML = ""; wrap.append(C.topbar("الْمُسَابَقَةُ الْمُبَاشِرَةُ", "Ruang " + code));
@@ -119,10 +156,20 @@
         h("div", { class: "panel", style: { display: "flex", flexDirection: "column", gap: "14px" } },
           h("div", { class: "row" }, count, h("span", { class: "sub grow" }, "mahasiswa sudah masuk"), h("span", { class: "pill" }, C.scopeName(C.getScope()) + " · " + QS.length + " soal · " + settings.limit + " dtk")),
           list,
-          h("div", { class: "row" }, h("button", { class: "btn primary", type: "button", onclick: () => ask(0) }, "Mulai kuis →"), h("span", { class: "sub" }, "Mahasiswa yang datang terlambat tetap bisa masuk di tengah kuis.")))));
+          h("div", { class: "row" }, h("button", { class: "btn primary", type: "button", onclick: () => ask(0) }, "Mulai kuis →"), h("span", { class: "sub" }, TM ? "Klik nama untuk memindah ke kelompok lain. Yang datang terlambat tetap bisa masuk." : "Mahasiswa yang datang terlambat tetap bisa masuk di tengah kuis.")))));
       if (window.QRCode) { try { new window.QRCode(qr, { text: url, width: 560, height: 560, colorDark: "#0A1B44", colorLight: "#ffffff", correctLevel: window.QRCode.CorrectLevel.M }); } catch (e) { /* */ } }
       else qr.append(h("p", { class: "sub" }, "(QR tidak tersedia, gunakan kode)"));
-      watchPlayers(() => { const arr = Object.values(players); count.textContent = arr.length; list.innerHTML = ""; arr.sort((a, b) => (a.joined || 0) - (b.joined || 0)).forEach((p) => list.append(h("span", { class: "pchip" }, p.name))); });
+      watchPlayers(() => {
+        const arr = Object.entries(players).sort((a, b) => (a[1].joined || 0) - (b[1].joined || 0)); count.textContent = arr.length; list.innerHTML = "";
+        if (!TM) { arr.forEach(([, p]) => list.append(h("span", { class: "pchip" }, p.name))); return; }
+        list.className = "teamcols";
+        const cols = TM.list.map((t, k) => h("div", { class: "tcol", style: { "--tc": t.color } }, h("div", { class: "th" }, h("span", { class: "ar" }, t.name), h("span", { class: "pill" }, String(arr.filter(([u]) => teamOf(u) === k).length)))));
+        const none = arr.filter(([u]) => teamOf(u) < 0);
+        arr.forEach(([u, p]) => { const k = teamOf(u); if (k < 0) return;
+          cols[k].append(h("button", { class: "pchip tchip", type: "button", title: "Klik untuk memindah ke kelompok lain", onclick: () => net.set(R("players/" + u + "/team"), (k + 1) % TM.list.length) }, p.name)); });
+        list.append(...cols);
+        if (none.length) list.append(h("div", { class: "tcol none" }, h("div", { class: "th" }, h("span", null, TM.assign === "self" ? "Belum memilih" : "Sedang dibagi…"), h("span", { class: "pill" }, String(none.length))), ...none.map(([, p]) => h("span", { class: "pchip" }, p.name))));
+      });
     }
 
     let timer = null, revealed = false, curAns = {};
@@ -161,6 +208,7 @@
         });
         const ranked = Object.entries(upd).sort((x, y) => y[1].score - x[1].score); ranked.forEach(([uid, s], k) => (s.rank = k + 1));
         if (Object.keys(upd).length) await net.set(R("scores"), upd);
+        if (TM) { const ts = teamStats(upd); const byK = {}; ts.forEach((t) => (byK[t.k] = { avg: t.avg, n: t.n, rank: t.rank })); await net.set(R("teamScores"), byK); }
         await net.update(R("state"), { phase: "reveal", a: q.a, dist });
         C.revealOpts(opts, q.a, null);
         const qh = wrap.querySelector(".qhead"); if (qh) qh.append(h("button", { class: "btn primary", type: "button", onclick: showBoard }, "Papan skor →"));
@@ -183,19 +231,28 @@
       wrap.append(h("div", { class: "stage-inner", style: { margin: "0 auto" } },
         h("div", { class: "qhead" }, h("span", { class: "pill gold" }, "Setelah soal " + (i + 1) + " / " + QS.length), h("span", { class: "grow" })),
         h("h2", { class: "h-ar", style: { textAlign: "center" } }, "لَوْحَةُ الصَّدَارَةِ"),
-        h("div", { class: "lb" }, ranked.slice(0, 8).map((r, k) => h("div", { class: "r" }, h("span", { class: "rk" }, k + 1), h("span", { class: "nm" }, r.name, r.streak >= 3 ? "  🔥" + r.streak : ""), h("b", null, r.score)))),
+        TM ? (() => { const ts = teamStats(scores); return h("div", { class: "lb" }, teamRows(ts, ts.length ? ts[0].avg : 0)); })() : null,
+        TM ? h("p", { class: "sub", style: { textAlign: "center" } }, "Skor kelompok = rata-rata anggota · 5 besar perorangan:") : null,
+        h("div", { class: "lb" + (TM ? " small" : "") }, ranked.slice(0, TM ? 5 : 8).map((r, k) => h("div", { class: "r" }, h("span", { class: "rk" }, k + 1), h("span", { class: "nm" }, r.name, r.streak >= 3 ? "  🔥" + r.streak : "", TM && teamOf(r.uid) >= 0 ? h("small", { class: "ar tag", style: { "--tc": TM.list[teamOf(r.uid)].color } }, TM.list[teamOf(r.uid)].name) : null), h("b", null, r.score)))),
         ranked.length ? null : h("p", { class: "empty" }, "Belum ada peserta."),
         h("div", { class: "row", style: { justifyContent: "center" } }, h("button", { class: "btn primary", type: "button", id: "next", onclick: () => ask(i + 1) }, "Soal berikutnya →"))));
       const nx = wrap.querySelector("#next"); nx && nx.focus();
     }
 
     function finish(ranked) {
-      confetti(); const top = ranked.slice(0, 3); const order = [top[1], top[0], top[2]];
-      const csv = ["Peringkat,Nama,Skor,Benar,Jumlah Soal", ...ranked.map((r, k) => [k + 1, '"' + String(r.name).replace(/"/g, '""') + '"', r.score, r.right || 0, QS.length].join(","))].join("\n");
+      confetti(); const q3 = (s) => '"' + String(s).replace(/"/g, '""') + '"';
+      const ts = TM ? teamStats(Object.fromEntries(ranked.map((r) => [r.uid, r]))) : null;
+      const tName = (uid) => (TM && teamOf(uid) >= 0 ? TM.list[teamOf(uid)].name : "");
+      const top = TM ? ts.slice(0, 3).map((t) => ({ name: t.name, score: t.avg, ar: true, color: t.color })) : ranked.slice(0, 3); const order = [top[1], top[0], top[2]];
+      const csvRows = [(TM ? "Peringkat,Nama,Kelompok,Skor,Benar,Jumlah Soal" : "Peringkat,Nama,Skor,Benar,Jumlah Soal"), ...ranked.map((r, k) => [k + 1, q3(r.name), ...(TM ? [q3(tName(r.uid))] : []), r.score, r.right || 0, QS.length].join(","))];
+      if (TM) csvRows.push("", "Peringkat Kelompok,Kelompok,Anggota,Skor Rata-rata,Total Skor", ...ts.map((t) => [t.rank, q3(t.name), t.n, t.avg, t.total].join(",")));
+      const csv = csvRows.join("\n");
       wrap.append(h("div", { class: "stage-inner", style: { margin: "0 auto" } },
         h("h2", { class: "h-ar", style: { textAlign: "center", fontSize: "40px" } }, "مَبْرُوكٌ لِلْفَائِزِينَ"),
-        h("div", { class: "podium" }, order.map((r, k) => h("div", { class: "p" }, r ? h("span", { class: "nm" }, r.name) : h("span", { class: "nm" }, "—"), h("span", { class: "sub" }, r ? r.score + " poin" : ""), h("div", { class: "blk" }, [2, 1, 3][k])))),
-        h("div", { class: "lb" }, ranked.map((r, k) => h("div", { class: "r" }, h("span", { class: "rk" }, k + 1), h("span", { class: "nm" }, r.name), h("b", null, r.score + " · " + (r.right || 0) + "/" + QS.length + " benar")))),
+        h("div", { class: "podium" }, order.map((r, k) => h("div", { class: "p" }, r ? h("span", { class: "nm" + (r.ar ? " ar" : "") }, r.name) : h("span", { class: "nm" }, "—"), h("span", { class: "sub" }, r ? r.score + (TM ? " rata-rata" : " poin") : ""), h("div", { class: "blk", style: r && r.color ? { boxShadow: "inset 0 6px 0 " + r.color } : null }, [2, 1, 3][k])))),
+        TM ? h("div", { class: "lb" }, teamRows(ts, ts.length ? ts[0].avg : 0)) : null,
+        TM ? h("h3", { style: { textAlign: "center", margin: "6px 0 0" } }, "Peringkat perorangan") : null,
+        h("div", { class: "lb" + (TM ? " small" : "") }, ranked.map((r, k) => h("div", { class: "r" }, h("span", { class: "rk" }, k + 1), h("span", { class: "nm" }, r.name, TM && tName(r.uid) ? h("small", { class: "ar tag", style: { "--tc": TM.list[teamOf(r.uid)].color } }, tName(r.uid)) : null), h("b", null, r.score + " · " + (r.right || 0) + "/" + QS.length + " benar")))),
         h("div", { class: "row", style: { justifyContent: "center" } },
           h("button", { class: "btn primary", type: "button", onclick: () => downloadText("hasil-kuis-wahdah-" + S.wahdah + "-" + code + ".csv", csv) }, "Unduh hasil (CSV)"),
           h("button", { class: "btn", type: "button", onclick: () => copyText(csv.replace(/,/g, "\t")) }, "Salin untuk Excel"),
@@ -232,10 +289,18 @@
       say(f); (code ? ni : ci).focus();
     }
 
-    let state = null, me = null, myScore = null, answeredKey = null, tmr = null;
+    let state = null, me = null, myScore = null, answeredKey = null, tmr = null, TMp = null, tScores = null;
+    const myTeam = () => (TMp && me && me.team != null && TMp.list[me.team] ? TMp.list[me.team] : null);
+    function pickTeam() {
+      say(h("div", { class: "card-p" }, h("p", { class: "status" }, "Pilih kelompokmu"),
+        h("div", { class: "tpick" }, TMp.list.map((t, k) => h("button", { class: "btn", type: "button", style: { "--tc": t.color }, onclick: async () => {
+          try { await net.set("rooms/" + code + "/players/" + net.uid + "/team", k); } catch (e) { toast("Gagal, coba lagi"); } } }, h("span", { class: "ar" }, t.name))))));
+    }
     function listen() {
       const R = (p) => "rooms/" + code + "/" + p;
-      net.on(R("players/" + net.uid), (v) => { me = v; if (!v) joinForm("Silakan masuk lagi."); });
+      net.on(R("teams"), (v) => { TMp = v; lastRender = ""; render(); });
+      net.on(R("teamScores"), (v) => { tScores = v; lastRender = ""; render(); });
+      net.on(R("players/" + net.uid), (v) => { me = v; if (!v) joinForm("Silakan masuk lagi."); else render(); });
       net.on(R("scores/" + net.uid), (v) => { myScore = v; render(); });
       net.on(R("state"), (v) => { state = v; render(); });
       net.on("rooms/" + code + "/host", (v) => { if (!v) say(h("div", { class: "card-p" }, h("b", null, "Kuis sudah ditutup oleh dosen."), h("p", { class: "sub" }, "Terima kasih sudah ikut!"))); });
@@ -243,10 +308,16 @@
     let lastRender = "", tok = 0;
     async function render() {
       if (!state || !me) return; const my = ++tok;
-      const sig = [state.phase, state.i, answeredKey, myScore && myScore.score, myScore && myScore.rank].join("|"); if (sig === lastRender) return; lastRender = sig;
+      const tm = myTeam(); const tr = tm && tScores && tScores[me.team] ? tScores[me.team] : null;
+      const sig = [state.phase, state.i, answeredKey, myScore && myScore.score, myScore && myScore.rank, me.team, tr && tr.rank, tr && tr.avg, !!TMp].join("|"); if (sig === lastRender) return; lastRender = sig;
       if (tmr) { tmr.stop(); tmr = null; }
-      const scoreLine = h("div", { class: "row" }, h("span", { class: "pill" }, me.name), h("span", { class: "grow" }), h("span", { class: "pill gold" }, (myScore ? myScore.score : 0) + " poin"));
-      if (state.phase === "lobby") return say(scoreLine, h("div", { class: "card-p" }, h("p", { class: "qtext", dir: "rtl" }, "أَهْلًا وَسَهْلًا"), h("p", { class: "status" }, "Kamu sudah masuk. Lihat namamu di layar, lalu tunggu dosen memulai.")));
+      if (TMp && !tm && TMp.assign === "self" && state.phase !== "end") return pickTeam();
+      const teamPill = tm ? h("span", { class: "pill ar tpill", style: { "--tc": tm.color } }, tm.name) : null;
+      const scoreLine = h("div", { class: "row" }, h("span", { class: "pill" }, me.name), teamPill, h("span", { class: "grow" }), h("span", { class: "pill gold" }, (myScore ? myScore.score : 0) + " poin"));
+      const teamLine = tm && tr ? h("div", { class: "tline" }, h("span", { class: "pill ar tpill", style: { "--tc": tm.color } }, tm.name), h("span", null, "Kelompok peringkat ", h("b", null, "#" + tr.rank), " · rata-rata " + tr.avg)) : null;
+      if (state.phase === "lobby") return say(scoreLine, h("div", { class: "card-p" }, h("p", { class: "qtext", dir: "rtl" }, "أَهْلًا وَسَهْلًا"),
+        TMp && !tm ? h("p", { class: "status" }, "Kamu sudah masuk. Tunggu sebentar, dosen sedang membagi kelompok.") : tm ? h("div", { class: "tline col" }, h("span", { class: "sub" }, "Kamu masuk kelompok"), h("span", { class: "pill ar tpill big", style: { "--tc": tm.color } }, tm.name), h("span", { class: "status" }, "Tunggu dosen memulai.")) : h("p", { class: "status" }, "Kamu sudah masuk. Lihat namamu di layar, lalu tunggu dosen memulai."),
+        tm && TMp.assign === "self" ? h("button", { class: "btn small ghost", type: "button", style: { alignSelf: "center" }, onclick: () => net.remove("rooms/" + code + "/players/" + net.uid + "/team") }, "Ganti kelompok") : null));
       const q = state.q || {};
       if (state.phase === "question") {
         const key = state.key; const mine = await net.get("rooms/" + code + "/answers/" + key + "/" + net.uid);
@@ -265,10 +336,10 @@
       if (state.phase === "reveal") {
         const last = myScore && myScore.last; const ok = last && last.ok;
         return say(scoreLine, h("div", { class: "result " + (ok ? "ok" : "no") }, ok ? "Benar! +" + last.pts : last && last.answered ? "Belum tepat" : "Tidak menjawab",
-          h("small", null, "Jawaban: ", h("span", { class: "ar", style: { fontSize: "22px" } }, q.o ? q.o[state.a] : ""))), myScore && myScore.rank ? h("p", { class: "status" }, "Peringkatmu sekarang: #" + myScore.rank) : null);
+          h("small", null, "Jawaban: ", h("span", { class: "ar", style: { fontSize: "22px" } }, q.o ? q.o[state.a] : ""))), myScore && myScore.rank ? h("p", { class: "status" }, "Peringkatmu sekarang: #" + myScore.rank) : null, teamLine);
       }
-      if (state.phase === "board") return say(scoreLine, h("div", { class: "card-p" }, h("p", { class: "status" }, "Lihat papan skor di layar."), myScore && myScore.rank ? h("div", { class: "bigcount", style: { textAlign: "center" } }, "#" + myScore.rank) : null, h("p", { class: "sub", style: { textAlign: "center" } }, "Bersiap untuk soal berikutnya…")));
-      if (state.phase === "end") { if (myScore && myScore.rank <= 3) confetti(); return say(scoreLine, h("div", { class: "card-p" }, h("p", { class: "qtext", dir: "rtl" }, "انْتَهَتِ الْمُسَابَقَةُ"), h("div", { class: "bigcount", style: { textAlign: "center" } }, myScore ? "#" + myScore.rank : "—"), h("p", { class: "status" }, (myScore ? myScore.score : 0) + " poin · " + (myScore ? myScore.right || 0 : 0) + "/" + state.total + " benar"))); }
+      if (state.phase === "board") return say(scoreLine, h("div", { class: "card-p" }, h("p", { class: "status" }, "Lihat papan skor di layar."), myScore && myScore.rank ? h("div", { class: "bigcount", style: { textAlign: "center" } }, "#" + myScore.rank) : null, teamLine, h("p", { class: "sub", style: { textAlign: "center" } }, "Bersiap untuk soal berikutnya…")));
+      if (state.phase === "end") { if (myScore && myScore.rank <= 3) confetti(); return say(scoreLine, h("div", { class: "card-p" }, h("p", { class: "qtext", dir: "rtl" }, "انْتَهَتِ الْمُسَابَقَةُ"), h("div", { class: "bigcount", style: { textAlign: "center" } }, myScore ? "#" + myScore.rank : "—"), h("p", { class: "status" }, (myScore ? myScore.score : 0) + " poin · " + (myScore ? myScore.right || 0 : 0) + "/" + state.total + " benar"), teamLine)); }
     }
 
     // sudah pernah bergabung di ruang ini? langsung lanjut
