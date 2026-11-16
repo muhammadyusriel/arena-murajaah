@@ -87,7 +87,7 @@
         h("div", { class: "panel", style: { display: "flex", flexDirection: "column", gap: "12px" } }, h("b", null, "Pengaturan"),
           C.scopePicker(),
           sel("tm", "Mode main", [0, 2, 3, 4, 5, 6], "teams", (v) => (v ? v + " kelompok" : "Individu"), () => drawTeamBox()), teamBox,
-          sel("cnt", "Jumlah soal", [10, 15, 20, 25], "count", (v) => v + " soal"), sel("lim", "Waktu per soal", [15, 20, 30, 45], "limit", (v) => v + " detik"),
+          sel("cnt", "Jumlah soal", [10, 15, 20, 25, 50, 75], "count", (v) => v + " soal"), sel("lim", "Waktu per soal", [15, 20, 30, 45, 60], "limit", (v) => (v === 60 ? "1 menit" : v + " detik")),
           h("button", { class: "btn primary", type: "button", disabled: !cfgOK, onclick: () => start("firebase") }, "Buat ruang kuis"),
           saved && Date.now() - saved.at < 4 * 3600e3 ? h("button", { class: "btn", type: "button", onclick: () => resume() }, "Lanjutkan ruang " + saved.code) : null),
         h("div", { class: "panel", style: { display: "flex", flexDirection: "column", gap: "10px" } }, h("b", null, "Jenis soal yang diikutkan"), ...catBoxes,
@@ -108,7 +108,7 @@
     async function start(mode) {
       try { net = await initNet(mode); } catch (e) { toast("Tidak bisa terhubung ke server: " + e.message); return; }
       if (!net) return toast("Server belum diatur");
-      QS = buildQuestions(); ST = []; if (!QS.length) return toast("Pilih minimal satu jenis soal");
+      QS = buildQuestions(); ST = []; if (!QS.length) return toast("Pilih minimal satu jenis soal"); if (QS.length < settings.count) toast("Soal yang tersedia di cakupan ini hanya " + QS.length + ", jadi kuis memakai " + QS.length + " soal.");
       for (let t = 0; t < 8; t++) { code = String(1000 + rnd(9000)); const ex = await net.get("rooms/" + code + "/host"); if (!ex) break; }
       TM = settings.teams ? { list: S.teams.slice(0, settings.teams).map((t, k) => ({ name: (t.name || "").trim() || C.TEAM_NAMES[k], color: t.color })), assign: settings.assign } : null;
       await net.set("rooms/" + code, { host: net.uid, created: net.TS, wahdah: S.wahdah, title: D().title, state: { phase: "lobby" }, teams: TM });
