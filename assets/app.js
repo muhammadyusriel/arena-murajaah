@@ -333,6 +333,23 @@
   }
   ArenaCore.go = go; ArenaCore.dropdown = dropdown; ArenaCore.onLeave = (f) => cleanup.push(f); ArenaCore.topbar = topbar;
 
+  // ---------- Angka menghitung naik (v1.8.7) ----------
+  function countUp(target, ms) {
+    const b = h("b", { class: "count", "aria-label": String(target) }, "0");
+    const reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce || !(target > 0)) { b.textContent = String(target); return b; }
+    const dur = ms || Math.min(1600, 700 + target * 3);
+    let t0 = null;
+    const step = (t) => {
+      if (!b.isConnected) { if (t0 !== null) return; requestAnimationFrame(step); return; }
+      if (t0 === null) t0 = t + 250; // jeda singkat agar kotak muncul dulu
+      const k = Math.max(0, Math.min(1, (t - t0) / dur)); const e = 1 - Math.pow(1 - k, 3);
+      b.textContent = String(Math.round(target * e));
+      if (k < 1) requestAnimationFrame(step); else b.classList.add("done");
+    };
+    requestAnimationFrame(step); return b;
+  }
+
   // =====================================================================
   const SCREENS = {};
 
@@ -354,9 +371,9 @@
         h("div", { class: "intro" }, h("span", { class: "kick" }, "Muraja'ah Wahdah " + S.wahdah),
           h("p", null, "Pilih model kuis. Mode proyektor cukup dengan satu layar; mode kuis langsung membuat setiap mahasiswa menjawab dari HP masing-masing.")),
         h("div", { class: "meta" },
-          h("div", { class: "stat" }, h("b", null, nSoal), h("span", null, "soal di bank")),
-          h("div", { class: "stat" }, h("b", null, d.nusus.length), h("span", null, "nash")),
-          h("div", { class: "stat" }, h("b", null, d.vocab.length), h("span", null, "mufradat")))),
+          h("div", { class: "stat" }, countUp(nSoal), h("span", null, "soal di bank")),
+          h("div", { class: "stat" }, countUp(d.nusus.length), h("span", null, "nash")),
+          h("div", { class: "stat" }, countUp(d.vocab.length), h("span", null, "mufradat")))),
       h("section", { class: "modes" },
         h("button", { class: "mode live", type: "button", style: { "--mc": "var(--saffron)" }, onclick: () => go("liveHost") },
           h("span", { class: "ic", html: I.phone }),

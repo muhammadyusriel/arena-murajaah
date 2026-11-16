@@ -737,3 +737,8 @@ a.brand.link:hover .seal { transform: rotate(45deg) scale(1.05); }
 @media (max-width: 1000px) { .hero .ar-title { line-height: 1.7; } }
 .credit .cr-by b { margin-inline-start: .3em; }
 .credit .cr-meta i { margin: 0 7px; width: 3px; height: 3px; opacity: .8; } /* v1.8.5: titik pemisah versi lebih rapat */
+/* v1.8.7: angka menghitung naik; lebar angka tetap agar kotak tidak bergoyang */
+.stat b.count { font-variant-numeric: tabular-nums; }
+.stat b.count.done { animation: countPop .35s var(--ease); }
+@keyframes countPop { 40% { transform: scale(1.12); } 100% { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .stat b.count.done { animation: none; } }
