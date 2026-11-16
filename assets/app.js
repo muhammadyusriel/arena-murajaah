@@ -54,8 +54,8 @@
   // ---------- PIN DOSEN (Bank Soal) ----------
   // Catatan: ini penghalang untuk mahasiswa, bukan pengamanan penuh — situs statis tetap bisa dibongkar oleh yang paham teknis.
   const PIN = window.ARENA_PIN && window.ARENA_PIN.hash ? window.ARENA_PIN : null;
-  const PIN_LOCKED = new Set(["bank"]);
-  let pinSession = false;
+  const PIN_LOCKED = new Set(["bank", "pantau"]);
+  let pinSession = false, lastPin = null;
   const pinOk = () => !PIN || pinSession || store.get("pin-ok", "") === PIN.hash;
   const lockPin = () => { pinSession = false; store.set("pin-ok", ""); };
   async function pinHash(pin) {
@@ -74,7 +74,7 @@
       btn.disabled = true; msg.textContent = "Memeriksa…"; let ok = false;
       try { ok = (await pinHash(v)) === PIN.hash; } catch (err) { msg.textContent = "Peramban ini tidak mendukung pemeriksaan PIN."; btn.disabled = false; return; }
       btn.disabled = false;
-      if (ok) { store.set("pin-fail", 0); pinSession = true; store.set("pin-rem", rem.checked); store.set("pin-ok", rem.checked ? PIN.hash : ""); close(); onOk && onOk(); return; }
+      if (ok) { store.set("pin-fail", 0); pinSession = true; lastPin = v; store.set("pin-rem", rem.checked); store.set("pin-ok", rem.checked ? PIN.hash : ""); close(); onOk && onOk(v); return; }
       const n = store.get("pin-fail", 0) + 1; store.set("pin-fail", n); if (n >= 5) { store.set("pin-wait", Date.now() + 30000); store.set("pin-fail", 0); }
       msg.textContent = n >= 5 ? "PIN salah 5 kali. Tunggu 30 detik." : "PIN salah."; box.classList.remove("shake"); void box.offsetWidth; box.classList.add("shake"); inp.select(); SFX.wrong();
     } },
@@ -644,8 +644,8 @@
             h("li", null, "Tampilkan QR ini di kelas, atau salin tautannya ke grup WhatsApp kelas."),
             h("li", null, "Mahasiswa membuka tautan di HP, memilih bagian dan jenis soal, lalu berlatih."),
             h("li", null, "Setiap jawaban langsung diberi tahu benar atau salah beserta catatannya. Di akhir, mereka bisa mengulang soal yang salah saja.")),
-          h("p", { class: "sub", style: { lineHeight: 1.6 } }, "Latihan tidak memerlukan ruang kuis dan tidak memakai kuota server. Hasilnya hanya tersimpan di HP masing-masing (skor terbaik), tidak terkirim ke dosen. Tautan ini membuka Wahdah " + S.wahdah + "; mahasiswa tetap bisa memilih wahdah lain yang sudah tersedia."),
-          h("div", { class: "row" }, h("button", { class: "btn primary", type: "button", onclick: () => go("latihan") }, "Coba latihan di layar ini →"))))));
+          h("p", { class: "sub", style: { lineHeight: 1.6 } }, "Mahasiswa menulis nama (dan NIM bila mau) sebelum berlatih. Setiap selesai latihan, hasilnya terkirim ke server dan bisa Ustadz pantau lewat tombol di bawah (dengan PIN). Mahasiswa tidak bisa melihat hasil teman-temannya. Tautan ini membuka Wahdah " + S.wahdah + "; mahasiswa tetap bisa memilih wahdah lain yang sudah tersedia."),
+          h("div", { class: "row" }, h("button", { class: "btn primary", type: "button", onclick: () => go("pantau") }, "Pantau hasil latihan →"), h("button", { class: "btn", type: "button", onclick: () => go("latihan") }, "Coba latihan di layar ini"))))));
     if (window.QRCode) { try { new window.QRCode(qr, { text: url, width: 560, height: 560, colorDark: "#0A1B44", colorLight: "#ffffff", correctLevel: window.QRCode.CorrectLevel.M }); } catch (e) { /* */ } }
     else qr.append(h("p", { class: "sub" }, "(QR tidak tersedia, gunakan tautan)"));
   };
@@ -659,6 +659,18 @@
     const cfg = store.get("lat-cfg", { cats: CATS.map((c) => c.id), count: 10 });
     const bestKey = () => "lat-best-" + S.wahdah + "-" + getScope();
     const pct = (a, b) => (b ? Math.round((100 * a) / b) : 0);
+    const online = !!(window.ARENA_FIREBASE && window.ARENA_FIREBASE.apiKey && window.ArenaLive);
+    const me = { name: store.get("lat-name", ""), nim: store.get("lat-nim", "") };
+    async function sendResult(rec) {
+      if (!online || !me.name) return "off";
+      try {
+        const net = await window.ArenaLive.initNet("firebase"); if (!net) return "off";
+        const base = "latihan/w" + S.wahdah + "/" + net.uid;
+        const job = Promise.all([net.update(base + "/profile", { name: me.name, nim: me.nim || "", updated: net.TS }), net.set(base + "/sesi/" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), { ...rec, at: net.TS })]);
+        const r = await Promise.race([job.then(() => "ok"), new Promise((res) => setTimeout(() => res("wait"), 9000))]);
+        return r;
+      } catch (e) { return "fail"; }
+    }
 
     function setup() {
       const wsel = WAHDAH_LIST().length > 1 ? dropdown(WAHDAH_LIST().map((w) => ({ value: w, label: () => h("span", { class: "dd-w" }, h("b", null, "Wahdah " + w), h("span", { class: "ar" }, window.ARENA_DATA[w].title)) })), S.wahdah, (v) => { S.wahdah = v; store.set("wahdah", v); setup(); }, "Pilih wahdah") : null;
@@ -667,11 +679,14 @@
       const avail = () => cfg.cats.reduce((a, c) => a + D().bank[c].filter(inScope(getScope())).length, 0);
       const info = h("p", { class: "sub", style: { textAlign: "center", margin: 0 } });
       const best = store.get(bestKey(), null);
-      const upd = () => { const n = avail(); info.textContent = n + " soal tersedia" + (cfg.count && n < cfg.count ? " (semua akan dipakai)" : ""); startBtn.disabled = !n; };
+      const upd = () => { const n = avail(); const needName = online && me.name.length < 2; info.textContent = needName ? "Tulis namamu dulu agar latihan tercatat." : n + " soal tersedia" + (cfg.count && n < cfg.count ? " (semua akan dipakai)" : ""); startBtn.disabled = !n || needName; };
       const cnt = dropdown([10, 20, 30, 0].map((v) => ({ value: v, label: v ? v + " soal" : "Semua soal" })), cfg.count, (v) => { cfg.count = v; store.set("lat-cfg", cfg); upd(); }, "Jumlah soal");
       const startBtn = h("button", { class: "btn primary", type: "button", style: { fontSize: "18px", padding: "14px" }, onclick: () => run(buildSet()) }, "Mulai latihan →");
+      const nmI = h("input", { type: "text", id: "lat-name", maxlength: 40, placeholder: "Nama lengkap", value: me.name, autocomplete: "name", "aria-label": "Nama lengkap", oninput: (e) => { me.name = e.target.value.trim().replace(/\s+/g, " ").slice(0, 40); store.set("lat-name", me.name); upd(); } });
+      const nimI = h("input", { type: "text", id: "lat-nim", maxlength: 20, placeholder: "NIM (opsional)", value: me.nim, inputmode: "numeric", "aria-label": "NIM", oninput: (e) => { me.nim = e.target.value.trim().slice(0, 20); store.set("lat-nim", me.nim); } });
       say(h("div", { class: "card-p" },
           h("p", { class: "qtext", dir: "rtl", style: { margin: 0 } }, D().title),
+          online ? h("div", { class: "lat-id" }, nmI, nimI, h("small", { class: "sub" }, "Hasil latihanmu tercatat untuk dosen dengan nama ini.")) : null,
           wsel ? h("label", { class: "row" }, h("span", { class: "sub", style: { minWidth: "88px" } }, "Wahdah"), wsel) : h("p", { class: "status", style: { margin: 0 } }, "Wahdah " + S.wahdah),
           scopePicker(() => setup()),
           h("div", { class: "row" }, h("span", { class: "sub", style: { minWidth: "88px" } }, "Jumlah"), cnt),
@@ -682,12 +697,12 @@
     }
     function buildSet() {
       const sc = getScope(); const all = shuffle(cfg.cats.flatMap((c) => D().bank[c].filter(inScope(sc)).map((q) => ({ q, c }))));
-      return (cfg.count ? all.slice(0, cfg.count) : all).map(({ q, c }) => prepare(q, c));
+      return (cfg.count ? all.slice(0, cfg.count) : all).map(({ q, c }) => prepare({ ...q, _k: c + ":" + D().bank[c].indexOf(q) }, c));
     }
     function run(set, retry) {
-      let k = 0, right = 0, streak = 0, ans = 0; const wrong = [];
+      let k = 0, right = 0, streak = 0, ans = 0; const wrong = []; const t0 = Date.now();
       const next = () => {
-        if (k >= set.length) return summary(set, right, wrong, retry);
+        if (k >= set.length) return summary(set, right, wrong, retry, t0);
         const q = set[k]; let done = false;
         const verdict = h("div", { class: "verdict" }); const after = h("div", { style: { display: "flex", flexDirection: "column", gap: "12px" } });
         const opts = optButtons(q, (i) => {
@@ -704,18 +719,24 @@
           h("div", { class: "meter lat-meter" }, h("i", { style: { width: (100 * k) / set.length + "%" } })),
           h("div", { class: "row" }, h("span", { class: "pill ar", style: { fontSize: "17px" } }, catOf(q.cat).ar), q.n ? h("span", { class: "pill" }, "Bagian " + q.n) : null),
           h("div", { class: "card-p" }, ...renderQ(q), opts, verdict, after),
-          h("button", { class: "btn small ghost", type: "button", style: { alignSelf: "center" }, onclick: () => summary(set.slice(0, ans), right, wrong, retry) }, "Akhiri latihan"));
+          h("button", { class: "btn small ghost", type: "button", style: { alignSelf: "center" }, onclick: () => summary(set.slice(0, ans), right, wrong, retry, t0) }, "Akhiri latihan"));
       };
       next();
     }
-    function summary(set, right, wrong, retry) {
+    function summary(set, right, wrong, retry, t0) {
       const n = set.length, p = pct(right, n);
+      const sent = h("p", { class: "sub lat-sent", style: { margin: 0 } });
+      if (n && online && me.name) {
+        sent.textContent = "Mengirim hasil ke dosen…";
+        sendResult({ n, right, scope: getScope(), retry: !!retry, dur: Math.round((Date.now() - (t0 || Date.now())) / 1000), w: wrong.map((x) => x.q._k).filter(Boolean).slice(0, 60) })
+          .then((st) => { sent.textContent = st === "ok" ? "✓ Hasil tercatat untuk dosen" : st === "wait" ? "Hasil akan terkirim saat koneksi tersambung (biarkan halaman ini terbuka)" : st === "off" ? "" : "Hasil belum terkirim. Periksa koneksi internet."; sent.classList.toggle("ok", st === "ok"); });
+      }
       if (!retry && n) { const b = store.get(bestKey(), null); if (!b || p > pct(b.r, b.n) || (p === pct(b.r, b.n) && n > b.n)) store.set(bestKey(), { r: right, n, at: Date.now() }); }
       const [ar, idn] = p >= 90 ? ["مُمْتَازٌ", "Luar biasa!"] : p >= 75 ? ["جَيِّدٌ جِدًّا", "Bagus sekali!"] : p >= 60 ? ["جَيِّدٌ", "Bagus, tingkatkan lagi."] : ["حَاوِلْ مَرَّةً أُخْرَى", "Ayo ulangi, pasti bisa."];
       if (p >= 75 && n) { confetti(); SFX.fanfare(); }
       say(h("div", { class: "card-p", style: { alignItems: "center", textAlign: "center" } },
           h("p", { class: "qtext", dir: "rtl", style: { margin: 0 } }, ar), h("div", { class: "lat-pct" }, p + "%"),
-          h("p", { class: "status", style: { margin: 0 } }, right + " dari " + n + " soal benar · " + idn),
+          h("p", { class: "status", style: { margin: 0 } }, right + " dari " + n + " soal benar · " + idn), sent,
           h("div", { class: "row", style: { justifyContent: "center" } },
             wrong.length ? h("button", { class: "btn primary", type: "button", onclick: () => run(shuffle(wrong.map((w) => prepare(w.q, w.q.cat))), true) }, "Ulangi yang salah (" + wrong.length + ")") : null,
             h("button", { class: wrong.length ? "btn" : "btn primary", type: "button", onclick: () => run(buildSet()) }, "Latihan baru"),
@@ -725,6 +746,95 @@
           h("div", { class: "rc-ans" }, h("span", null, "Jawabanmu: ", h("b", { class: "ar wr" }, w.q.o[w.picked])), h("span", null, "Kunci: ", h("b", { class: "ar" }, w.q.o[w.q.a]))), ...noteFor(w.q))));
     }
     setup();
+  };
+
+  // ---------- PANTAU LATIHAN (dosen) ----------
+  SCREENS.pantau = (root) => {
+    const body = h("div", { style: { display: "flex", flexDirection: "column", gap: "16px" } });
+    root.append(h("div", { class: "wrap" }, topbar("مُتَابَعَةُ التَّدْرِيبِ", "Pantau latihan mandiri"), body));
+    const msg = (t, extra) => { body.innerHTML = ""; body.append(h("div", { class: "panel", style: { display: "flex", flexDirection: "column", gap: "12px", alignItems: "flex-start" } }, h("p", { class: "sub", style: { margin: 0, lineHeight: 1.6 } }, t), extra || null)); };
+    if (!(window.ARENA_FIREBASE && window.ARENA_FIREBASE.apiKey) || !window.ArenaLive) return msg("Server kuis belum diatur di sini, jadi hasil latihan tidak bisa dipantau. Buka halaman ini dari situs live.");
+    msg("Menghubungkan ke server…");
+    let net = null, off = null, data = {}, open = new Set(), confirmDel = false;
+    let period = store.get("pantau-period", 0), sortBy = store.get("pantau-sort", "last");
+    cleanup.push(() => off && off());
+    const fmt = (t) => (t ? new Date(t).toLocaleString("id-ID", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }) : "—");
+    const ago = (t) => { if (!t) return "—"; const m = Math.round((Date.now() - t) / 60000); return m < 1 ? "baru saja" : m < 60 ? m + " mnt lalu" : m < 1440 ? Math.round(m / 60) + " jam lalu" : Math.round(m / 1440) + " hari lalu"; };
+    const pc = (a, b) => (b ? Math.round((100 * a) / b) : 0);
+    const since = () => { if (period === 1) { const d = new Date(); d.setHours(0, 0, 0, 0); return d.getTime(); } return period ? Date.now() - period * 86400000 : 0; };
+    function rows() {
+      const t0 = since(); const by = {};
+      Object.entries(data).forEach(([uid, v]) => {
+        const pf = v.profile || {}; const name = (pf.name || "?").trim(); const nim = (pf.nim || "").trim(); const key = name.toLowerCase() + "|" + nim;
+        const st = by[key] || (by[key] = { key, name, nim, uids: [], sesi: [] }); st.uids.push(uid);
+        Object.values(v.sesi || {}).forEach((x) => { if ((x.at || 0) >= t0) st.sesi.push(x); });
+      });
+      return Object.values(by).filter((x) => x.sesi.length).map((x) => {
+        x.sesi.sort((a, b) => (b.at || 0) - (a.at || 0));
+        x.n = x.sesi.reduce((a, y) => a + (y.n || 0), 0); x.right = x.sesi.reduce((a, y) => a + (y.right || 0), 0); x.avg = pc(x.right, x.n);
+        x.best = Math.max(...x.sesi.filter((y) => !y.retry).map((y) => pc(y.right, y.n)), 0); x.last = x.sesi[0].at || 0;
+        x.parts = [...new Set(x.sesi.map((y) => y.scope || 0))].sort(); x.dur = x.sesi.reduce((a, y) => a + (y.dur || 0), 0);
+        return x;
+      });
+    }
+    function draw() {
+      const list = rows();
+      const sorters = { last: (a, b) => b.last - a.last, name: (a, b) => a.name.localeCompare(b.name, "id"), low: (a, b) => a.avg - b.avg, many: (a, b) => b.n - a.n };
+      list.sort(sorters[sortBy] || sorters.last);
+      const tn = list.reduce((a, x) => a + x.n, 0), tr = list.reduce((a, x) => a + x.right, 0), ts = list.reduce((a, x) => a + x.sesi.length, 0);
+      const perSel = dropdown([[0, "Semua waktu"], [7, "7 hari terakhir"], [1, "Hari ini"]].map(([v, l]) => ({ value: v, label: l })), period, (v) => { period = v; store.set("pantau-period", v); draw(); }, "Periode");
+      const sortSel = dropdown([["last", "Terakhir berlatih"], ["name", "Nama (A–Z)"], ["low", "Ketepatan terendah"], ["many", "Soal terbanyak"]].map(([v, l]) => ({ value: v, label: l })), sortBy, (v) => { sortBy = v; store.set("pantau-sort", v); draw(); }, "Urutkan", "end");
+      const table = h("div", { class: "ptable" }, h("div", { class: "pr ph" }, h("span", null, "Mahasiswa"), h("span", null, "Sesi"), h("span", null, "Soal"), h("span", null, "Ketepatan"), h("span", null, "Terbaik"), h("span", null, "Bagian"), h("span", null, "Terakhir")));
+      list.forEach((x) => {
+        const isOpen = open.has(x.key); const lv = x.avg < 50 ? "hard" : x.avg < 80 ? "mid" : "easy";
+        table.append(h("button", { class: "pr " + lv + (isOpen ? " open" : ""), type: "button", onclick: () => { isOpen ? open.delete(x.key) : open.add(x.key); draw(); } },
+          h("span", { class: "pn" }, h("b", null, x.name), x.nim ? h("small", null, x.nim) : null),
+          h("span", null, x.sesi.length), h("span", null, x.n),
+          h("span", { class: "pa" }, h("i", { class: "pm" }, h("i", { style: { width: Math.max(3, x.avg) + "%" } })), x.avg + "%"),
+          h("span", null, x.best + "%"),
+          h("span", { class: "pb" }, x.parts.map((b) => h("i", null, b ? "B" + b : "Semua"))),
+          h("span", { class: "sub" }, ago(x.last))));
+        if (isOpen) table.append(h("div", { class: "pdetail" }, x.sesi.slice(0, 30).map((y) => h("div", { class: "ps" },
+          h("span", null, fmt(y.at)), h("span", null, y.scope ? "Bagian " + y.scope : "Semua bagian"), h("span", null, y.right + "/" + y.n + " benar"), h("b", null, pc(y.right, y.n) + "%"),
+          h("span", { class: "sub" }, (y.dur ? Math.max(1, Math.round(y.dur / 60)) + " mnt" : "") + (y.retry ? " · ulang yang salah" : ""))))));
+      });
+      // soal paling sering salah
+      const cnt = {}; list.forEach((x) => x.sesi.forEach((y) => (y.w || []).forEach((k) => (cnt[k] = (cnt[k] || 0) + 1))));
+      const top = Object.entries(cnt).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([k, c]) => { const [cat, i] = k.split(":"); const q = (D().bank[cat] || [])[Number(i)]; return q ? { q, cat, c } : null; }).filter(Boolean);
+      const csv = () => { const q3 = (v) => '"' + String(v == null ? "" : v).replace(/"/g, '""') + '"';
+        return ["Nama,NIM,Sesi,Soal Dijawab,Benar,Ketepatan %,Terbaik %,Bagian Dilatih,Total Menit,Terakhir Berlatih", ...list.map((x) => [q3(x.name), q3(x.nim), x.sesi.length, x.n, x.right, x.avg, x.best, q3(x.parts.map((b) => (b ? "B" + b : "Semua")).join(" ")), Math.round(x.dur / 60), q3(fmt(x.last))].join(","))].join("\n"); };
+      body.innerHTML = "";
+      body.append(
+        h("div", { class: "row" }, h("span", { class: "sub" }, "Periode"), perSel, h("span", { class: "grow" }), h("span", { class: "sub" }, "Urutkan"), sortSel),
+        h("div", { class: "rsum" },
+          h("div", { class: "stat" }, h("b", null, String(list.length)), h("span", null, "mahasiswa berlatih")),
+          h("div", { class: "stat" }, h("b", null, String(ts)), h("span", null, "sesi latihan")),
+          h("div", { class: "stat" }, h("b", null, String(tn)), h("span", null, "soal dijawab")),
+          h("div", { class: "stat" }, h("b", null, pc(tr, tn) + "%"), h("span", null, "rata-rata ketepatan"))),
+        list.length ? h("div", { class: "panel", style: { padding: "10px" } }, table) : h("div", { class: "panel" }, h("p", { class: "empty" }, "Belum ada mahasiswa yang berlatih" + (period ? " pada periode ini." : " di Wahdah " + S.wahdah + ". Bagikan tautan latihan dari halaman sebelumnya."))),
+        top.length ? h("h3", { style: { margin: "6px 0 0" } }, "5 soal yang paling sering salah saat latihan") : null,
+        top.length ? h("div", { class: "rlist" }, top.map((t, k) => h("div", { class: "rcard hard", style: { cursor: "default" } },
+          h("div", { class: "rc-top" }, h("span", { class: "rk" }, "#" + (k + 1)), h("span", { class: "pill ar" }, catOf(t.cat).ar), t.q.n ? h("span", { class: "pill" }, "Bagian " + t.q.n) : null, h("span", { class: "grow" }), h("span", { class: "pct" }, t.c + "×"), h("small", { class: "sub" }, "salah")),
+          h("p", { class: "rc-q", dir: "rtl" }, (t.q.q || "") + (t.q.s ? "  " + t.q.s[0] + " … " + t.q.s[1] : "")),
+          h("div", { class: "rc-ans" }, h("span", null, "Kunci: ", h("b", { class: "ar" }, t.q.o[t.q.a])))))) : null,
+        h("div", { class: "row", style: { justifyContent: "center" } },
+          h("button", { class: "btn primary", type: "button", disabled: !list.length, onclick: () => downloadText("latihan-wahdah-" + S.wahdah + ".csv", csv()) }, "Unduh rekap (CSV)"),
+          h("button", { class: "btn ghost", type: "button", onclick: () => go("latihanShare") }, "Tautan & QR latihan"),
+          h("button", { class: "btn ghost" + (confirmDel ? " danger" : ""), type: "button", id: "del-lat", onclick: async () => {
+            if (!confirmDel) { confirmDel = true; draw(); setTimeout(() => { confirmDel = false; }, 6000); return; }
+            try { await net.remove("latihan/w" + S.wahdah); toast("Data latihan Wahdah " + S.wahdah + " dihapus"); } catch (e) { toast("Gagal menghapus"); } confirmDel = false; } }, confirmDel ? "Klik lagi untuk menghapus permanen" : "Hapus data latihan wahdah ini")),
+        h("p", { class: "sub", style: { textAlign: "center", lineHeight: 1.6 } }, "Data diperbarui otomatis. Nama ditulis sendiri oleh mahasiswa; mahasiswa yang belum pernah berlatih tidak muncul di daftar."));
+    }
+    (async () => {
+      try { net = await window.ArenaLive.initNet("firebase"); } catch (e) { return msg("Tidak bisa terhubung ke server. Periksa koneksi internet."); }
+      if (!net) return msg("Server kuis belum diatur.");
+      const reg = async (pin) => { try { await net.set("admins/" + net.uid, pin); return true; } catch (e) { return false; } };
+      let admin = await net.get("admins/" + net.uid).catch(() => null);
+      if (!admin && lastPin) admin = await reg(lastPin);
+      if (!admin) return msg("Laptop ini perlu didaftarkan sekali sebagai perangkat dosen. Masukkan PIN untuk mendaftarkannya.",
+        h("button", { class: "btn primary", type: "button", onclick: () => askPin(async (v) => { if (await reg(v)) go("pantau"); else toast("PIN tidak diterima server"); }) }, "Masukkan PIN"));
+      off = net.on("latihan/w" + S.wahdah, (v) => { data = v || {}; draw(); });
+    })();
   };
 
   // ---------- BANK SOAL ----------

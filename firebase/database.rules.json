@@ -19,6 +19,32 @@
           }
         }
       }
+    },
+    "admins": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid",
+        ".validate": "newData.val() === '__PIN__'"
+      }
+    },
+    "latihan": {
+      ".read": "auth != null && root.child('admins').child(auth.uid).exists()",
+      ".write": "auth != null && root.child('admins').child(auth.uid).exists()",
+      "$w": {
+        "$uid": {
+          ".read": "auth != null && auth.uid === $uid",
+          ".write": "auth != null && auth.uid === $uid",
+          "profile": {
+            ".validate": "newData.hasChildren(['name', 'updated']) && newData.child('name').isString() && newData.child('name').val().length >= 2 && newData.child('name').val().length <= 40 && (!newData.child('nim').exists() || (newData.child('nim').isString() && newData.child('nim').val().length <= 20))"
+          },
+          "sesi": {
+            "$sid": {
+              ".validate": "newData.hasChildren(['at', 'n', 'right']) && newData.child('n').isNumber() && newData.child('n').val() >= 1 && newData.child('n').val() <= 400 && newData.child('right').isNumber() && newData.child('right').val() >= 0 && newData.child('right').val() <= newData.child('n').val()"
+            }
+          },
+          "$other": { ".validate": false }
+        }
+      }
     }
   }
 }
