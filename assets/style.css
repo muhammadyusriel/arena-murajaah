@@ -705,3 +705,5 @@ a.brand.link:hover .seal { transform: rotate(45deg) scale(1.05); }
 /* HP: kolom tunggal tidak boleh melebar mengikuti isi (Papan Tantangan sempat 538px di layar 412px) */
 @media (max-width: 1000px) { .board-layout, .fahm-layout, .roda-layout, .lobby { grid-template-columns: minmax(0, 1fr); } }
 .mnav.mini .mnav-w { display: none; } .mnav.mini .mnav-btn { padding: 0 6px; width: 44px; justify-content: center; }
+.mnav-w .mw-s { display: none; } @media (max-width: 400px) { .mnav-w .mw-l { display: none; } .mnav-w .mw-s { display: inline; } }
+@media (max-width: 360px) { .topbar .brand h1 { font-size: 17px; } .topbar .brand .seal { width: 36px; height: 36px; } }

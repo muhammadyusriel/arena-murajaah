@@ -298,7 +298,7 @@
   const X_IC = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
   function mnav(home) {
     const box = h("div", { class: "mnav" + (home ? "" : " mini") });
-    const btn = h("button", { class: "mnav-btn", type: "button", "aria-haspopup": "dialog", "aria-expanded": "false", "aria-label": "Buka menu" }, h("span", { class: "mnav-w" }, "Wahdah " + S.wahdah), h("span", { class: "mnav-ic", html: MENU_IC }));
+    const btn = h("button", { class: "mnav-btn", type: "button", "aria-haspopup": "dialog", "aria-expanded": "false", "aria-label": "Buka menu" }, h("span", { class: "mnav-w" }, h("span", { class: "mw-l" }, "Wahdah "), h("span", { class: "mw-s" }, "W"), String(S.wahdah)), h("span", { class: "mnav-ic", html: MENU_IC }));
     const scrim = h("div", { class: "mnav-scrim" });
     const sheet = h("div", { class: "mnav-sheet", role: "dialog", "aria-label": "Menu" });
     const esc = (e) => { if (e.key === "Escape") { close(); btn.focus(); } };
