@@ -23,4 +23,4 @@ window.ARENA_FIREBASE = {
 
 /* PIN dosen untuk membuka Bank Soal (yang disimpan hanya sandi-acak PBKDF2, bukan PIN-nya).
    Untuk mengganti PIN, minta Asisten 3 membuat nilai baru. Hapus baris ini bila tidak ingin memakai PIN. */
-window.ARENA_PIN = {"salt":"2dddf2117249df8687359751","hash":"ae0e98c0e076f01de17f3150155c46e9c65f25179934c48559953167f3985232","iter":150000};
+window.ARENA_PIN = {"salt":"67b2e4491de14cfa0893a8df","hash":"226566b3cdd783d6c01385c1c9cac4bd4e0e0ed678d914ffe838895687120fca","iter":150000};
