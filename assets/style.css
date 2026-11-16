@@ -729,3 +729,10 @@ a.brand.link:hover .seal { transform: rotate(45deg) scale(1.05); }
   .mnav-sheet { position: absolute; top: calc(100% + 10px); left: 0; right: auto; width: 400px; max-height: min(78vh, 660px); transform-origin: top left; }
   .mnav-list { max-height: min(58vh, 520px); }
 }
+/* v1.8.4: jarak di HP lebih rapat & seimbang; judul hero 2 baris tidak dempet; kredit tidak dempet */
+@media (max-width: 640px) {
+  .topbar { gap: 8px; }
+  .topbar .brand { gap: 8px; }
+}
+@media (max-width: 1000px) { .hero .ar-title { line-height: 1.7; } }
+.credit .cr-by b { margin-inline-start: .3em; }
