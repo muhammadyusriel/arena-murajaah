@@ -159,7 +159,9 @@
           h("div", { class: "row" }, h("button", { class: "btn primary", type: "button", onclick: () => ask(0) }, "Mulai kuis →"), h("span", { class: "sub" }, TM ? "Klik nama untuk memindah ke kelompok lain. Yang datang terlambat tetap bisa masuk." : "Mahasiswa yang datang terlambat tetap bisa masuk di tengah kuis.")))));
       if (window.QRCode) { try { new window.QRCode(qr, { text: url, width: 560, height: 560, colorDark: "#0A1B44", colorLight: "#ffffff", correctLevel: window.QRCode.CorrectLevel.M }); } catch (e) { /* */ } }
       else qr.append(h("p", { class: "sub" }, "(QR tidak tersedia, gunakan kode)"));
+      let seen = -1;
       watchPlayers(() => {
+        const nP = Object.keys(players).length; if (seen >= 0 && nP > seen) C.SFX.pop(); seen = nP;
         const arr = Object.entries(players).sort((a, b) => (a[1].joined || 0) - (b[1].joined || 0)); count.textContent = arr.length; list.innerHTML = "";
         if (!TM) { arr.forEach(([, p]) => list.append(h("span", { class: "pchip" }, p.name))); return; }
         list.className = "teamcols";
@@ -180,7 +182,7 @@
       await net.set(R("state"), { phase: "question", i, key: "q" + i, total: QS.length, q: { q: q.q, s: q.s, bare: q.bare, o: q.o, tf: q.tf, cat: q.cat }, limit, startedAt: net.TS });
       const st = await net.get(R("state")); const startedAt = st.startedAt;
       wrap.innerHTML = "";
-      timer = timerEl(limit, () => reveal());
+      timer = timerEl(limit, () => reveal(), { sound: true }); C.SFX.start();
       const cnt = h("span", { class: "pill" }, "0 menjawab");
       const opts = C.optButtons(q, null); opts.querySelectorAll(".opt").forEach((b) => (b.style.cursor = "default"));
       const extra = h("div", { style: { display: "flex", flexDirection: "column", gap: "14px" } });
@@ -194,7 +196,7 @@
       watchPlayers(() => updCount());
       offs.push(net.on(R("answers/q" + i), (v) => { curAns = v || {}; updCount(); }));
       async function reveal() {
-        if (revealed) return; revealed = true; timer.stop(); const sk = wrap.querySelector("#skip"); if (sk) sk.remove();
+        if (revealed) return; revealed = true; timer.stop(); C.SFX.reveal(); const sk = wrap.querySelector("#skip"); if (sk) sk.remove();
         const answers = (await net.get(R("answers/q" + i))) || {}; const scores = (await net.get(R("scores"))) || {};
         const dist = q.o.map(() => 0); const upd = {}; const lim = limit * 1000;
         Object.keys(players).forEach((uid) => {
@@ -227,7 +229,7 @@
       await net.update(R("state"), { phase: last ? "end" : "board" });
       persist();
       const ranked = Object.entries(scores).map(([uid, s]) => ({ uid, name: (ps[uid] || {}).name || "?", ...s })).sort((a, b) => b.score - a.score);
-      wrap.innerHTML = "";
+      wrap.innerHTML = ""; if (!last) C.SFX.whoosh();
       if (last) return finish(ranked);
       wrap.append(h("div", { class: "stage-inner", style: { margin: "0 auto" } },
         h("div", { class: "qhead" }, h("span", { class: "pill gold" }, "Setelah soal " + (i + 1) + " / " + QS.length), h("span", { class: "grow" })),
@@ -241,7 +243,7 @@
     }
 
     function finish(ranked) {
-      confetti(); const q3 = (s) => '"' + String(s).replace(/"/g, '""') + '"';
+      confetti(); C.SFX.fanfare(); const q3 = (s) => '"' + String(s).replace(/"/g, '""') + '"';
       const ts = TM ? teamStats(Object.fromEntries(ranked.map((r) => [r.uid, r]))) : null;
       const tName = (uid) => (TM && teamOf(uid) >= 0 ? TM.list[teamOf(uid)].name : "");
       const top = TM ? ts.slice(0, 3).map((t) => ({ name: t.name, score: t.avg, ar: true, color: t.color })) : ranked.slice(0, 3); const order = [top[1], top[0], top[2]];
@@ -368,7 +370,7 @@
       net.on(R("state"), (v) => { state = v; render(); });
       net.on("rooms/" + code + "/host", (v) => { if (!v) say(h("div", { class: "card-p" }, h("b", null, "Kuis sudah ditutup oleh dosen."), h("p", { class: "sub" }, "Terima kasih sudah ikut!"))); });
     }
-    let lastRender = "", tok = 0;
+    let lastRender = "", tok = 0, vibKey = null;
     async function render() {
       if (!state || !me) return; const my = ++tok;
       const tm = myTeam(); const tr = tm && tScores && tScores[me.team] ? tScores[me.team] : null;
@@ -398,6 +400,7 @@
       }
       if (state.phase === "reveal") {
         const last = myScore && myScore.last; const ok = last && last.ok;
+        if (vibKey !== state.i) { vibKey = state.i; try { if (navigator.vibrate && last) navigator.vibrate(ok ? 70 : [90, 60, 90]); } catch (e) { /* */ } }
         return say(scoreLine, h("div", { class: "result " + (ok ? "ok" : "no") }, ok ? "Benar! +" + last.pts : last && last.answered ? "Belum tepat" : "Tidak menjawab",
           h("small", null, "Jawaban: ", h("span", { class: "ar", style: { fontSize: "22px" } }, q.o ? q.o[state.a] : ""))), myScore && myScore.rank ? h("p", { class: "status" }, "Peringkatmu sekarang: #" + myScore.rank) : null, teamLine);
       }

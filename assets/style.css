@@ -569,3 +569,8 @@ a.brand.link:hover .seal { transform: rotate(45deg) scale(1.05); }
 .rc-ans b.ar { font-size: 20px; color: #7EE2B8; font-weight: 700; margin-inline-start: 4px; }
 .rc-ans b.ar.wr { color: #FF9C7A; }
 .tab.on:hover { background: var(--paper); filter: brightness(1.03); }
+
+/* Tombol suara */
+.snd { display: inline-flex; align-items: center; gap: 6px; }
+.snd.off { opacity: .7; }
+.snd.off svg { color: var(--coral, #E5683F); }

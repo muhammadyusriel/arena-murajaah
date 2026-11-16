@@ -70,6 +70,59 @@
     get(k, d) { try { const v = localStorage.getItem("arena:" + k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
     set(k, v) { try { localStorage.setItem("arena:" + k, JSON.stringify(v)); } catch (e) { /* abaikan */ } },
   };
+  // ---------- EFEK SUARA (dibangkitkan Web Audio, tanpa berkas audio) ----------
+  const SFX = (() => {
+    let ctx = null, master = null, on = store.get("sound", true);
+    const ac = () => {
+      if (!on) return null;
+      try { if (!ctx) { const A = window.AudioContext || window.webkitAudioContext; if (!A) return null; ctx = new A(); master = ctx.createGain(); master.gain.value = 0.55; master.connect(ctx.destination); } if (ctx.state === "suspended") ctx.resume(); } catch (e) { return null; }
+      return ctx;
+    };
+    document.addEventListener("pointerdown", () => { if (on && ctx && ctx.state === "suspended") ctx.resume(); }, true);
+    function tone(f, d, { type = "sine", g = 0.3, at = 0, to = null, a = 0.008 } = {}) {
+      const c = ac(); if (!c) return; const t = c.currentTime + at; const o = c.createOscillator(), v = c.createGain();
+      o.type = type; o.frequency.setValueAtTime(f, t); if (to) o.frequency.exponentialRampToValueAtTime(to, t + d);
+      v.gain.setValueAtTime(0.0001, t); v.gain.exponentialRampToValueAtTime(g, t + a); v.gain.exponentialRampToValueAtTime(0.0001, t + d);
+      o.connect(v); v.connect(master); o.start(t); o.stop(t + d + 0.05);
+    }
+    function noise(d, { g = 0.2, at = 0, f0 = 800, f1 = 3000, q = 1 } = {}) {
+      const c = ac(); if (!c) return; const t = c.currentTime + at; const n = Math.floor(c.sampleRate * d); const buf = c.createBuffer(1, n, c.sampleRate); const ch = buf.getChannelData(0);
+      for (let k = 0; k < n; k++) ch[k] = Math.random() * 2 - 1;
+      const src = c.createBufferSource(); src.buffer = buf; const bp = c.createBiquadFilter(); bp.type = "bandpass"; bp.Q.value = q; bp.frequency.setValueAtTime(f0, t); bp.frequency.exponentialRampToValueAtTime(f1, t + d);
+      const v = c.createGain(); v.gain.setValueAtTime(0.0001, t); v.gain.exponentialRampToValueAtTime(g, t + d * 0.3); v.gain.exponentialRampToValueAtTime(0.0001, t + d);
+      src.connect(bp); bp.connect(v); v.connect(master); src.start(t); src.stop(t + d + 0.05);
+    }
+    const notes = (seq, opt) => seq.forEach(([f, at, d]) => tone(f, d || 0.18, { ...opt, at }));
+    return {
+      get on() { return on; },
+      set(v) { on = !!v; store.set("sound", on); if (!on && ctx) { try { ctx.suspend(); } catch (e) { /* */ } } else ac(); },
+      tick(urgent) { tone(urgent ? 1560 : 1180, 0.05, { type: "square", g: urgent ? 0.12 : 0.07 }); },
+      timeup() { tone(330, 0.5, { type: "sawtooth", g: 0.12, to: 165 }); tone(247, 0.5, { type: "square", g: 0.06, to: 123 }); },
+      start() { notes([[523, 0], [659, 0.09], [784, 0.18], [1047, 0.27, 0.32]], { type: "triangle", g: 0.2 }); },
+      right() { notes([[659, 0, 0.14], [988, 0.11, 0.38]], { type: "sine", g: 0.32 }); tone(1976, 0.3, { g: 0.05, at: 0.11 }); },
+      wrong() { tone(196, 0.32, { type: "sawtooth", g: 0.12, to: 130 }); tone(185, 0.32, { type: "square", g: 0.05, to: 123, at: 0.02 }); },
+      reveal() { tone(392, 1.1, { g: 0.22, a: 0.01 }); tone(784, 0.8, { g: 0.08 }); tone(1176, 0.5, { g: 0.04 }); noise(0.25, { g: 0.05, f0: 3000, f1: 6000 }); },
+      whoosh() { noise(0.45, { g: 0.22, f0: 300, f1: 2600, q: 0.8 }); },
+      pop() { tone(880, 0.09, { type: "sine", g: 0.16, to: 1320 }); },
+      flip() { noise(0.07, { g: 0.12, f0: 1800, f1: 2600, q: 2 }); },
+      match() { notes([[784, 0, 0.12], [1175, 0.08, 0.3]], { type: "triangle", g: 0.2 }); },
+      spin() { tone(1400, 0.025, { type: "square", g: 0.05 }); },
+      award() { notes([[523, 0, 0.1], [784, 0.07, 0.1], [1047, 0.14, 0.36]], { type: "triangle", g: 0.22 }); },
+      fanfare() {
+        notes([[523, 0, 0.16], [523, 0.17, 0.12], [523, 0.3, 0.12], [659, 0.43, 0.3], [523, 0.75, 0.16], [659, 0.92, 0.16], [784, 1.09, 0.9]], { type: "triangle", g: 0.24 });
+        [392, 494, 587].forEach((f) => tone(f, 1.2, { g: 0.07, at: 1.09, a: 0.05 })); [262, 330].forEach((f) => tone(f / 2, 1.4, { type: "sine", g: 0.1, at: 1.09, a: 0.05 }));
+      },
+    };
+  })();
+  const SPK_ON = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+  const SPK_OFF = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16.5 9.5l5 5m0-5l-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+  function soundBtn() {
+    const b = h("button", { class: "btn small ghost snd", type: "button" });
+    const paint = () => { b.innerHTML = (SFX.on ? SPK_ON : SPK_OFF) + "<span>" + (SFX.on ? "Suara" : "Senyap") + "</span>"; b.setAttribute("aria-pressed", String(SFX.on)); b.title = SFX.on ? "Matikan efek suara" : "Nyalakan efek suara"; b.classList.toggle("off", !SFX.on); };
+    b.addEventListener("click", () => { SFX.set(!SFX.on); document.querySelectorAll(".snd").forEach((x) => x.dispatchEvent(new Event("repaint"))); if (SFX.on) SFX.pop(); });
+    b.addEventListener("repaint", paint); paint(); return b;
+  }
+
   function toast(msg) { const t = h("div", { class: "toast", role: "status" }, msg); document.body.append(t); setTimeout(() => t.remove(), 2200); }
   async function copyText(text) {
     try { await navigator.clipboard.writeText(text); toast("Tersalin ke clipboard"); }
@@ -127,7 +180,7 @@
     const order = shuffle(q.o.map((_, i) => i));
     return { ...base, o: order.map((i) => q.o[i]), a: order.indexOf(q.a) };
   }
-  window.ArenaCore = { h, shuffle, sample, rnd, arNum, store, toast, copyText, downloadText, SHAPES, CATS, catOf, prepare, D, S, TEAM_NAMES, TEAM_COLORS, saveTeams, nashTitle, getScope, inScope, scopeName, scopePicker, renderQ: null, timerEl: null, go: null, SEAL, I };
+  window.ArenaCore = { h, shuffle, sample, rnd, arNum, store, toast, copyText, downloadText, SHAPES, CATS, catOf, prepare, D, S, TEAM_NAMES, TEAM_COLORS, saveTeams, nashTitle, getScope, inScope, scopeName, scopePicker, SFX, soundBtn, renderQ: null, timerEl: null, go: null, SEAL, I };
 
   // ---------- render pertanyaan ----------
   function renderQ(q, { compact = false } = {}) {
@@ -163,14 +216,17 @@
   ArenaCore.renderQ = renderQ; ArenaCore.optButtons = optButtons; ArenaCore.revealOpts = revealOpts; ArenaCore.noteFor = noteFor;
 
   // ---------- timer ----------
-  function timerEl(seconds, onEnd) {
+  function timerEl(seconds, onEnd, { sound = false } = {}) {
     const R = 28, C = 2 * Math.PI * R;
     const el = h("div", { class: "timer", "aria-label": "Waktu" , html: `<svg viewBox="0 0 64 64"><circle class="bg" cx="32" cy="32" r="${R}" stroke-width="6" fill="none"/><circle class="fg" cx="32" cy="32" r="${R}" stroke-width="6" fill="none" stroke-dasharray="${C}" stroke-dashoffset="0"/></svg><b>${seconds}</b>` });
     let left = seconds, end = 0, iv = null, total = seconds;
     const fg = el.querySelector(".fg"), lab = el.querySelector("b");
     const draw = () => { lab.textContent = Math.ceil(left); fg.style.strokeDashoffset = String(C * (1 - left / total)); el.classList.toggle("low", left <= 5); };
-    const tick = () => { left = Math.max(0, (end - Date.now()) / 1000); draw(); if (left <= 0) { stop(); onEnd && onEnd(); } };
-    function start(from) { if (from != null) { left = from; } end = Date.now() + left * 1000; clearInterval(iv); iv = setInterval(tick, 200); tick(); }
+    let lastSec = null;
+    const tick = () => { left = Math.max(0, (end - Date.now()) / 1000); draw();
+      if (sound) { const sc = Math.ceil(left); if (sc !== lastSec) { if (lastSec != null && sc <= 5 && sc > 0) SFX.tick(sc <= 3); lastSec = sc; } }
+      if (left <= 0) { stop(); if (sound) SFX.timeup(); onEnd && onEnd(); } };
+    function start(from) { lastSec = null; if (from != null) { left = from; } end = Date.now() + left * 1000; clearInterval(iv); iv = setInterval(tick, 200); tick(); }
     function stop() { clearInterval(iv); iv = null; }
     function running() { return !!iv; }
     function syncTo(endAt, tot) { total = tot; end = endAt; clearInterval(iv); iv = setInterval(tick, 200); tick(); }
@@ -195,7 +251,7 @@
     return h("header", { class: "topbar" },
       h("button", { class: "btn ghost back", type: "button", onclick: () => go("home") }, "← Beranda"),
       h("a", { class: "brand link", href: "#", title: "Kembali ke beranda", onclick: (e) => { e.preventDefault(); go("home"); } }, h("span", { class: "seal-sm", html: SEAL }), h("div", null, h("h1", { class: "ui-ar", dir: "rtl" }, title), h("small", null, "Arena Muraja'ah" + (sub ? " · " + sub : "")))),
-      h("div", { class: "spacer" }),
+      h("div", { class: "spacer" }), soundBtn(),
       h("span", { class: "chip" }, h("span", { class: "ar", style: { fontSize: "17px" } }, D().label), " · ", h("span", { class: "ar", style: { fontSize: "17px" } }, D().title)));
   }
   let cleanup = [];
@@ -222,7 +278,7 @@
     root.append(h("div", { class: "wrap" },
       h("header", { class: "topbar" },
         h("a", { class: "brand link", href: "#", title: "Beranda", onclick: (e) => { e.preventDefault(); go("home"); }, html: SEAL + '<div><h1 class="ui-ar">Arena Muraja\'ah</h1><small>Qiraah · Al-\'Arabiyyah Bayna Yadaik 2</small></div>' }),
-        h("div", { class: "spacer" }), h("div", { class: "row materi" }, h("span", { class: "sub" }, "Materi"), sel)),
+        h("div", { class: "spacer" }), soundBtn(), h("div", { class: "row materi" }, h("span", { class: "sub" }, "Materi"), sel)),
       h("section", { class: "hero" },
         h("h2", { class: "ar-title", dir: "rtl" }, "سَاحَةُ ", h("em", null, "الْمُرَاجَعَةِ"), " — ", h("span", { class: "wt" }, d.title)),
         h("p", null, "Pilih model kuis. Mode proyektor cukup dengan satu layar; mode kuis langsung membuat setiap mahasiswa menjawab dari HP masing-masing."),
@@ -302,13 +358,13 @@
       const pts = POINTS[r]; const cell = board.cells[ci][r];
       const cc = catOf(cell.c) || cats[ci]; const q = prepare(cell.q, cc.id);
       let picked = null, revealed = false;
-      const timer = timerEl(30, () => {});
+      const timer = timerEl(30, () => {}, { sound: true });
       const opts = optButtons(q, (i, b) => { if (revealed) return; picked = i; opts.querySelectorAll(".opt").forEach((x) => x.classList.toggle("picked", x === b)); });
       const extra = h("div", { style: { display: "flex", flexDirection: "column", gap: "12px" } });
-      const close = (who) => { timer.stop(); cell.done = who; if (who >= 0) { S.teams[who].score += pts; saveTeams(); } save(); stage.remove(); document.removeEventListener("keydown", onKey); drawBoard(); if (board.cells.every((col) => col.every((x) => x.done != null))) { confetti(); toast("Papan selesai!"); } };
+      const close = (who) => { timer.stop(); cell.done = who; if (who >= 0) { S.teams[who].score += pts; saveTeams(); SFX.award(); } else SFX.wrong(); save(); stage.remove(); document.removeEventListener("keydown", onKey); drawBoard(); if (board.cells.every((col) => col.every((x) => x.done != null))) { confetti(); SFX.fanfare(); toast("Papan selesai!"); } };
       const revealBtn = h("button", { class: "btn primary", type: "button", onclick: reveal }, "Tampilkan jawaban (spasi)");
       function reveal() {
-        if (revealed) return; revealed = true; timer.stop(); revealOpts(opts, q.a, picked); revealBtn.remove();
+        if (revealed) return; revealed = true; timer.stop(); revealOpts(opts, q.a, picked); revealBtn.remove(); if (picked == null) SFX.reveal(); else if (picked === q.a) SFX.right(); else SFX.wrong();
         extra.append(...noteFor(q), h("div", { class: "award" },
           S.teams.map((t, i) => h("button", { class: "btn", type: "button", style: { "--tc": t.color }, onclick: () => close(i) }, "+" + pts + " ", h("span", { class: "ar" }, t.name))),
           h("button", { class: "btn ghost", type: "button", onclick: () => close(-1) }, "Tidak ada yang benar")));
@@ -322,7 +378,7 @@
             h("button", { class: "btn small", type: "button", onclick: () => (timer.running() ? timer.stop() : timer.start()) }, "Jeda/lanjut"),
             h("button", { class: "btn small ghost", type: "button", onclick: () => { timer.stop(); stage.remove(); document.removeEventListener("keydown", onKey); } }, "Tutup (Esc)")),
           ...renderQ(q), opts, h("div", { class: "row", style: { justifyContent: "center" } }, revealBtn), extra));
-      document.body.append(stage); timer.start();
+      document.body.append(stage); SFX.start(); timer.start();
     }
     const regen = (sc) => { board = fresh(sc); cats = board.cats.map(catOf); save(); drawBoard(); };
     root.append(h("div", { class: "wrap" }, topbar("لَوْحَةُ التَّحَدِّي", "Papan Tantangan Tim"),
@@ -356,7 +412,7 @@
     function drawQ() {
       drawText(null); card.innerHTML = ""; const q = qs[idx]; if (!q) { card.append(h("p", { class: "empty" }, "Belum ada soal untuk nash ini.")); return; }
       let revealed = false;
-      const opts = optButtons(q, (i) => { if (revealed) return; revealed = true; revealOpts(opts, q.a, i); drawText(q.ev); after.append(...noteFor(q).filter((x) => !x.classList.contains("sub"))); });
+      const opts = optButtons(q, (i) => { if (revealed) return; revealed = true; revealOpts(opts, q.a, i); i === q.a ? SFX.right() : SFX.wrong(); drawText(q.ev); after.append(...noteFor(q).filter((x) => !x.classList.contains("sub"))); });
       const after = h("div", { style: { display: "flex", flexDirection: "column", gap: "10px" } });
       card.append(h("div", { class: "row" }, h("span", { class: "pill" }, (q.tf ? "صَوَابٌ أَمْ خَطَأٌ" : "اخْتَرِ الْجَوَابَ") ), h("span", { class: "grow" }), h("span", { class: "sub" }, "Soal " + (idx + 1) + " / " + qs.length)),
         h("p", { class: "qtext", dir: "rtl" }, q.q), opts, after,
@@ -391,7 +447,7 @@
         if (!ans.length) ansEl.append(h("span", { class: "sub" }, "Ketuk kata di bawah sesuai urutan"));
         pool.forEach((p, k) => poolEl.append(h("button", { class: "wchip", type: "button", onclick: () => { pool.splice(k, 1); ans.push(p); draw(); } }, p.w)));
       };
-      const check = () => { const ok = ans.length === words.length && ans.map((p) => p.w).join(" ") === words.join(" "); ansEl.classList.add(ok ? "ok" : "no"); verdict.className = "verdict " + (ok ? "ok" : "no"); verdict.textContent = ok ? "صَحِيحٌ! Benar" : ans.length < words.length ? "Belum lengkap" : "Belum tepat, coba lagi"; if (ok) confetti(); };
+      const check = () => { const ok = ans.length === words.length && ans.map((p) => p.w).join(" ") === words.join(" "); ansEl.classList.add(ok ? "ok" : "no"); verdict.className = "verdict " + (ok ? "ok" : "no"); verdict.textContent = ok ? "صَحِيحٌ! Benar" : ans.length < words.length ? "Belum lengkap" : "Belum tepat, coba lagi"; if (ok) { confetti(); SFX.right(); } else SFX.wrong(); };
       body.append(h("div", { class: "row" }, h("span", { class: "pill ar", style: { fontSize: "18px" } }, nashTitle(it.n)), h("span", { class: "grow" }), h("span", { class: "sub" }, words.length + " kata")),
         h("p", { class: "qtext", dir: "rtl", style: { fontSize: "30px" } }, "رَتِّبِ الْكَلِمَاتِ الْآتِيَةَ لِتَكُونَ جُمْلَةً مُفِيدَةً كَمَا فِي النَّصِّ:"),
         ansEl, poolEl, verdict,
@@ -404,7 +460,7 @@
     function shakl() {
       const raw = pickFrom(D().bank.tasykil, "shakl"); if (!raw) return body.append(h("p", { class: "empty" }, "Tidak ada soal."));
       const q = prepare(raw, "tasykil"); let done = false;
-      const opts = optButtons(q, (i) => { if (done) return; done = true; revealOpts(opts, q.a, i); verdict.className = "verdict " + (i === q.a ? "ok" : "no"); verdict.textContent = i === q.a ? "صَحِيحٌ! Benar" : "Kurang tepat"; });
+      const opts = optButtons(q, (i) => { if (done) return; done = true; revealOpts(opts, q.a, i); i === q.a ? SFX.right() : SFX.wrong(); verdict.className = "verdict " + (i === q.a ? "ok" : "no"); verdict.textContent = i === q.a ? "صَحِيحٌ! Benar" : "Kurang tepat"; });
       const verdict = h("div", { class: "verdict" });
       body.append(h("div", { class: "row" }, h("span", { class: "pill ar", style: { fontSize: "18px" } }, nashTitle(q.n))), ...renderQ(q), opts, verdict,
         h("div", { class: "row", style: { justifyContent: "center" } }, h("button", { class: "btn ghost", type: "button", onclick: () => { if (!done) { done = true; revealOpts(opts, q.a, null); } } }, "Tampilkan jawaban"), h("button", { class: "btn primary", type: "button", onclick: next }, "Soal lain →")),
@@ -451,11 +507,13 @@
       const L = list(); if (spinning || !L.length) { if (!L.length) toast("Semua nama sudah terpilih. Klik 'Kembalikan semua'."); return; }
       spinning = true; const start = rot, extra = 8 * Math.PI + Math.random() * 2 * Math.PI, dur = 4200, t0 = performance.now();
       const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let lastSeg = null; const segW = (2 * Math.PI) / L.length;
       (function frame(now) {
         const k = reduce ? 1 : Math.min(1, (now - t0) / dur); const e = 1 - Math.pow(1 - k, 3); rot = start + extra * e; drawWheel();
+        const sg = Math.floor(((-rot) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI) / segW); if (sg !== lastSeg) { if (lastSeg != null && k < 1) SFX.spin(); lastSeg = sg; }
         if (k < 1) return requestAnimationFrame(frame);
         spinning = false; const seg = (2 * Math.PI) / L.length; const a = ((-rot) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI); const who = L[Math.floor(a / seg) % L.length];
-        pickedEl.textContent = who; pickedName = who; scores.fill(0); drawRubric(); newPassage(); if (removePicked) used.push(who);
+        SFX.award(); pickedEl.textContent = who; pickedName = who; scores.fill(0); drawRubric(); newPassage(); if (removePicked) used.push(who);
       })(t0);
     }
     const nSel = dropdown([{ value: 0, label: "Bacaan dari semua nash" }].concat(D().nusus.map((u) => ({ value: u.n, label: "Nash " + u.n }))), 0, () => newPassage(), "Nash bacaan");
@@ -510,13 +568,13 @@
     function drawTeams() { tp.el.style.display = useTeams ? "" : "none"; const n = tp.el; const fresh = teamPanel({ editable: false, turn }); n.replaceWith(fresh.el); tp.el = fresh.el; tp.el.style.display = useTeams ? "" : "none"; }
     function flip(el, c) {
       if (lock || el.classList.contains("flip") || el.classList.contains("done")) return;
-      el.classList.add("flip"); open.push({ el, c });
+      el.classList.add("flip"); SFX.flip(); open.push({ el, c });
       if (open.length === 2) {
         moves++; lock = true; const [a, b] = open;
         if (a.c.id === b.c.id) {
-          setTimeout(() => { const col = useTeams ? S.teams[turn].color : null; [a, b].forEach((x) => { x.el.classList.add("done"); if (col) x.el.style.setProperty("--tc", col); }); if (useTeams) { S.teams[turn].score += 100; saveTeams(); } found++; open = []; lock = false; drawInfo(); drawTeams(); if (found === total) { confetti(); toast("Semua pasangan ditemukan!"); } }, 450);
+          setTimeout(() => { SFX.match(); const col = useTeams ? S.teams[turn].color : null; [a, b].forEach((x) => { x.el.classList.add("done"); if (col) x.el.style.setProperty("--tc", col); }); if (useTeams) { S.teams[turn].score += 100; saveTeams(); } found++; open = []; lock = false; drawInfo(); drawTeams(); if (found === total) { confetti(); SFX.fanfare(); toast("Semua pasangan ditemukan!"); } }, 450);
         } else {
-          setTimeout(() => { a.el.classList.remove("flip"); b.el.classList.remove("flip"); open = []; lock = false; if (useTeams) turn = (turn + 1) % S.teams.length; drawInfo(); drawTeams(); }, 1100);
+          SFX.wrong(); setTimeout(() => { a.el.classList.remove("flip"); b.el.classList.remove("flip"); open = []; lock = false; if (useTeams) turn = (turn + 1) % S.teams.length; drawInfo(); drawTeams(); }, 1100);
         }
       }
     }
