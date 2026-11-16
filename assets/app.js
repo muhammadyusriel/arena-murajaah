@@ -288,10 +288,40 @@
   // ---------- kerangka layar ----------
   function topbar(title, sub) {
     return h("header", { class: "topbar" },
-      h("button", { class: "btn ghost back", type: "button", onclick: () => go("home") }, "← Beranda"),
+      h("button", { class: "btn ghost back", type: "button", "aria-label": "Kembali ke beranda", onclick: () => go("home") }, h("span", { class: "bk-a" }, "←"), h("span", { class: "bk-t" }, "Beranda")),
       h("a", { class: "brand link", href: "#", title: "Kembali ke beranda", onclick: (e) => { e.preventDefault(); go("home"); } }, h("span", { class: "seal-sm", html: SEAL }), h("div", null, h("h1", { class: "ui-ar", dir: "rtl" }, title), h("small", null, "Arena Muraja'ah" + (sub ? " · " + sub : "")))),
       h("div", { class: "spacer" }), soundBtn(),
-      h("span", { class: "chip" }, h("span", { class: "ar", style: { fontSize: "17px" } }, D().label), " · ", h("span", { class: "ar", style: { fontSize: "17px" } }, D().title)));
+      h("span", { class: "chip" }, h("span", { class: "ar", style: { fontSize: "17px" } }, D().label), " · ", h("span", { class: "ar", style: { fontSize: "17px" } }, D().title)), mnav(false));
+  }
+  // ---------- MENU HP (layar ≤ 640px): wahdah + suara dalam satu tombol ----------
+  const MENU_IC = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
+  const X_IC = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
+  function mnav(home) {
+    const box = h("div", { class: "mnav" + (home ? "" : " mini") });
+    const btn = h("button", { class: "mnav-btn", type: "button", "aria-haspopup": "dialog", "aria-expanded": "false", "aria-label": "Buka menu" }, h("span", { class: "mnav-w" }, "Wahdah " + S.wahdah), h("span", { class: "mnav-ic", html: MENU_IC }));
+    const scrim = h("div", { class: "mnav-scrim" });
+    const sheet = h("div", { class: "mnav-sheet", role: "dialog", "aria-label": "Menu" });
+    const esc = (e) => { if (e.key === "Escape") { close(); btn.focus(); } };
+    function close() { box.classList.remove("open"); btn.setAttribute("aria-expanded", "false"); document.removeEventListener("keydown", esc); }
+    function open() {
+      sheet.innerHTML = "";
+      sheet.append(h("div", { class: "mnav-head" }, h("span", null, home ? "Pilih materi" : "Materi yang dibuka"), h("button", { class: "mnav-x", type: "button", "aria-label": "Tutup menu", onclick: close, html: X_IC })));
+      if (home) {
+        const list = h("div", { class: "mnav-list", role: "listbox", "aria-label": "Pilih wahdah" });
+        WAHDAH_LIST().forEach((w) => list.append(h("button", { class: "mnav-item" + (w === S.wahdah ? " on" : ""), type: "button", role: "option", "aria-selected": String(w === S.wahdah),
+          onclick: () => { close(); if (w !== S.wahdah) { S.wahdah = w; store.set("wahdah", w); go("home"); } } }, h("b", null, "Wahdah " + w), h("span", { class: "ar" }, window.ARENA_DATA[w].title))));
+        sheet.append(list);
+      } else {
+        sheet.append(h("div", { class: "mnav-item on" }, h("b", null, "Wahdah " + S.wahdah), h("span", { class: "ar" }, D().title)),
+          h("button", { class: "mnav-row", type: "button", onclick: () => { close(); go("home"); } }, "← Kembali ke Beranda (ganti materi)"));
+      }
+      sheet.append(h("div", { class: "mnav-foot" }, h("span", null, "Efek suara"), soundBtn()));
+      box.classList.add("open"); btn.setAttribute("aria-expanded", "true"); document.addEventListener("keydown", esc);
+      const on = sheet.querySelector(".mnav-list .on"); if (on) on.scrollIntoView({ block: "nearest" });
+    }
+    btn.addEventListener("click", () => (box.classList.contains("open") ? close() : open()));
+    scrim.addEventListener("click", close);
+    box.append(btn, scrim, sheet); return box;
   }
   let cleanup = [];
   function go(screen, arg) {
@@ -317,8 +347,8 @@
       h("span", { class: "ic", html: icon }), h("span", { class: "ar", dir: "rtl" }, ar), h("span", { class: "t" }, t), h("span", { class: "d" }, d2));
     root.append(h("div", { class: "wrap" },
       h("header", { class: "topbar" },
-        h("a", { class: "brand link", href: "#", title: "Beranda", onclick: (e) => { e.preventDefault(); go("home"); }, html: SEAL + '<div><h1 class="ui-ar">Arena Muraja\'ah</h1><small>Qiraah · Al-\'Arabiyyah Bayna Yadaik 2</small></div>' }),
-        h("div", { class: "spacer" }), soundBtn(), h("div", { class: "row materi" }, h("span", { class: "sub" }, "Materi"), sel)),
+        h("a", { class: "brand link", href: "#", title: "Beranda", onclick: (e) => { e.preventDefault(); go("home"); }, html: SEAL + '<div><h1 class="ui-ar">Arena Muraja\'ah</h1><small>Qiraah · <span class="sub-l">Al-\'Arabiyyah Bayna Yadaik 2</span><span class="sub-s">ABY Jilid 2</span></small></div>' }),
+        h("div", { class: "spacer" }), soundBtn(), h("div", { class: "row materi" }, h("span", { class: "sub" }, "Materi"), sel), mnav(true)),
       h("section", { class: "hero" },
         h("h2", { class: "ar-title", dir: "rtl" }, "سَاحَةُ ", h("em", null, "الْمُرَاجَعَةِ"), " — ", h("span", { class: "wt" }, d.title)),
         h("div", { class: "intro" }, h("span", { class: "kick" }, "Muraja'ah Wahdah " + S.wahdah),
