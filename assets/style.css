@@ -707,13 +707,13 @@ a.brand.link:hover .seal { transform: rotate(45deg) scale(1.05); }
 .mnav.mini .mnav-w { display: none; } .mnav.mini .mnav-btn { padding: 0 6px; width: 44px; justify-content: center; }
 .mnav-w .mw-s { display: none; } @media (max-width: 400px) { .mnav-w .mw-l { display: none; } .mnav-w .mw-s { display: inline; } }
 @media (max-width: 360px) { .topbar .brand h1 { font-size: 17px; } .topbar .brand .seal { width: 36px; height: 36px; } }
-/* ---------- v1.8.2: menu di semua layar (PC juga); menu di kiri, judul aplikasi di kanan ---------- */
+/* ---------- v1.8.3: menu di semua layar (PC juga); paling kiri menu, lalu judul aplikasi ---------- */
 .topbar { flex-wrap: nowrap; gap: 12px; }
 .topbar > .snd, .topbar > .materi, .topbar > .chip, .topbar > .spacer { display: none; }
 .topbar > .mnav { display: block; flex: none; order: -2; margin: 0; }
 .topbar > .back { order: -1; flex: none; }
-.topbar > .brand { order: 2; margin-inline-start: auto; flex: 0 1 auto; min-width: 0; flex-direction: row-reverse; text-align: right; }
-.topbar > a.brand.link { padding: 4px 4px 4px 8px; margin: -4px -4px -4px auto; }
+.topbar > .brand { order: 2; margin-inline-start: 0; flex: 0 1 auto; min-width: 0; }
+.topbar > a.brand.link { padding: 4px 8px 4px 4px; margin: -4px 0 -4px -4px; }
 .topbar .brand > div { min-width: 0; }
 .topbar .brand h1, .topbar .brand small { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .mnav-btn { padding: 0 12px 0 6px; }
