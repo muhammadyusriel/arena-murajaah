@@ -104,11 +104,11 @@
       return out.map((q) => ({ q: q.q, s: q.s || null, bare: q.bare || null, o: q.o, a: q.a, tf: !!q.tf, cat: q.cat, n: q.n || 0, x: q.x || null, fix: q.fix || null }));
     }
 
-    let net, code, QS, i = -1, players = {}, unsubAns = null;
+    let net, code, QS, i = -1, players = {}, unsubAns = null, ST = [];
     async function start(mode) {
       try { net = await initNet(mode); } catch (e) { toast("Tidak bisa terhubung ke server: " + e.message); return; }
       if (!net) return toast("Server belum diatur");
-      QS = buildQuestions(); if (!QS.length) return toast("Pilih minimal satu jenis soal");
+      QS = buildQuestions(); ST = []; if (!QS.length) return toast("Pilih minimal satu jenis soal");
       for (let t = 0; t < 8; t++) { code = String(1000 + rnd(9000)); const ex = await net.get("rooms/" + code + "/host"); if (!ex) break; }
       TM = settings.teams ? { list: S.teams.slice(0, settings.teams).map((t, k) => ({ name: (t.name || "").trim() || C.TEAM_NAMES[k], color: t.color })), assign: settings.assign } : null;
       await net.set("rooms/" + code, { host: net.uid, created: net.TS, wahdah: S.wahdah, title: D().title, state: { phase: "lobby" }, teams: TM });
@@ -116,11 +116,11 @@
     }
     async function resume() {
       try { net = await initNet(saved.mode); } catch (e) { return toast("Tidak bisa terhubung"); }
-      code = saved.code; QS = saved.QS; i = saved.i; const h0 = await net.get("rooms/" + code + "/host"); TM = await net.get("rooms/" + code + "/teams");
+      code = saved.code; QS = saved.QS; i = saved.i; ST = saved.ST || []; const h0 = await net.get("rooms/" + code + "/host"); TM = await net.get("rooms/" + code + "/teams");
       if (h0 !== net.uid) { store.set("live-session", null); toast("Ruang lama tidak bisa dilanjutkan"); return setup(); }
       if (i < 0) lobby(); else showBoard();
     }
-    const persist = () => store.set("live-session", { code, QS, i, at: Date.now(), mode: net.kind });
+    const persist = () => store.set("live-session", { code, QS, i, ST, at: Date.now(), mode: net.kind });
     const R = (p) => "rooms/" + code + (p ? "/" + p : "");
     const pending = {};
     function autoAssign() {
@@ -210,6 +210,7 @@
         if (Object.keys(upd).length) await net.set(R("scores"), upd);
         if (TM) { const ts = teamStats(upd); const byK = {}; ts.forEach((t) => (byK[t.k] = { avg: t.avg, n: t.n, rank: t.rank })); await net.set(R("teamScores"), byK); }
         await net.update(R("state"), { phase: "reveal", a: q.a, dist });
+        ST[i] = { dist, right: dist[q.a] || 0, answered: dist.reduce((x, y) => x + y, 0), players: Object.keys(players).length }; persist();
         C.revealOpts(opts, q.a, null);
         const qh = wrap.querySelector(".qhead"); if (qh) qh.append(h("button", { class: "btn primary", type: "button", onclick: showBoard }, "Papan skor →"));
         const max = Math.max(1, ...dist);
@@ -247,16 +248,78 @@
       const csvRows = [(TM ? "Peringkat,Nama,Kelompok,Skor,Benar,Jumlah Soal" : "Peringkat,Nama,Skor,Benar,Jumlah Soal"), ...ranked.map((r, k) => [k + 1, q3(r.name), ...(TM ? [q3(tName(r.uid))] : []), r.score, r.right || 0, QS.length].join(","))];
       if (TM) csvRows.push("", "Peringkat Kelompok,Kelompok,Anggota,Skor Rata-rata,Total Skor", ...ts.map((t) => [t.rank, q3(t.name), t.n, t.avg, t.total].join(",")));
       const csv = csvRows.join("\n");
+      const rec = recapRows(); const recCsv = recapCsv(rec);
+      const pane1 = h("div", { style: { display: "flex", flexDirection: "column", gap: "18px" } }); const pane2 = recapPane(rec);
+      const tabs = h("div", { class: "tabs", style: { justifyContent: "center" } });
+      const showTab = (k) => { pane1.style.display = k ? "none" : ""; pane2.style.display = k ? "" : "none"; tabs.innerHTML = ""; [["Peringkat", 0], ["Rekap soal tersulit", 1]].forEach(([t, v]) => tabs.append(h("button", { class: "tab" + (k === v ? " on" : ""), type: "button", id: "tab-" + v, onclick: () => showTab(v) }, t))); };
       wrap.append(h("div", { class: "stage-inner", style: { margin: "0 auto" } },
-        h("h2", { class: "h-ar", style: { textAlign: "center", fontSize: "40px" } }, "مَبْرُوكٌ لِلْفَائِزِينَ"),
+        h("h2", { class: "h-ar", style: { textAlign: "center", fontSize: "40px" } }, "مَبْرُوكٌ لِلْفَائِزِينَ"), tabs, pane1, pane2,
+        h("div", { class: "row", style: { justifyContent: "center" } },
+          h("button", { class: "btn primary", type: "button", onclick: () => downloadText("hasil-kuis-wahdah-" + S.wahdah + "-" + code + ".csv", csv) }, "Unduh hasil (CSV)"),
+          h("button", { class: "btn", type: "button", onclick: () => downloadText("rekap-soal-wahdah-" + S.wahdah + "-" + code + ".csv", recCsv) }, "Unduh rekap soal (CSV)"),
+          h("button", { class: "btn", type: "button", onclick: () => copyText(csv.replace(/,/g, "\t")) }, "Salin untuk Excel"),
+          h("button", { class: "btn ghost", type: "button", onclick: async () => { await net.remove(R()); store.set("live-session", null); toast("Ruang dihapus"); C.go("home"); } }, "Tutup & hapus ruang"))));
+      pane1.append(
         h("div", { class: "podium" }, order.map((r, k) => h("div", { class: "p" }, r ? h("span", { class: "nm" + (r.ar ? " ar" : "") }, r.name) : h("span", { class: "nm" }, "—"), h("span", { class: "sub" }, r ? r.score + (TM ? " rata-rata" : " poin") : ""), h("div", { class: "blk", style: r && r.color ? { boxShadow: "inset 0 6px 0 " + r.color } : null }, [2, 1, 3][k])))),
         TM ? h("div", { class: "lb" }, teamRows(ts, ts.length ? ts[0].avg : 0)) : null,
         TM ? h("h3", { style: { textAlign: "center", margin: "6px 0 0" } }, "Peringkat perorangan") : null,
-        h("div", { class: "lb" + (TM ? " small" : "") }, ranked.map((r, k) => h("div", { class: "r" }, h("span", { class: "rk" }, k + 1), h("span", { class: "nm" }, r.name, TM && tName(r.uid) ? h("small", { class: "ar tag", style: { "--tc": TM.list[teamOf(r.uid)].color } }, tName(r.uid)) : null), h("b", null, r.score + " · " + (r.right || 0) + "/" + QS.length + " benar")))),
-        h("div", { class: "row", style: { justifyContent: "center" } },
-          h("button", { class: "btn primary", type: "button", onclick: () => downloadText("hasil-kuis-wahdah-" + S.wahdah + "-" + code + ".csv", csv) }, "Unduh hasil (CSV)"),
-          h("button", { class: "btn", type: "button", onclick: () => copyText(csv.replace(/,/g, "\t")) }, "Salin untuk Excel"),
-          h("button", { class: "btn ghost", type: "button", onclick: async () => { await net.remove(R()); store.set("live-session", null); toast("Ruang dihapus"); C.go("home"); } }, "Tutup & hapus ruang"))));
+        h("div", { class: "lb" + (TM ? " small" : "") }, ranked.map((r, k) => h("div", { class: "r" }, h("span", { class: "rk" }, k + 1), h("span", { class: "nm" }, r.name, TM && tName(r.uid) ? h("small", { class: "ar tag", style: { "--tc": TM.list[teamOf(r.uid)].color } }, tName(r.uid)) : null), h("b", null, r.score + " · " + (r.right || 0) + "/" + QS.length + " benar")))));
+      showTab(0);
+    }
+
+    // ---------- REKAP SOAL TERSULIT ----------
+    const qPlain = (q) => (q.q || "") + (q.s ? "  " + q.s[0] + " … " + q.s[1] : "");
+    function recapRows() {
+      return QS.map((q, k) => ({ q, k, st: ST[k] })).filter((x) => x.st).map((x) => {
+        const st = x.st; const pct = st.players ? Math.round((100 * st.right) / st.players) : 0;
+        const w = st.dist.map((d, j) => [d, j]).filter(([, j]) => j !== x.q.a).sort((a, b) => b[0] - a[0])[0];
+        return { ...x, pct, wrong: w && w[0] > 0 ? x.q.o[w[1]] : null, wrongN: w ? w[0] : 0, none: Math.max(0, st.players - st.answered) };
+      }).sort((a, b) => a.pct - b.pct || a.k - b.k).map((x, r) => ({ ...x, rank: r + 1 }));
+    }
+    function recapCsv(rows) {
+      const q3 = (s) => '"' + String(s == null ? "" : s).replace(/"/g, '""') + '"';
+      return ["Urutan Tersulit,No Soal,Bagian,Jenis,Soal,Kunci,Benar,Menjawab,Peserta,% Benar,Jawaban Salah Terbanyak,Dipilih",
+        ...rows.map((x) => [x.rank, x.k + 1, x.q.n || "", q3(C.catOf(x.q.cat).id_), q3(qPlain(x.q)), q3(x.q.o[x.q.a]), x.st.right, x.st.answered, x.st.players, x.pct, q3(x.wrong || ""), x.wrongN].join(","))].join("\n");
+    }
+    const lvl = (p) => (p < 50 ? "hard" : p < 80 ? "mid" : "easy");
+    function recapCard(x) {
+      return h("button", { class: "rcard " + lvl(x.pct), type: "button", onclick: () => review(x), "aria-label": "Ulas soal " + (x.k + 1) },
+        h("div", { class: "rc-top" }, h("span", { class: "rk" }, "#" + x.rank), h("span", { class: "pill" }, "Soal " + (x.k + 1)), h("span", { class: "pill ar" }, C.catOf(x.q.cat).ar), x.q.n ? h("span", { class: "pill" }, "Bagian " + x.q.n) : null, h("span", { class: "grow" }),
+          h("span", { class: "pct" }, x.pct + "%"), h("small", { class: "sub" }, x.st.right + "/" + x.st.players + " benar")),
+        h("div", { class: "meter" }, h("i", { style: { width: Math.max(2, x.pct) + "%" } })),
+        h("p", { class: "rc-q", dir: "rtl" }, qPlain(x.q)),
+        h("div", { class: "rc-ans" }, h("span", null, "Kunci: ", h("b", { class: "ar" }, x.q.o[x.q.a])),
+          x.wrong ? h("span", null, "Salah terbanyak: ", h("b", { class: "ar wr" }, x.wrong), " (" + x.wrongN + " org)") : null,
+          x.none ? h("span", { class: "sub" }, x.none + " tidak menjawab") : null));
+    }
+    function recapPane(rows) {
+      const box = h("div", { class: "recap", style: { display: "none" } });
+      if (!rows.length) { box.append(h("p", { class: "empty" }, "Belum ada soal yang dibuka jawabannya.")); return box; }
+      const avg = Math.round(rows.reduce((a, x) => a + x.pct, 0) / rows.length); const hard = rows.filter((x) => x.pct < 50).length;
+      const list = h("div", { class: "rlist" }); let all = false;
+      const more = h("button", { class: "btn small", type: "button", onclick: () => { all = !all; draw(); } });
+      const draw = () => { list.innerHTML = ""; (all ? rows : rows.slice(0, 5)).forEach((x) => list.append(recapCard(x))); more.textContent = all ? "Tampilkan 5 tersulit saja" : "Tampilkan semua (" + rows.length + " soal)"; more.style.display = rows.length > 5 ? "" : "none"; };
+      box.append(h("div", { class: "rsum" },
+          h("div", { class: "stat" }, h("b", null, avg + "%"), h("span", null, "rata-rata ketepatan kelas")),
+          h("div", { class: "stat" }, h("b", null, String(hard)), h("span", null, "soal di bawah 50%")),
+          h("div", { class: "stat" }, h("b", null, String(rows.length)), h("span", null, "soal dibahas"))),
+        h("p", { class: "sub", style: { textAlign: "center" } }, "Diurutkan dari yang paling banyak salah. Klik kartu untuk membahasnya di layar."),
+        list, h("div", { class: "row", style: { justifyContent: "center" } }, more));
+      draw(); return box;
+    }
+    function review(x) {
+      const q = x.q; const opts = C.optButtons(q, null); C.revealOpts(opts, q.a, null); opts.querySelectorAll(".opt").forEach((b) => (b.style.cursor = "default"));
+      const max = Math.max(1, ...x.st.dist);
+      const close = () => { stage.remove(); document.removeEventListener("keydown", onKey); };
+      const onKey = (e) => { if (e.key === "Escape") close(); };
+      const stage = h("div", { class: "stage", role: "dialog", "aria-modal": "true" }, h("div", { class: "stage-inner" },
+        h("div", { class: "qhead" }, h("span", { class: "pill gold" }, "Tersulit #" + x.rank + " · Soal " + (x.k + 1)), h("span", { class: "pill ar", style: { fontSize: "18px" } }, C.catOf(q.cat).ar), q.n ? h("span", { class: "pill" }, "Bagian " + q.n) : null,
+          h("span", { class: "pill" }, x.pct + "% benar · " + x.st.right + "/" + x.st.players), h("span", { class: "grow" }),
+          h("button", { class: "btn small ghost", type: "button", onclick: close }, "Tutup (Esc)")),
+        ...C.renderQ({ ...q }), opts,
+        h("div", { class: "dist" + (q.tf ? " tf" : "") }, x.st.dist.map((d, k) => h("div", { class: "bar" + (k === q.a ? "" : " wrong"), style: { height: (12 + (d / max) * 88) + "%" } }, d))),
+        ...C.noteFor(q)));
+      document.addEventListener("keydown", onKey); document.body.append(stage);
     }
 
     setup();
