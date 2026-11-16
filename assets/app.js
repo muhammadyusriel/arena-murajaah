@@ -51,6 +51,16 @@
     Object.defineProperty(box, "value", { get: () => cur });
     setLab(); box.append(btn, menu); return box;
   }
+  // ---------- CAKUPAN (semua bagian / per bagian) ----------
+  const scopeKey = () => "scope-" + S.wahdah;
+  const getScope = () => { const v = store.get(scopeKey(), 0); return D().nusus.some((u) => u.n === v) ? v : 0; };
+  const inScope = (sc) => (x) => !sc || x.n === sc;
+  const scopeName = (sc) => (sc ? "Bagian " + sc : "Semua bagian");
+  function scopePicker(onChange, extra) {
+    const opts = [{ value: 0, label: "Semua bagian (1–" + D().nusus.length + ")" }].concat(D().nusus.map((u) => ({ value: u.n, label: () => h("span", null, "Bagian " + u.n + " · ", h("span", { class: "ar dd-ar" }, u.title)) })));
+    const dd = dropdown(opts, getScope(), (v) => { store.set(scopeKey(), v); onChange && onChange(v); }, "Cakupan materi", extra);
+    return h("div", { class: "row scope" }, h("span", { class: "sub" }, "Cakupan"), dd);
+  }
   const rnd = (n) => Math.floor(Math.random() * n);
   const shuffle = (a) => { const r = a.slice(); for (let i = r.length - 1; i > 0; i--) { const j = rnd(i + 1); [r[i], r[j]] = [r[j], r[i]]; } return r; };
   const sample = (a, n) => shuffle(a).slice(0, n);
@@ -117,7 +127,7 @@
     const order = shuffle(q.o.map((_, i) => i));
     return { ...base, o: order.map((i) => q.o[i]), a: order.indexOf(q.a) };
   }
-  window.ArenaCore = { h, shuffle, sample, rnd, arNum, store, toast, copyText, downloadText, SHAPES, CATS, catOf, prepare, D, S, nashTitle, renderQ: null, timerEl: null, go: null, SEAL, I };
+  window.ArenaCore = { h, shuffle, sample, rnd, arNum, store, toast, copyText, downloadText, SHAPES, CATS, catOf, prepare, D, S, nashTitle, getScope, inScope, scopeName, scopePicker, renderQ: null, timerEl: null, go: null, SEAL, I };
 
   // ---------- render pertanyaan ----------
   function renderQ(q, { compact = false } = {}) {
@@ -256,11 +266,24 @@
 
   // ---------- PAPAN TANTANGAN ----------
   SCREENS.board = (root) => {
-    const cats = CATS.slice(0, 5);
-    const POINTS = [100, 200, 300, 400, 500];
+    const POINTS = [100, 200, 300, 400, 500], NC = 5;
     let board = store.get("board-" + S.wahdah, null);
-    const fresh = () => ({ cats: cats.map((c) => c.id), cells: cats.map((c) => sample(D().bank[c.id], POINTS.length).map((q) => ({ q, done: null }))) });
-    if (!board || !board.cells || board.cells.length !== cats.length) board = fresh();
+    // Pilih 5 kategori yang soalnya cukup di cakupan ini; kolom yang kurang diisi soal kategori lain dari cakupan yang sama.
+    const fresh = (sc) => {
+      const pool = (id) => D().bank[id].filter(inScope(sc));
+      const enough = CATS.filter((c) => pool(c.id).length >= POINTS.length);
+      let chosen = CATS.slice(0, NC).filter((c) => enough.includes(c));
+      enough.forEach((c) => { if (chosen.length < NC && !chosen.includes(c)) chosen.push(c); });
+      CATS.filter((c) => !chosen.includes(c)).sort((a, b) => pool(b.id).length - pool(a.id).length).forEach((c) => { if (chosen.length < NC) chosen.push(c); });
+      chosen = CATS.filter((c) => chosen.includes(c));
+      const used = new Set();
+      const cells = chosen.map((c) => sample(pool(c.id), POINTS.length).map((q) => { used.add(q); return { q, c: c.id, done: null }; }));
+      const spare = shuffle(CATS.flatMap((c) => pool(c.id).filter((q) => !used.has(q)).map((q) => ({ q, c: c.id }))));
+      cells.forEach((col) => { while (col.length < POINTS.length && spare.length) col.push({ ...spare.pop(), done: null }); });
+      return { scope: sc, cats: chosen.map((c) => c.id), cells };
+    };
+    if (!board || !board.cells || board.scope !== getScope() || !board.cells.every((col) => col.length === POINTS.length && col.every((x) => x.c))) board = fresh(getScope());
+    let cats = board.cats.map(catOf);
     const save = () => store.set("board-" + S.wahdah, board);
     const tp = teamPanel({ onChange: () => drawBoard() });
     const grid = h("div", { class: "board" });
@@ -277,7 +300,7 @@
     }
     function openQ(ci, r) {
       const pts = POINTS[r]; const cell = board.cells[ci][r];
-      const q = prepare(cell.q, cats[ci].id);
+      const cc = catOf(cell.c) || cats[ci]; const q = prepare(cell.q, cc.id);
       let picked = null, revealed = false;
       const timer = timerEl(30, () => {});
       const opts = optButtons(q, (i, b) => { if (revealed) return; picked = i; opts.querySelectorAll(".opt").forEach((x) => x.classList.toggle("picked", x === b)); });
@@ -294,19 +317,21 @@
       document.addEventListener("keydown", onKey);
       const stage = h("div", { class: "stage", role: "dialog", "aria-modal": "true" },
         h("div", { class: "stage-inner" },
-          h("div", { class: "qhead" }, h("span", { class: "pill gold" }, pts + " poin"), h("span", { class: "pill ar", style: { fontSize: "18px" } }, cats[ci].ar), q.n && q.cat === "fahm" ? h("span", { class: "pill ar", style: { fontSize: "18px" } }, nashTitle(q.n)) : null,
+          h("div", { class: "qhead" }, h("span", { class: "pill gold" }, pts + " poin"), h("span", { class: "pill ar", style: { fontSize: "18px" } }, cc.ar), q.n ? h("span", { class: "pill" }, "Bagian " + q.n) : null, q.n && q.cat === "fahm" ? h("span", { class: "pill ar", style: { fontSize: "18px" } }, nashTitle(q.n)) : null,
             h("div", { class: "grow" }), timer.el,
             h("button", { class: "btn small", type: "button", onclick: () => (timer.running() ? timer.stop() : timer.start()) }, "Jeda/lanjut"),
             h("button", { class: "btn small ghost", type: "button", onclick: () => { timer.stop(); stage.remove(); document.removeEventListener("keydown", onKey); } }, "Tutup (Esc)")),
           ...renderQ(q), opts, h("div", { class: "row", style: { justifyContent: "center" } }, revealBtn), extra));
       document.body.append(stage); timer.start();
     }
+    const regen = (sc) => { board = fresh(sc); cats = board.cats.map(catOf); save(); drawBoard(); };
     root.append(h("div", { class: "wrap" }, topbar("لَوْحَةُ التَّحَدِّي", "Papan Tantangan Tim"),
+      h("div", { class: "row" }, scopePicker((v) => { regen(v); toast("Papan baru · " + scopeName(v)); })),
       h("div", { class: "board-layout" },
         h("div", { class: "panel" }, grid),
         h("div", { style: { display: "flex", flexDirection: "column", gap: "12px" } }, tp.el,
           h("div", { class: "panel" }, h("b", null, "Cara main"), h("p", { class: "sub", style: { lineHeight: 1.6 } }, "Kelompok bergiliran memilih kategori dan poin. Wakil kelompok menjawab dalam 30 detik. Dosen menekan spasi untuk menampilkan jawaban lalu memberi poin."),
-            h("button", { class: "btn small", type: "button", onclick: () => { board = fresh(); save(); drawBoard(); toast("Papan baru dengan soal acak"); } }, "Acak ulang papan"))))));
+            h("button", { class: "btn small", type: "button", onclick: () => { regen(getScope()); toast("Papan baru dengan soal acak"); } }, "Acak ulang papan"))))));
     drawBoard();
   };
 
@@ -467,7 +492,7 @@
     const kindTabs = h("div", { class: "tabs" });
     let open = [], lock = false, moves = 0, found = 0, total = 0;
     function deal() {
-      const pool = D().vocab.filter((v) => v.t !== "h" && (kind === "mr" ? v.mr : v.md));
+      const pool = D().vocab.filter(inScope(getScope())).filter((v) => v.t !== "h" && (kind === "mr" ? v.mr : v.md));
       const pick = sample(pool, 8); total = pick.length; found = 0; moves = 0; open = []; lock = false;
       const cards = shuffle(pick.flatMap((v, i) => [{ id: i, txt: v.w, lab: "kata" }, { id: i, txt: (kind === "mr" ? v.mr : v.md).split("/")[0].trim(), lab: kind === "mr" ? "مُرَادِف" : "مُضَادّ" }]));
       grid.innerHTML = "";
@@ -497,7 +522,7 @@
     }
     function drawKinds() { kindTabs.innerHTML = ""; [["mr", "الْمُرَادِفُ", "Sinonim"], ["md", "الْمُضَادُّ", "Antonim"]].forEach(([k, ar, id]) => kindTabs.append(h("button", { class: "tab" + (kind === k ? " on" : ""), type: "button", onclick: () => { kind = k; drawKinds(); deal(); } }, h("span", { class: "ar" }, ar), " · " + id))); }
     root.append(h("div", { class: "wrap" }, topbar("بِطَاقَاتُ الْمُفْرَدَاتِ", "Kartu Pasangan"),
-      h("div", { class: "row" }, kindTabs), info,
+      h("div", { class: "row" }, kindTabs, h("span", { class: "grow" }), scopePicker(() => deal(), "end")), info,
       h("div", { class: "board-layout" }, h("div", { class: "panel" }, grid), h("div", null, tp.el))));
     drawKinds(); deal(); drawTeams();
   };

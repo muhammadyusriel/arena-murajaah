@@ -511,3 +511,7 @@ a.brand.link:hover .seal { transform: rotate(45deg) scale(1.05); }
   .hero .ar-title { margin-bottom: 20px; }
   .hero .meta { margin-top: 16px; }
 }
+
+/* Cakupan materi */
+.scope .dd-btn { min-width: 220px; justify-content: space-between; }
+.dd-ar { font-size: 18px; line-height: 1; }

@@ -73,6 +73,7 @@
       const sel = (id, label, vals, key, fmt) => h("label", { class: "row" }, h("span", { style: { minWidth: "120px" } }, label), (() => { const dd = C.dropdown(vals.map((v) => ({ value: v, label: fmt(v) })), settings[key], (v) => { settings[key] = v; store.set("live-settings", settings); }, label); dd.id = id; return dd; })());
       wrap.append(h("div", { class: "lobby" },
         h("div", { class: "panel", style: { display: "flex", flexDirection: "column", gap: "12px" } }, h("b", null, "Pengaturan"),
+          C.scopePicker(),
           sel("cnt", "Jumlah soal", [10, 15, 20, 25], "count", (v) => v + " soal"), sel("lim", "Waktu per soal", [15, 20, 30, 45], "limit", (v) => v + " detik"),
           h("button", { class: "btn primary", type: "button", disabled: !cfgOK, onclick: () => start("firebase") }, "Buat ruang kuis"),
           saved && Date.now() - saved.at < 4 * 3600e3 ? h("button", { class: "btn", type: "button", onclick: () => resume() }, "Lanjutkan ruang " + saved.code) : null),
@@ -82,7 +83,8 @@
 
     function buildQuestions() {
       const cats = shuffle(settings.cats.length ? settings.cats : ["makna", "fahm"]);
-      const pools = Object.fromEntries(cats.map((c) => [c, shuffle(D().bank[c])]));
+      const sc = C.getScope();
+      const pools = Object.fromEntries(cats.map((c) => [c, shuffle(D().bank[c].filter(C.inScope(sc)))]));
       const out = []; let k = 0, guard = 0;
       while (out.length < settings.count && guard++ < 500) { const c = cats[k++ % cats.length]; const q = pools[c].pop(); if (q) out.push(prepare(q, c)); }
       return out.map((q) => ({ q: q.q, s: q.s || null, bare: q.bare || null, o: q.o, a: q.a, tf: !!q.tf, cat: q.cat, n: q.n || 0, x: q.x || null, fix: q.fix || null }));
@@ -115,7 +117,7 @@
         h("div", { class: "qrbox" }, h("b", null, "Pindai untuk bergabung"), qr, h("div", null, "Kode ruang"), h("div", { class: "code" }, code), h("div", { class: "url" }, url),
           h("button", { class: "btn small", type: "button", style: { color: "#0A1B44", background: "#EEF3FF" }, onclick: () => copyText(url) }, "Salin tautan")),
         h("div", { class: "panel", style: { display: "flex", flexDirection: "column", gap: "14px" } },
-          h("div", { class: "row" }, count, h("span", { class: "sub grow" }, "mahasiswa sudah masuk"), h("span", { class: "pill" }, QS.length + " soal · " + settings.limit + " dtk")),
+          h("div", { class: "row" }, count, h("span", { class: "sub grow" }, "mahasiswa sudah masuk"), h("span", { class: "pill" }, C.scopeName(C.getScope()) + " · " + QS.length + " soal · " + settings.limit + " dtk")),
           list,
           h("div", { class: "row" }, h("button", { class: "btn primary", type: "button", onclick: () => ask(0) }, "Mulai kuis →"), h("span", { class: "sub" }, "Mahasiswa yang datang terlambat tetap bisa masuk di tengah kuis.")))));
       if (window.QRCode) { try { new window.QRCode(qr, { text: url, width: 560, height: 560, colorDark: "#0A1B44", colorLight: "#ffffff", correctLevel: window.QRCode.CorrectLevel.M }); } catch (e) { /* */ } }
