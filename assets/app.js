@@ -51,6 +51,44 @@
     Object.defineProperty(box, "value", { get: () => cur });
     setLab(); box.append(btn, menu); return box;
   }
+  // ---------- PIN DOSEN (Bank Soal) ----------
+  // Catatan: ini penghalang untuk mahasiswa, bukan pengamanan penuh — situs statis tetap bisa dibongkar oleh yang paham teknis.
+  const PIN = window.ARENA_PIN && window.ARENA_PIN.hash ? window.ARENA_PIN : null;
+  const PIN_LOCKED = new Set(["bank"]);
+  let pinSession = false;
+  const pinOk = () => !PIN || pinSession || store.get("pin-ok", "") === PIN.hash;
+  const lockPin = () => { pinSession = false; store.set("pin-ok", ""); };
+  async function pinHash(pin) {
+    const enc = new TextEncoder(); const key = await crypto.subtle.importKey("raw", enc.encode(pin), "PBKDF2", false, ["deriveBits"]);
+    const bits = await crypto.subtle.deriveBits({ name: "PBKDF2", salt: enc.encode(PIN.salt), iterations: PIN.iter || 150000, hash: "SHA-256" }, key, 256);
+    return [...new Uint8Array(bits)].map((b) => b.toString(16).padStart(2, "0")).join("");
+  }
+  function askPin(onOk) {
+    const inp = h("input", { type: "password", id: "pin", inputmode: "numeric", autocomplete: "off", maxlength: 12, class: "pin-in", "aria-label": "PIN dosen", placeholder: "• • • • • •" });
+    const rem = h("input", { type: "checkbox", id: "pin-rem", checked: store.get("pin-rem", true) });
+    const msg = h("p", { class: "pin-msg", role: "alert" });
+    const box = h("form", { class: "pin-card", onsubmit: async (e) => {
+      e.preventDefault(); const until = store.get("pin-wait", 0);
+      if (Date.now() < until) { msg.textContent = "Terlalu banyak percobaan. Coba lagi dalam " + Math.ceil((until - Date.now()) / 1000) + " detik."; return; }
+      const v = inp.value.trim(); if (!v) return inp.focus();
+      btn.disabled = true; msg.textContent = "Memeriksa…"; let ok = false;
+      try { ok = (await pinHash(v)) === PIN.hash; } catch (err) { msg.textContent = "Peramban ini tidak mendukung pemeriksaan PIN."; btn.disabled = false; return; }
+      btn.disabled = false;
+      if (ok) { store.set("pin-fail", 0); pinSession = true; store.set("pin-rem", rem.checked); store.set("pin-ok", rem.checked ? PIN.hash : ""); close(); onOk && onOk(); return; }
+      const n = store.get("pin-fail", 0) + 1; store.set("pin-fail", n); if (n >= 5) { store.set("pin-wait", Date.now() + 30000); store.set("pin-fail", 0); }
+      msg.textContent = n >= 5 ? "PIN salah 5 kali. Tunggu 30 detik." : "PIN salah."; box.classList.remove("shake"); void box.offsetWidth; box.classList.add("shake"); inp.select(); SFX.wrong();
+    } },
+      h("span", { class: "pin-ic", html: '<svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2.5" fill="currentColor"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" fill="none" stroke="currentColor" stroke-width="2.2"/></svg>' }),
+      h("h2", null, "Khusus dosen"), h("p", { class: "sub" }, "Masukkan PIN untuk membuka Bank Soal dan kunci jawaban."),
+      inp, h("label", { class: "row sub", style: { justifyContent: "center" } }, rem, "Ingat di perangkat ini"), msg,
+      h("div", { class: "row", style: { justifyContent: "center" } }, h("button", { class: "btn ghost", type: "button", onclick: () => close() }, "Batal")));
+    const btn = h("button", { class: "btn primary", type: "submit" }, "Buka"); box.lastChild.append(btn);
+    const onKey = (e) => { if (e.key === "Escape") close(); };
+    const stage = h("div", { class: "stage pin-stage", role: "dialog", "aria-modal": "true", "aria-label": "PIN dosen" }, box);
+    function close() { stage.remove(); document.removeEventListener("keydown", onKey); }
+    document.addEventListener("keydown", onKey); document.body.append(stage); setTimeout(() => inp.focus(), 50);
+  }
+
   // ---------- CAKUPAN (semua bagian / per bagian) ----------
   const scopeKey = () => "scope-" + S.wahdah;
   const getScope = () => { const v = store.get(scopeKey(), 0); return D().nusus.some((u) => u.n === v) ? v : 0; };
@@ -256,6 +294,7 @@
   }
   let cleanup = [];
   function go(screen, arg) {
+    if (PIN_LOCKED.has(screen) && !pinOk()) return askPin(() => go(screen, arg));
     cleanup.forEach((f) => { try { f(); } catch (e) { /* */ } }); cleanup = [];
     document.querySelectorAll(".stage").forEach((s) => s.remove());
     const root = app(); root.innerHTML = ""; root.scrollTop = 0; window.scrollTo(0, 0);
@@ -273,7 +312,7 @@
     const sel = dropdown(WAHDAH_LIST().map((w) => ({ value: w, label: () => h("span", { class: "dd-w" }, h("b", null, "Wahdah " + w), h("span", { class: "ar" }, window.ARENA_DATA[w].title)) })),
       S.wahdah, (v) => { S.wahdah = v; store.set("wahdah", S.wahdah); go("home"); }, "Pilih wahdah", "end");
     const mode = (key, color, icon, ar, t, d2, tag) => h("button", { class: "mode", type: "button", style: { "--mc": color }, onclick: () => go(key) },
-      tag ? h("span", { class: "tag" }, tag) : null,
+      tag ? h("span", { class: "tag" }, PIN_LOCKED.has(key) && PIN ? h("span", { class: "lk", html: '<svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2.5" fill="currentColor"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>' }) : null, tag) : null,
       h("span", { class: "ic", html: icon }), h("span", { class: "ar", dir: "rtl" }, ar), h("span", { class: "t" }, t), h("span", { class: "d" }, d2));
     root.append(h("div", { class: "wrap" },
       h("header", { class: "topbar" },
@@ -296,7 +335,7 @@
         mode("tasykil", "var(--violet)", I.pen, "رَتِّبْ وَشَكِّلْ", "Susun Kalimat & Tasykil", "Menyusun kata acak menjadi kalimat nash dan memilih harakat akhir yang benar.", "Maju ke depan"),
         mode("roda", "#4EA3E8", I.wheel, "عَجَلَةُ الْقِرَاءَةِ", "Roda Qiraah Jahriyyah", "Roda memilih mahasiswa untuk membaca nash, dinilai dengan rubrik singkat.", "Individu"),
         mode("kartu", "#E2558F", I.cards, "بِطَاقَاتُ الْمُفْرَدَاتِ", "Kartu Pasangan", "Mencocokkan kata dengan muradif atau mudhad-nya. Cocok untuk pemanasan.", "Pemanasan"),
-        mode("bank", "#9DBDBA", I.list, "بَنْكُ الْأَسْئِلَةِ", "Bank Soal", "Semua soal beserta kunci jawaban, untuk diperiksa dosen sebelum kelas.", "Dosen")),
+        mode("bank", "#9DBDBA", I.list, "بَنْكُ الْأَسْئِلَةِ", "Bank Soal", "Semua soal beserta kunci jawaban, untuk diperiksa dosen sebelum kelas." + (PIN ? " Dibuka dengan PIN." : ""), "Dosen")),
       h("p", { class: "footnote" }, "Tips: tekan F11 agar layar proyektor penuh. Skor kelompok tersimpan di perangkat ini.")));
   };
 
@@ -601,7 +640,8 @@
         q.fix ? h("div", { class: "x" }, "Pembetulan: ", h("span", { class: "ar", style: { fontSize: "18px" } }, q.fix)) : null,
         q.x ? h("div", { class: "x" }, q.x) : null)));
     }
-    root.append(h("div", { class: "wrap" }, topbar("بَنْكُ الْأَسْئِلَةِ", "Bank Soal & Kunci"), h("div", { class: "row" }, tabs, h("span", { class: "grow" }), nSel),
+    root.append(h("div", { class: "wrap" }, topbar("بَنْكُ الْأَسْئِلَةِ", "Bank Soal & Kunci"), h("div", { class: "row" }, tabs, h("span", { class: "grow" }), nSel,
+      PIN ? h("button", { class: "btn small ghost", type: "button", id: "relock", title: "Kunci Bank Soal lagi di perangkat ini", onclick: () => { lockPin(); toast("Bank Soal dikunci lagi"); go("home"); } }, "Kunci lagi") : null),
       h("p", { class: "sub" }, "Soal makna, sinonim/antonim, isian, dan harakat dibangkitkan dari data mufradat dan nash; soal pemahaman dan tarakib ditulis manual. Saat kuis, urutan pilihan selalu diacak."), list));
     draw();
   };

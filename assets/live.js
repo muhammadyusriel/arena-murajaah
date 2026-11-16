@@ -236,7 +236,7 @@
         h("h2", { class: "h-ar", style: { textAlign: "center" } }, "لَوْحَةُ الصَّدَارَةِ"),
         TM ? (() => { const ts = teamStats(scores); return h("div", { class: "lb" }, teamRows(ts, ts.length ? ts[0].avg : 0)); })() : null,
         TM ? h("p", { class: "sub", style: { textAlign: "center" } }, "Skor kelompok = rata-rata anggota · 5 besar perorangan:") : null,
-        h("div", { class: "lb" + (TM ? " small" : "") }, ranked.slice(0, TM ? 5 : 8).map((r, k) => h("div", { class: "r" }, h("span", { class: "rk" }, k + 1), h("span", { class: "nm" }, r.name, r.streak >= 3 ? "  🔥" + r.streak : "", TM && teamOf(r.uid) >= 0 ? h("small", { class: "ar tag", style: { "--tc": TM.list[teamOf(r.uid)].color } }, TM.list[teamOf(r.uid)].name) : null), h("b", null, r.score)))),
+        h("div", { class: "lb" + (TM ? " small" : "") }, ranked.slice(0, TM ? 5 : 8).map((r, k) => h("div", { class: "r" }, h("span", { class: "rk" }, k + 1), h("span", { class: "nm" }, r.name, r.streak >= 3 ? "  🔥" + r.streak : "", TM && teamOf(r.uid) >= 0 ? h("small", { class: "ar ttag", style: { "--tc": TM.list[teamOf(r.uid)].color } }, TM.list[teamOf(r.uid)].name) : null), h("b", null, r.score)))),
         ranked.length ? null : h("p", { class: "empty" }, "Belum ada peserta."),
         h("div", { class: "row", style: { justifyContent: "center" } }, h("button", { class: "btn primary", type: "button", id: "next", onclick: () => ask(i + 1) }, "Soal berikutnya →"))));
       const nx = wrap.querySelector("#next"); nx && nx.focus();
@@ -265,7 +265,7 @@
         h("div", { class: "podium" }, order.map((r, k) => h("div", { class: "p" }, r ? h("span", { class: "nm" + (r.ar ? " ar" : "") }, r.name) : h("span", { class: "nm" }, "—"), h("span", { class: "sub" }, r ? r.score + (TM ? " rata-rata" : " poin") : ""), h("div", { class: "blk", style: r && r.color ? { boxShadow: "inset 0 6px 0 " + r.color } : null }, [2, 1, 3][k])))),
         TM ? h("div", { class: "lb" }, teamRows(ts, ts.length ? ts[0].avg : 0)) : null,
         TM ? h("h3", { style: { textAlign: "center", margin: "6px 0 0" } }, "Peringkat perorangan") : null,
-        h("div", { class: "lb" + (TM ? " small" : "") }, ranked.map((r, k) => h("div", { class: "r" }, h("span", { class: "rk" }, k + 1), h("span", { class: "nm" }, r.name, TM && tName(r.uid) ? h("small", { class: "ar tag", style: { "--tc": TM.list[teamOf(r.uid)].color } }, tName(r.uid)) : null), h("b", null, r.score + " · " + (r.right || 0) + "/" + QS.length + " benar")))));
+        h("div", { class: "lb" + (TM ? " small" : "") }, ranked.map((r, k) => h("div", { class: "r" }, h("span", { class: "rk" }, k + 1), h("span", { class: "nm" }, r.name, TM && tName(r.uid) ? h("small", { class: "ar ttag", style: { "--tc": TM.list[teamOf(r.uid)].color } }, tName(r.uid)) : null), h("b", null, r.score + " · " + (r.right || 0) + "/" + QS.length + " benar")))));
       showTab(0);
     }
 

@@ -20,3 +20,7 @@ window.ARENA_FIREBASE = {
   messagingSenderId: "623772960146",
   appId: "1:623772960146:web:d429edbfe03d3dcaea2d4b"
 };
+
+/* PIN dosen untuk membuka Bank Soal (yang disimpan hanya sandi-acak PBKDF2, bukan PIN-nya).
+   Untuk mengganti PIN, minta Asisten 3 membuat nilai baru. Hapus baris ini bila tidak ingin memakai PIN. */
+window.ARENA_PIN = {"salt":"2dddf2117249df8687359751","hash":"ae0e98c0e076f01de17f3150155c46e9c65f25179934c48559953167f3985232","iter":150000};

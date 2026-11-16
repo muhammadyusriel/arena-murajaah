@@ -536,7 +536,7 @@ a.brand.link:hover .seal { transform: rotate(45deg) scale(1.05); }
 .tbar { flex-basis: 100%; height: 8px; border-radius: 99px; background: rgba(255,255,255,.08); overflow: hidden; }
 .tbar i { display: block; height: 100%; border-radius: inherit; background: var(--tc); transition: width .8s var(--ease); }
 .lb.small .r { font-size: 16px; padding: 8px 14px; }
-.tag { margin-inline-start: 10px; font-size: 16px; padding: 1px 10px; border-radius: 99px; background: color-mix(in srgb, var(--tc) 28%, transparent); color: #fff; }
+.ttag { margin-inline-start: 10px; font-size: 16px; padding: 1px 10px; border-radius: 99px; background: color-mix(in srgb, var(--tc) 28%, transparent); color: #fff; }
 .tpick { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .tpick .btn { min-height: 64px; font-size: 24px; background: var(--tc); color: #0A1B44; font-weight: 700; justify-content: center; }
 .tpill { background: var(--tc) !important; color: #0A1B44 !important; font-size: 17px; }
@@ -574,3 +574,17 @@ a.brand.link:hover .seal { transform: rotate(45deg) scale(1.05); }
 .snd { display: inline-flex; align-items: center; gap: 6px; }
 .snd.off { opacity: .7; }
 .snd.off svg { color: var(--coral, #E5683F); }
+
+/* PIN dosen */
+.pin-stage { align-items: center; justify-content: center; background: rgba(4,12,36,.72); backdrop-filter: blur(6px); }
+.pin-card { margin: auto; width: min(92vw, 380px); display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; padding: 26px 24px; border-radius: 24px; border: 1px solid var(--edge); background: linear-gradient(180deg, #22468F, #16326F); box-shadow: var(--sh-2, 0 30px 60px -16px rgba(2,8,30,.85)); }
+.pin-card h2 { margin: 0; font-size: 22px; }
+.pin-card .sub { margin: 0; }
+.pin-ic { display: grid; place-items: center; width: 58px; height: 58px; border-radius: 18px; color: #0A1B44; background: linear-gradient(180deg, #F3D08A, #E2B862); box-shadow: var(--sh-btn); }
+.pin-in { width: 100%; text-align: center; font-size: 28px; letter-spacing: .4em; padding: 12px; font-variant-numeric: tabular-nums; }
+.pin-msg { min-height: 1.3em; margin: 0; color: #FF9C7A; font-weight: 600; }
+.pin-card.shake { animation: pinShake .4s; }
+@keyframes pinShake { 20%, 60% { transform: translateX(-8px); } 40%, 80% { transform: translateX(8px); } }
+.mode .tag .lk { display: inline-block; vertical-align: -1px; margin-inline-end: 4px; }
+.pin-in { border: 1px solid var(--edge); background: var(--sunken); box-shadow: inset 0 2px 6px rgba(0,0,0,.35); border-radius: 14px; color: #fff; outline: none; }
+.pin-in:focus { border-color: var(--saffron); box-shadow: inset 0 2px 6px rgba(0,0,0,.35), 0 0 0 3px rgba(226,184,98,.25); }
