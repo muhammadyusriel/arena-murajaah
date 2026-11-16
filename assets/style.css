@@ -663,3 +663,9 @@ a.brand.link:hover .seal { transform: rotate(45deg) scale(1.05); }
   .ps { grid-template-columns: 1fr 1fr; }
 }
 .pr .pn small.pwarn { color: #F0B85A; font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* Footer: kredit + versi */
+.credit p { margin: 0; }
+.credit .cr-by { line-height: 1.5; }
+.credit .cr-meta { margin-top: 7px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 0; font-size: 11px; letter-spacing: .09em; text-transform: uppercase; color: rgba(205,216,240,.62); font-variant-numeric: tabular-nums; }
+.credit .cr-meta > span { white-space: nowrap; }
+.credit .cr-meta i { display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: var(--saffron); opacity: .7; margin: 0 11px; }
