@@ -2,7 +2,7 @@
 window.ARENA_DATA = window.ARENA_DATA || {};
 window.ARENA_DATA[3] = {
  "wahdah": 3,
- "title": "الْأُسْرَةُ",
+ "title": "الْحَيَاةُ الزَّوْجِيَّةُ",
  "label": "الْوَحْدَةُ الثَّالِثَةُ",
  "nusus": [
   {
