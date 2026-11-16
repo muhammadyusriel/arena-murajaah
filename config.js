@@ -11,4 +11,12 @@
      appId: "1:1234567890:web:abcdef"
    };
 */
-window.ARENA_FIREBASE = null;
+window.ARENA_FIREBASE = {
+  apiKey: "AIzaSyAB7z8c3NoZ7BINZNORt6Y7mtlmyyRZDoM",
+  authDomain: "arena-murajaah.firebaseapp.com",
+  databaseURL: "https://arena-murajaah-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "arena-murajaah",
+  storageBucket: "arena-murajaah.firebasestorage.app",
+  messagingSenderId: "623772960146",
+  appId: "1:623772960146:web:d429edbfe03d3dcaea2d4b"
+};
