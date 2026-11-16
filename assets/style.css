@@ -621,3 +621,19 @@ a.brand.link:hover .seal { transform: rotate(45deg) scale(1.05); }
   .mode.live .txt .ar { text-align: right; align-self: stretch; }
 }
 .hero .ar-title { text-align: right; }
+
+/* Hero v3 (2026-11-16): judul Arab + angka di kanan, pengantar di kiri — seimbang */
+.hero { grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto auto; column-gap: 48px; row-gap: 0; align-items: center; padding: 30px 34px; }
+.hero .ar-title { grid-column: 2; grid-row: 1; margin: 0 0 16px; justify-self: end; }
+.hero .intro { grid-column: 1; grid-row: 1 / span 2; align-self: center; display: flex; flex-direction: column; gap: 10px; padding-inline-start: 20px; border-inline-start: 3px solid; border-image: linear-gradient(180deg, #F3D08A, rgba(226,184,98,.15)) 1; max-width: 46ch; }
+.hero .intro .kick { font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: #F1C96E; }
+.hero .intro p { margin: 0; font-size: 16px; line-height: 1.75; color: #D5E0FA; max-width: none; }
+.hero .meta { grid-column: 2; grid-row: 2; justify-content: flex-end; margin: 0; flex-wrap: nowrap; }
+.hero .meta .stat { min-width: 112px; }
+@media (max-width: 1000px) {
+  .hero { grid-template-columns: 1fr; grid-template-rows: auto; row-gap: 20px; padding: 24px; }
+  .hero .ar-title { grid-column: 1; grid-row: auto; margin: 0; }
+  .hero .intro { grid-column: 1; grid-row: auto; max-width: none; }
+  .hero .meta { grid-column: 1; grid-row: auto; justify-content: flex-start; margin: 0; flex-wrap: wrap; }
+}
+@media (max-width: 640px) { .hero .meta { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; } .hero .meta .stat { min-width: 0; padding: 10px; } }
