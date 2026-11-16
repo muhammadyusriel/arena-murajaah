@@ -620,3 +620,4 @@ a.brand.link:hover .seal { transform: rotate(45deg) scale(1.05); }
 @media (max-width: 640px) {
   .mode.live .txt .ar { text-align: right; align-self: stretch; }
 }
+.hero .ar-title { text-align: right; }
