@@ -707,3 +707,25 @@ a.brand.link:hover .seal { transform: rotate(45deg) scale(1.05); }
 .mnav.mini .mnav-w { display: none; } .mnav.mini .mnav-btn { padding: 0 6px; width: 44px; justify-content: center; }
 .mnav-w .mw-s { display: none; } @media (max-width: 400px) { .mnav-w .mw-l { display: none; } .mnav-w .mw-s { display: inline; } }
 @media (max-width: 360px) { .topbar .brand h1 { font-size: 17px; } .topbar .brand .seal { width: 36px; height: 36px; } }
+/* ---------- v1.8.2: menu di semua layar (PC juga); menu di kiri, judul aplikasi di kanan ---------- */
+.topbar { flex-wrap: nowrap; gap: 12px; }
+.topbar > .snd, .topbar > .materi, .topbar > .chip, .topbar > .spacer { display: none; }
+.topbar > .mnav { display: block; flex: none; order: -2; margin: 0; }
+.topbar > .back { order: -1; flex: none; }
+.topbar > .brand { order: 2; margin-inline-start: auto; flex: 0 1 auto; min-width: 0; flex-direction: row-reverse; text-align: right; }
+.topbar > a.brand.link { padding: 4px 4px 4px 8px; margin: -4px -4px -4px auto; }
+.topbar .brand > div { min-width: 0; }
+.topbar .brand h1, .topbar .brand small { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mnav-btn { padding: 0 12px 0 6px; }
+.mnav.mini .mnav-btn { padding: 0 6px; }
+.mnav-item:not(.on):hover { background: rgba(255,255,255,.09); }
+.mnav-row:hover { background: rgba(255,255,255,.1); }
+@media (min-width: 641px) {
+  .mnav { position: relative; }
+  .mnav-btn { height: 46px; font-size: 14px; gap: 10px; }
+  .mnav.mini .mnav-w { display: inline; }
+  .mnav.mini .mnav-btn { width: auto; padding: 0 14px 0 6px; justify-content: flex-start; }
+  .mnav-scrim { background: rgba(2,8,30,.35); backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .mnav-sheet { position: absolute; top: calc(100% + 10px); left: 0; right: auto; width: 400px; max-height: min(78vh, 660px); transform-origin: top left; }
+  .mnav-list { max-height: min(58vh, 520px); }
+}

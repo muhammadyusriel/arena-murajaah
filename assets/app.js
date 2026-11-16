@@ -293,12 +293,12 @@
       h("div", { class: "spacer" }), soundBtn(),
       h("span", { class: "chip" }, h("span", { class: "ar", style: { fontSize: "17px" } }, D().label), " · ", h("span", { class: "ar", style: { fontSize: "17px" } }, D().title)), mnav(false));
   }
-  // ---------- MENU HP (layar ≤ 640px): wahdah + suara dalam satu tombol ----------
+  // ---------- MENU (semua layar, v1.8.2): wahdah + suara dalam satu tombol di kiri; judul di kanan ----------
   const MENU_IC = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
   const X_IC = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
   function mnav(home) {
     const box = h("div", { class: "mnav" + (home ? "" : " mini") });
-    const btn = h("button", { class: "mnav-btn", type: "button", "aria-haspopup": "dialog", "aria-expanded": "false", "aria-label": "Buka menu" }, h("span", { class: "mnav-w" }, h("span", { class: "mw-l" }, "Wahdah "), h("span", { class: "mw-s" }, "W"), String(S.wahdah)), h("span", { class: "mnav-ic", html: MENU_IC }));
+    const btn = h("button", { class: "mnav-btn", type: "button", "aria-haspopup": "dialog", "aria-expanded": "false", "aria-label": "Buka menu" }, h("span", { class: "mnav-ic", html: MENU_IC }), h("span", { class: "mnav-w" }, h("span", { class: "mw-l" }, "Wahdah "), h("span", { class: "mw-s" }, "W"), String(S.wahdah)));
     const scrim = h("div", { class: "mnav-scrim" });
     const sheet = h("div", { class: "mnav-sheet", role: "dialog", "aria-label": "Menu" });
     const esc = (e) => { if (e.key === "Escape") { close(); btn.focus(); } };
