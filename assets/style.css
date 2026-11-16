@@ -609,3 +609,14 @@ a.brand.link:hover .seal { transform: rotate(45deg) scale(1.05); }
 .lat-wrong .qtext { font-size: 22px; margin: 0; }
 .latihan .scope .dd-btn { min-width: 0; }
 .qrbox #qr-lat img, .qrbox #qr-lat canvas { width: 100% !important; max-width: 280px; height: auto !important; }
+
+/* Banner lebar: judul Arab di kanan, di tengah secara vertikal, sebelum tombol */
+@media (min-width: 641px) {
+  .mode.live .txt { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto auto; column-gap: 28px; row-gap: 4px; align-items: center; }
+  .mode.live .txt .t { grid-column: 1; grid-row: 1; align-self: end; }
+  .mode.live .txt .d { grid-column: 1; grid-row: 2; align-self: start; }
+  .mode.live .txt .ar { grid-column: 2; grid-row: 1 / span 2; align-self: center; font-size: 32px; line-height: 1.5; text-align: right; padding-inline-start: 26px; border-inline-start: 1px solid rgba(255,255,255,.14); }
+}
+@media (max-width: 640px) {
+  .mode.live .txt .ar { text-align: right; align-self: stretch; }
+}
