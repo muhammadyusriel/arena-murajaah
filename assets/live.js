@@ -103,7 +103,7 @@
       let out = []; let k = 0, guard = 0;
       while (out.length < settings.count && guard++ < 1000) { const c = cats[k++ % cats.length]; const q = pools[c].pop(); if (q) out.push(prepare(q, c)); }
       if (!lv) out = C.byLevel(out); // Campuran: soal bergerak dari mudah ke sulit
-      return out.map((q) => ({ q: q.q, s: q.s || null, bare: q.bare || null, o: q.o, a: q.a, tf: !!q.tf, cat: q.cat, n: q.n || 0, d: C.qLevel(q), x: q.x || null, fix: q.fix || null }));
+      return out.map((q) => ({ q: q.q, p: q.p || null, s: q.s || null, bare: q.bare || null, o: q.o, a: q.a, tf: !!q.tf, cat: q.cat, n: q.n || 0, d: C.qLevel(q), x: q.x || null, fix: q.fix || null }));
     }
 
     let net, code, QS, i = -1, players = {}, unsubAns = null, ST = [];
@@ -195,8 +195,9 @@
       const g = ++gen; let revealed = false;
       i = idx; persist(); curAns = {};
       offs.forEach((f) => f()); offs.length = 0;
-      const q = QS[i]; const limit = resumeSt ? resumeSt.limit || settings.limit : settings.limit;
-      if (!resumeSt) await net.set(R("state"), { phase: "question", i, key: "q" + i, total: QS.length, q: { q: q.q, s: q.s, bare: q.bare, o: q.o, tf: q.tf, cat: q.cat }, limit, startedAt: net.TS });
+      // soal gagasan utama butuh waktu membaca: minimal 45 detik (v1.10.0)
+      const q = QS[i]; const limit = resumeSt ? resumeSt.limit || settings.limit : q.cat === "fikrah" ? Math.max(45, settings.limit) : settings.limit;
+      if (!resumeSt) await net.set(R("state"), { phase: "question", i, key: "q" + i, total: QS.length, q: { q: q.q, p: q.p || null, s: q.s, bare: q.bare, o: q.o, tf: q.tf, cat: q.cat }, limit, startedAt: net.TS });
       const st = resumeSt || (await net.get(R("state"))); const startedAt = st.startedAt;
       if (g !== gen) return;
       wrap.innerHTML = "";

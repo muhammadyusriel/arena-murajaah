@@ -224,8 +224,10 @@
     { id: "tasykil", ar: "التَّشْكِيلُ", id_: "Harakat akhir" },
     { id: "tashrif", ar: "تَصْرِيفُ الْفِعْلِ", id_: "Tashrif fi'il" },
     { id: "jamak", ar: "الْمُفْرَدُ وَالْجَمْعُ", id_: "Mufrad & jamak" },
+    { id: "fikrah", ar: "الْفِكْرَةُ الرَّئِيسَةُ", id_: "Gagasan utama" },
+    { id: "istikhraj", ar: "اسْتِخْرَاجٌ مِنَ النَّصِّ", id_: "Temukan dalam teks" },
   ];
-  const NEW_CATS_19 = ["tashrif", "jamak"]; // jenis baru v1.9.0: otomatis ikut di pengaturan yang tersimpan
+  const NEW_CATS_19 = ["tashrif", "jamak", "fikrah", "istikhraj"]; // jenis baru v1.9.0: otomatis ikut di pengaturan yang tersimpan
   const catOf = (id) => CATS.find((c) => c.id === id);
   const nashTitle = (n) => { const x = D().nusus.find((u) => u.n === n); return x ? x.title : ""; };
 
@@ -241,6 +243,7 @@
   // ---------- render pertanyaan ----------
   function renderQ(q, { compact = false } = {}) {
     const parts = [];
+    if (q.p) parts.push(h("div", { class: "qpass" + (q.cat === "istikhraj" ? " sent" : ""), dir: "rtl" }, q.p)); // paragraf / kalimat dari nash (v1.10.0)
     parts.push(h("p", { class: "qtext", dir: "rtl" }, q.q));
     if (q.s) {
       let pre = q.s[0], conj = ""; const m = pre.match(/([وف]َ)$/); if (m) { conj = m[1]; pre = pre.slice(0, -m[1].length); }
@@ -266,7 +269,7 @@
     const items = [];
     if (q.fix) items.push(h("div", { class: "note" }, h("b", null, "Pembetulan:"), h("span", { class: "ar", dir: "rtl" }, q.fix)));
     if (q.x) items.push(h("div", { class: "note" }, h("b", null, "Catatan:"), h("span", null, q.x)));
-    if (q.n && (q.cat === "fahm" || q.cat === "akmil" || q.cat === "tasykil")) items.push(h("div", { class: "sub", style: { textAlign: "center" } }, "Sumber: ", h("span", { class: "ar", style: { fontSize: "19px" } }, nashTitle(q.n))));
+    if (q.n && (q.cat === "fahm" || q.cat === "akmil" || q.cat === "tasykil" || q.cat === "fikrah" || q.cat === "istikhraj")) items.push(h("div", { class: "sub", style: { textAlign: "center" } }, "Sumber: ", h("span", { class: "ar", style: { fontSize: "19px" } }, nashTitle(q.n))));
     return items;
   }
   ArenaCore.renderQ = renderQ; ArenaCore.optButtons = optButtons; ArenaCore.revealOpts = revealOpts; ArenaCore.noteFor = noteFor;
@@ -940,7 +943,7 @@
       if (!qs.length) list.append(h("p", { class: "empty" }, "Tidak ada soal."));
       qs.forEach((q, i) => list.append(h("div", { class: "bank-q" },
         h("div", { class: "sub" }, "#" + (i + 1) + (q.n ? " · Nash " + q.n : ""), " ", levelTag(q)),
-        h("div", { class: "qq" }, q.q, q.s ? h("div", null, q.s[0], h("span", { class: cat === "tasykil" ? "hl" : "blank" }, cat === "tasykil" ? q.bare : "…"), q.s[1]) : null),
+        h("div", { class: "qq" }, q.p ? h("div", { class: "qpass small", dir: "rtl" }, q.p) : null, q.q, q.s ? h("div", null, q.s[0], h("span", { class: cat === "tasykil" ? "hl" : "blank" }, cat === "tasykil" ? q.bare : "…"), q.s[1]) : null),
         h("div", { class: "oo" }, q.o.map((o, k) => h("span", { class: k === q.a ? "ok" : "" }, (k === q.a ? "✓ " : "") + o))),
         q.fix ? h("div", { class: "x" }, "Pembetulan: ", h("span", { class: "ar", style: { fontSize: "18px" } }, q.fix)) : null,
         q.x ? h("div", { class: "x" }, q.x) : null)));
