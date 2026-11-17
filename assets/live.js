@@ -391,7 +391,7 @@
   async function player(root, codeIn) {
     const params = new URLSearchParams(location.search);
     const box = h("div", { class: "player" }); root.append(box);
-    const head = h("header", { class: "brand", html: SEAL + '<div><h1 class="ui-ar">Arena Muraja\'ah</h1><small>Peserta</small></div>' });
+    const head = h("header", { class: "brand", html: SEAL + '<div><h1 class="ui-ar">Arena Muraja\'ah' + (C.JILID || '') + '</h1><small>' + (C.JILID_S || '') + 'Peserta</small></div>' });
     const body = h("div", { style: { display: "flex", flexDirection: "column", gap: "14px" } });
     box.append(head, body);
     const say = (...k) => { body.innerHTML = ""; body.append(...k.filter((x) => x != null && x !== false)); }; // v1.8.8: tidak lagi menampilkan "null"

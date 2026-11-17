@@ -891,3 +891,12 @@ a.brand.link:hover .seal { transform: rotate(45deg) scale(1.05); }
 .player .qpass.sent { font-size: 23px; }
 .qpass.small { font-size: 18px; padding: 8px 12px; margin-bottom: 8px; }
 .lat-wrong .qpass { font-size: 18px; }
+
+/* v1.13.0: lencana jilid (warna sampul kitab) di bilah atas */
+.jilid { display: inline-flex; align-items: center; vertical-align: middle; margin-inline-start: 10px; padding: 3px 9px 2px; border-radius: 999px; font-family: var(--font-ui); font-size: 12px; font-weight: 800; letter-spacing: .06em; line-height: 1.3; white-space: nowrap; box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 2px 6px rgba(0,0,0,.25); }
+.jilid-hijau { background: linear-gradient(180deg, #A9B746, #7F8D26); color: #1C2306; border: 1px solid #C4CF6A; }
+.jilid-biru { background: linear-gradient(180deg, #4F8BF2, #2457CF); color: #fff; border: 1px solid #7FA8F5; }
+.jilid-marun { background: linear-gradient(180deg, #9B2F3E, #6E1A27); color: #fff; border: 1px solid #C0566A; }
+.brand h1[dir="rtl"] .jilid { margin-inline-start: 10px; }
+.jilid-s { display: none; font-size: 9.5px; padding: 1px 7px 0; margin: 0; margin-inline-end: 7px; letter-spacing: .05em; vertical-align: 1px; box-shadow: none; }
+@media (max-width: 640px) { .brand h1 .jilid { display: none; } .brand small .jilid-s { display: inline-flex; } }
