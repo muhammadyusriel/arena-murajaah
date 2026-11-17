@@ -744,7 +744,7 @@
   SCREENS.latihan = (root, student) => {
     const box = h("div", { class: "player latihan" });
     if (student) box.append(h("header", { class: "brand", html: SEAL + '<div><h1 class="ui-ar">Arena Muraja\'ah</h1><small>Latihan mandiri · ' + JILID + '</small></div>' }, h("span", { class: "spacer", style: { flex: 1 } }), soundBtn()));
-    else root.append(h("div", { class: "wrap" }, topbar("التَّدْرِيبُ الذَّاتِيُّ", "Latihan mandiri")));
+    else { root.append(h("div", { class: "wrap wrap-head" }, topbar("التَّدْرِيبُ الذَّاتِيُّ", "Latihan mandiri"))); box.classList.add("embed"); }
     const body = h("div", { style: { display: "flex", flexDirection: "column", gap: "14px" } }); box.append(body); root.append(box);
     const say = (...k) => { body.innerHTML = ""; body.append(...k); window.scrollTo(0, 0); };
     const cfg = store.get("lat-cfg", { cats: CATS.map((c) => c.id), count: 10 });

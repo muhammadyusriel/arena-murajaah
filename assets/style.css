@@ -894,3 +894,8 @@ a.brand.link:hover .seal { transform: rotate(45deg) scale(1.05); }
 
 /* v1.13.2: jarak judul-subjudul di bilah atas */
 .brand h1 + small { margin-top: 4px; }
+
+/* v1.13.3: (1) judul Arab berharakat di bilah atas tidak terpotong; (2) "Coba latihan di layar ini" tidak lagi bertumpuk dengan kredit */
+.brand h1.ui-ar[dir="rtl"] { line-height: 1.6; margin-block: -.28em -.22em; padding-inline: 2px; }
+.wrap.wrap-head { min-height: 0; padding-bottom: 0; }
+.player.latihan.embed { min-height: 0; padding-top: 8px; }
