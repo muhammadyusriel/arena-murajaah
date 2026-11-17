@@ -168,12 +168,12 @@
       const url = joinUrl(code);
       wrap.append(h("div", { class: "lobby" },
         h("div", { class: "qrbox" }, h("b", null, "Pindai untuk bergabung"), qr, h("div", null, "Kode ruang"), h("div", { class: "code" }, code), h("div", { class: "url" }, url),
-          h("button", { class: "btn small", type: "button", style: { color: "#0A1B44", background: "#EEF3FF" }, onclick: () => copyText(url) }, "Salin tautan")),
+          h("button", { class: "btn small", type: "button", style: { color: "var(--ink)", background: "var(--fg)" }, onclick: () => copyText(url) }, "Salin tautan")),
         h("div", { class: "panel", style: { display: "flex", flexDirection: "column", gap: "14px" } },
           h("div", { class: "row" }, count, h("span", { class: "sub grow" }, "mahasiswa sudah masuk"), h("span", { class: "pill" }, C.scopeName(C.getScope()) + " · " + C.levelName(C.getLevel()) + " · " + QS.length + " soal · " + settings.limit + " dtk")),
           list,
           h("div", { class: "row" }, navBtn("Mulai kuis →", () => ask(0), { class: "btn primary nav-go" }), h("span", { class: "sub" }, TM ? "Klik nama untuk memindah ke kelompok lain. Yang datang terlambat tetap bisa masuk." : "Mahasiswa yang datang terlambat tetap bisa masuk di tengah kuis.")))));
-      if (window.QRCode) { try { new window.QRCode(qr, { text: url, width: 560, height: 560, colorDark: "#0A1B44", colorLight: "#ffffff", correctLevel: window.QRCode.CorrectLevel.M }); } catch (e) { /* */ } }
+      if (window.QRCode) { try { new window.QRCode(qr, { text: url, width: 560, height: 560, colorDark: (getComputedStyle(document.documentElement).getPropertyValue("--ink").trim() || "#0A1B44"), colorLight: "#ffffff", correctLevel: window.QRCode.CorrectLevel.M }); } catch (e) { /* */ } }
       else qr.append(h("p", { class: "sub" }, "(QR tidak tersedia, gunakan kode)"));
       let seen = -1;
       watchPlayers(() => {

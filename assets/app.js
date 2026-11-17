@@ -201,7 +201,8 @@
     '<svg viewBox="0 0 20 20"><path d="M10 2l9 16H1z"/></svg>',
     '<svg viewBox="0 0 20 20"><rect x="2" y="2" width="16" height="16" rx="2"/></svg>',
   ];
-  const SEAL = '<svg class="seal" viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="#E2B862" stroke-width="2"><rect x="11" y="11" width="26" height="26" rx="2"/><rect x="11" y="11" width="26" height="26" rx="2" transform="rotate(45 24 24)"/></g><circle cx="24" cy="24" r="7" fill="#3B7CF0"/><path d="M20.5 24.5l2.4 2.4 4.8-5" stroke="#FFFFFF" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const cssVar = (n, f) => { try { return getComputedStyle(document.documentElement).getPropertyValue(n).trim() || f; } catch (e) { return f; } };
+  const SEAL = '<svg class="seal" viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="#E2B862" stroke-width="2"><rect x="11" y="11" width="26" height="26" rx="2"/><rect x="11" y="11" width="26" height="26" rx="2" transform="rotate(45 24 24)"/></g><circle cx="24" cy="24" r="7" style="fill:var(--azure)"/><path d="M20.5 24.5l2.4 2.4 4.8-5" stroke="#FFFFFF" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
   // ---------- state ----------
   const WAHDAH_LIST = () => Object.keys(window.ARENA_DATA || {}).map(Number).sort((a, b) => a - b);
@@ -299,7 +300,7 @@
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const c = h("canvas", { class: "confetti" }); document.body.append(c);
     const ctx = c.getContext("2d"); c.width = innerWidth; c.height = innerHeight;
-    const cols = ["#E2B862", "#3B7CF0", "#2BB5A0", "#E8704A", "#8F74E0", "#FBF7EC"];
+    const cols = ["#E2B862", cssVar("--azure", "#3B7CF0"), "#2BB5A0", "#E8704A", "#8F74E0", "#FBF7EC"];
     const ps = Array.from({ length: 160 }, () => ({ x: Math.random() * c.width, y: -20 - Math.random() * c.height * .4, vx: (Math.random() - .5) * 3, vy: 2 + Math.random() * 4, r: 4 + Math.random() * 5, c: cols[rnd(cols.length)], a: Math.random() * 6 }));
     let f = 0; (function loop() { ctx.clearRect(0, 0, c.width, c.height); ps.forEach((p) => { p.x += p.vx; p.y += p.vy; p.a += .1; ctx.fillStyle = p.c; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.a); ctx.fillRect(-p.r, -p.r / 2, p.r * 2, p.r); ctx.restore(); }); if (++f < 220) requestAnimationFrame(loop); else c.remove(); })();
   }
@@ -620,7 +621,7 @@
         const fs = Math.max(14, Math.min(34, 900 / Math.max(L.length, 1))); ctx.font = `600 ${fs}px "Plus Jakarta Sans", sans-serif`;
         const label = name.length > 18 ? name.slice(0, 17) + "…" : name; ctx.fillText(label, R - 20, 0); ctx.restore();
       });
-      ctx.restore(); ctx.beginPath(); ctx.arc(W / 2, W / 2, 46, 0, 2 * Math.PI); ctx.fillStyle = "#0A1B44"; ctx.fill(); ctx.strokeStyle = "#E2B862"; ctx.lineWidth = 6; ctx.stroke();
+      ctx.restore(); ctx.beginPath(); ctx.arc(W / 2, W / 2, 46, 0, 2 * Math.PI); ctx.fillStyle = cssVar("--ink", "#0A1B44"); ctx.fill(); ctx.strokeStyle = "#E2B862"; ctx.lineWidth = 6; ctx.stroke();
     }
     const pickedEl = h("div", { class: "picked-name", "aria-live": "polite" }, "—"); let pickedName = null;
     const passage = h("div", { class: "kitab", style: { maxHeight: "none" } }, h("p", { class: "sub", style: { fontFamily: "var(--font-ui)", textIndent: 0 } }, "Potongan bacaan akan muncul di sini."));
@@ -725,7 +726,7 @@
     root.append(h("div", { class: "wrap" }, topbar("التَّدْرِيبُ الذَّاتِيُّ", "Latihan mandiri"),
       h("div", { class: "lobby" },
         h("div", { class: "qrbox" }, h("b", null, "Pindai untuk latihan"), qr, h("div", { class: "url" }, url),
-          h("button", { class: "btn small", type: "button", style: { color: "#0A1B44", background: "#EEF3FF" }, onclick: () => copyText(url) }, "Salin tautan")),
+          h("button", { class: "btn small", type: "button", style: { color: "var(--ink)", background: "var(--fg)" }, onclick: () => copyText(url) }, "Salin tautan")),
         h("div", { class: "panel", style: { display: "flex", flexDirection: "column", gap: "12px" } },
           h("b", null, "Cara pakai"),
           h("ol", { class: "steps" },
@@ -734,7 +735,7 @@
             h("li", null, "Setiap jawaban langsung diberi tahu benar atau salah beserta catatannya. Di akhir, mereka bisa mengulang soal yang salah saja.")),
           h("p", { class: "sub", style: { lineHeight: 1.6 } }, "Mahasiswa menulis nama (dan NIM bila mau) sebelum berlatih. Setiap selesai latihan, hasilnya terkirim ke server dan bisa Ustadz pantau lewat tombol di bawah (dengan PIN). Mahasiswa tidak bisa melihat hasil teman-temannya. Tautan ini membuka Wahdah " + S.wahdah + "; mahasiswa tetap bisa memilih wahdah lain yang sudah tersedia."),
           h("div", { class: "row" }, h("button", { class: "btn primary", type: "button", onclick: () => go("pantau") }, "Pantau hasil latihan →"), h("button", { class: "btn", type: "button", onclick: () => go("latihan") }, "Coba latihan di layar ini"))))));
-    if (window.QRCode) { try { new window.QRCode(qr, { text: url, width: 560, height: 560, colorDark: "#0A1B44", colorLight: "#ffffff", correctLevel: window.QRCode.CorrectLevel.M }); } catch (e) { /* */ } }
+    if (window.QRCode) { try { new window.QRCode(qr, { text: url, width: 560, height: 560, colorDark: cssVar("--ink", "#0A1B44"), colorLight: "#ffffff", correctLevel: window.QRCode.CorrectLevel.M }); } catch (e) { /* */ } }
     else qr.append(h("p", { class: "sub" }, "(QR tidak tersedia, gunakan tautan)"));
   };
 
