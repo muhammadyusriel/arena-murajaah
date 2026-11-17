@@ -349,6 +349,21 @@
     };
     requestAnimationFrame(step); return b;
   }
+  // Angka bergerak dari nilai lama ke nilai baru (v1.8.8): papan skor, podium, HP peserta, latihan
+  function tween(el, from, to, { ms = 1100, delay = 0, fmt = (v) => String(v) } = {}) {
+    const reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+    from = Number(from) || 0; to = Number(to) || 0; el.classList.add("tw");
+    if (reduce || from === to) { el.textContent = fmt(to); return el; }
+    el.textContent = fmt(from); let t0 = null;
+    const step = (t) => {
+      if (t0 === null) t0 = t + delay;
+      const k = Math.max(0, Math.min(1, (t - t0) / ms)); const e = 1 - Math.pow(1 - k, 3);
+      el.textContent = fmt(Math.round(from + (to - from) * e));
+      if (k < 1) requestAnimationFrame(step); else { el.classList.remove("done"); void el.offsetWidth; el.classList.add("done"); }
+    };
+    requestAnimationFrame(step); return el;
+  }
+  ArenaCore.countUp = countUp; ArenaCore.tween = tween;
 
   // =====================================================================
   const SCREENS = {};
@@ -393,8 +408,9 @@
   };
 
   // ---------- TIM ----------
+  const TEAM_PREV = [];
   function teamPanel({ editable = true, turn = -1, onChange } = {}) {
-    const box = h("div", { class: "panel" });
+    const box = h("div", { class: "panel" }); const prevSc = TEAM_PREV;
     const draw = () => {
       box.innerHTML = "";
       box.append(h("div", { class: "row", style: { marginBottom: "10px" } }, h("b", { class: "grow" }, "Kelompok"),
@@ -403,7 +419,8 @@
       const list = h("div", { class: "teams" });
       S.teams.forEach((t, i) => {
         const nm = editable ? h("input", { type: "text", id: "team-" + i, value: t.name, dir: "rtl", "aria-label": "Nama kelompok " + (i + 1), oninput: (e) => { t.name = e.target.value; saveTeams(); } }) : h("span", { class: "nm", dir: "rtl" }, t.name);
-        list.append(h("div", { class: "team" + (i === turn ? " turn" : ""), style: { "--tc": t.color } }, h("span", { class: "sw" }), nm, h("span", { class: "sc" }, t.score)));
+        list.append(h("div", { class: "team" + (i === turn ? " turn" : ""), style: { "--tc": t.color } }, h("span", { class: "sw" }), nm, tween(h("span", { class: "sc" + (prevSc[i] != null && t.score > prevSc[i] ? " up" : "") }), prevSc[i] != null ? prevSc[i] : t.score, t.score, { ms: 900 })));
+        prevSc[i] = t.score;
       });
       box.append(list, h("div", { class: "row", style: { marginTop: "10px" } },
         h("button", { class: "btn small ghost", type: "button", onclick: () => { S.teams.forEach((t) => (t.score = 0)); saveTeams(); draw(); onChange && onChange(); } }, "Nol-kan skor")));
@@ -782,7 +799,7 @@
       const [ar, idn] = p >= 90 ? ["مُمْتَازٌ", "Luar biasa!"] : p >= 75 ? ["جَيِّدٌ جِدًّا", "Bagus sekali!"] : p >= 60 ? ["جَيِّدٌ", "Bagus, tingkatkan lagi."] : ["حَاوِلْ مَرَّةً أُخْرَى", "Ayo ulangi, pasti bisa."];
       if (p >= 75 && n) { confetti(); SFX.fanfare(); }
       say(h("div", { class: "card-p", style: { alignItems: "center", textAlign: "center" } },
-          h("p", { class: "qtext", dir: "rtl", style: { margin: 0 } }, ar), h("div", { class: "lat-pct" }, p + "%"),
+          h("p", { class: "qtext", dir: "rtl", style: { margin: 0 } }, ar), tween(h("div", { class: "lat-pct" }), 0, p, { ms: 1300, delay: 200, fmt: (v) => v + "%" }),
           h("p", { class: "status", style: { margin: 0 } }, right + " dari " + n + " soal benar · " + idn), sent,
           h("div", { class: "row", style: { justifyContent: "center" } },
             wrong.length ? h("button", { class: "btn primary", type: "button", onclick: () => run(shuffle(wrong.map((w) => prepare(w.q, w.q.cat))), true) }, "Ulangi yang salah (" + wrong.length + ")") : null,
