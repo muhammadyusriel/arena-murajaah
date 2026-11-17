@@ -99,6 +99,20 @@
     const dd = dropdown(opts, getScope(), (v) => { store.set(scopeKey(), v); onChange && onChange(v); }, "Cakupan materi", extra);
     return h("div", { class: "row scope" }, h("span", { class: "sub" }, "Cakupan"), dd);
   }
+  // ---------- TINGKAT SOAL (v1.9.0) ----------
+  const LEVELS = [{ v: 0, ar: "", id_: "Campuran (mudah → sulit)" }, { v: 1, ar: "سَهْلٌ", id_: "Mudah" }, { v: 2, ar: "مُتَوَسِّطٌ", id_: "Sedang" }, { v: 3, ar: "صَعْبٌ", id_: "Sulit" }];
+  const getLevel = () => { const v = store.get("level", 0); return [0, 1, 2, 3].includes(v) ? v : 0; };
+  const qLevel = (q) => q.d || 2;
+  const inLevel = (lv) => (q) => !lv || qLevel(q) === lv;
+  const levelName = (lv) => (lv ? LEVELS[lv].id_ : "Campuran");
+  const byLevel = (arr, get) => arr.map((x, i) => [x, i]).sort((a, b) => qLevel(get ? get(a[0]) : a[0]) - qLevel(get ? get(b[0]) : b[0]) || a[1] - b[1]).map((x) => x[0]);
+  const levelTag = (q) => h("span", { class: "lvl l" + qLevel(q), title: "Tingkat " + LEVELS[qLevel(q)].id_ }, LEVELS[qLevel(q)].ar);
+  function levelPicker(onChange, extra) {
+    const opts = LEVELS.map((l) => ({ value: l.v, label: () => h("span", null, l.id_, l.ar ? h("span", { class: "ar dd-ar" }, " · " + l.ar) : null) }));
+    const dd = dropdown(opts, getLevel(), (v) => { store.set("level", v); onChange && onChange(v); }, "Tingkat soal", extra);
+    return h("div", { class: "row scope lvlpick" }, h("span", { class: "sub" }, "Tingkat"), dd);
+  }
+  const bankOf = (c) => (D() && D().bank && D().bank[c]) || [];
   const rnd = (n) => Math.floor(Math.random() * n);
   const shuffle = (a) => { const r = a.slice(); for (let i = r.length - 1; i > 0; i--) { const j = rnd(i + 1); [r[i], r[j]] = [r[j], r[i]]; } return r; };
   const sample = (a, n) => shuffle(a).slice(0, n);
@@ -208,7 +222,10 @@
     { id: "fahm", ar: "فَهْمُ الْمَقْرُوءِ", id_: "Pemahaman teks" },
     { id: "tarakib", ar: "التَّرَاكِيبُ وَالصَّرْفُ", id_: "Tarakib & sharf" },
     { id: "tasykil", ar: "التَّشْكِيلُ", id_: "Harakat akhir" },
+    { id: "tashrif", ar: "تَصْرِيفُ الْفِعْلِ", id_: "Tashrif fi'il" },
+    { id: "jamak", ar: "الْمُفْرَدُ وَالْجَمْعُ", id_: "Mufrad & jamak" },
   ];
+  const NEW_CATS_19 = ["tashrif", "jamak"]; // jenis baru v1.9.0: otomatis ikut di pengaturan yang tersimpan
   const catOf = (id) => CATS.find((c) => c.id === id);
   const nashTitle = (n) => { const x = D().nusus.find((u) => u.n === n); return x ? x.title : ""; };
 
@@ -219,7 +236,7 @@
     const order = shuffle(q.o.map((_, i) => i));
     return { ...base, o: order.map((i) => q.o[i]), a: order.indexOf(q.a) };
   }
-  window.ArenaCore = { h, shuffle, sample, rnd, arNum, store, toast, copyText, downloadText, SHAPES, CATS, catOf, prepare, D, S, TEAM_NAMES, TEAM_COLORS, saveTeams, nashTitle, getScope, inScope, scopeName, scopePicker, SFX, soundBtn, renderQ: null, timerEl: null, go: null, SEAL, I };
+  window.ArenaCore = { h, shuffle, sample, rnd, arNum, store, toast, copyText, downloadText, SHAPES, CATS, catOf, prepare, D, S, TEAM_NAMES, TEAM_COLORS, saveTeams, nashTitle, getScope, inScope, scopeName, scopePicker, LEVELS, getLevel, inLevel, qLevel, levelName, byLevel, levelTag, levelPicker, bankOf, NEW_CATS_19, SFX, soundBtn, renderQ: null, timerEl: null, go: null, SEAL, I };
 
   // ---------- render pertanyaan ----------
   function renderQ(q, { compact = false } = {}) {
@@ -435,14 +452,18 @@
     let board = store.get("board-" + S.wahdah, null);
     // Pilih 5 kategori yang soalnya cukup di cakupan ini; kolom yang kurang diisi soal kategori lain dari cakupan yang sama.
     const fresh = (sc) => {
-      const pool = (id) => D().bank[id].filter(inScope(sc));
+      const pool = (id) => bankOf(id).filter(inScope(sc));
       const enough = CATS.filter((c) => pool(c.id).length >= POINTS.length);
       let chosen = CATS.slice(0, NC).filter((c) => enough.includes(c));
       enough.forEach((c) => { if (chosen.length < NC && !chosen.includes(c)) chosen.push(c); });
       CATS.filter((c) => !chosen.includes(c)).sort((a, b) => pool(b.id).length - pool(a.id).length).forEach((c) => { if (chosen.length < NC) chosen.push(c); });
       chosen = CATS.filter((c) => chosen.includes(c));
       const used = new Set();
-      const cells = chosen.map((c) => sample(pool(c.id), POINTS.length).map((q) => { used.add(q); return { q, c: c.id, done: null }; }));
+      // nilai 100–200 = mudah, 300 = sedang, 400–500 = sulit (bila soal tingkat itu habis, diambil yang terdekat)
+      const LV = [1, 1, 2, 3, 3];
+      const cells = chosen.map((c) => { const pl = shuffle(pool(c.id)); const col = [];
+        LV.forEach((L) => { const q = pl.filter((x) => !used.has(x)).sort((a, b) => Math.abs(qLevel(a) - L) - Math.abs(qLevel(b) - L))[0]; if (q) { used.add(q); col.push({ q, c: c.id, done: null }); } });
+        return col; });
       const spare = shuffle(CATS.flatMap((c) => pool(c.id).filter((q) => !used.has(q)).map((q) => ({ q, c: c.id }))));
       cells.forEach((col) => { while (col.length < POINTS.length && spare.length) col.push({ ...spare.pop(), done: null }); });
       return { scope: sc, cats: chosen.map((c) => c.id), cells };
@@ -721,7 +742,8 @@
     const body = h("div", { style: { display: "flex", flexDirection: "column", gap: "14px" } }); box.append(body); root.append(box);
     const say = (...k) => { body.innerHTML = ""; body.append(...k); window.scrollTo(0, 0); };
     const cfg = store.get("lat-cfg", { cats: CATS.map((c) => c.id), count: 10 });
-    const bestKey = () => "lat-best-" + S.wahdah + "-" + getScope();
+    if (!cfg.v19) { cfg.cats = cfg.cats.concat(NEW_CATS_19.filter((c) => !cfg.cats.includes(c))); cfg.v19 = 1; store.set("lat-cfg", cfg); }
+    const bestKey = () => "lat-best-" + S.wahdah + "-" + getScope() + (getLevel() ? "-L" + getLevel() : "");
     const pct = (a, b) => (b ? Math.round((100 * a) / b) : 0);
     const online = !!(window.ARENA_FIREBASE && window.ARENA_FIREBASE.apiKey && window.ArenaLive);
     const me = { name: store.get("lat-name", ""), nim: store.get("lat-nim", "") };
@@ -740,7 +762,7 @@
       const wsel = WAHDAH_LIST().length > 1 ? dropdown(WAHDAH_LIST().map((w) => ({ value: w, label: () => h("span", { class: "dd-w" }, h("b", null, "Wahdah " + w), h("span", { class: "ar" }, window.ARENA_DATA[w].title)) })), S.wahdah, (v) => { S.wahdah = v; store.set("wahdah", v); setup(); }, "Pilih wahdah") : null;
       const catBox = h("div", { class: "chips-sel" });
       const drawCats = () => { catBox.innerHTML = ""; CATS.forEach((c) => { const on = cfg.cats.includes(c.id); catBox.append(h("button", { class: "csel" + (on ? " on" : ""), type: "button", "aria-pressed": String(on), onclick: () => { cfg.cats = on ? cfg.cats.filter((x) => x !== c.id) : cfg.cats.concat(c.id); store.set("lat-cfg", cfg); drawCats(); upd(); } }, h("span", { class: "ar" }, c.ar), h("small", null, c.id_))); }); };
-      const avail = () => cfg.cats.reduce((a, c) => a + D().bank[c].filter(inScope(getScope())).length, 0);
+      const avail = () => cfg.cats.reduce((a, c) => a + bankOf(c).filter(inScope(getScope())).filter(inLevel(getLevel())).length, 0);
       const info = h("p", { class: "sub", style: { textAlign: "center", margin: 0 } });
       const best = store.get(bestKey(), null);
       const upd = () => { const n = avail(); const needName = online && me.name.length < 2; const needNim = online && me.nim.length < 3; info.textContent = needName && needNim ? "Tulis nama dan NIM-mu dulu agar latihan tercatat." : needName ? "Tulis namamu dulu agar latihan tercatat." : needNim ? "Tulis NIM-mu dulu agar latihan tercatat." : n + " soal tersedia" + (cfg.count && n < cfg.count ? " (semua akan dipakai)" : ""); startBtn.disabled = !n || needName || needNim; };
@@ -753,6 +775,7 @@
           online ? h("div", { class: "lat-id" }, nmI, nimI, h("small", { class: "sub" }, "Nama dan NIM wajib diisi. Hasil latihanmu tercatat untuk dosen dengan NIM ini.")) : null,
           wsel ? h("label", { class: "row" }, h("span", { class: "sub", style: { minWidth: "88px" } }, "Wahdah"), wsel) : h("p", { class: "status", style: { margin: 0 } }, "Wahdah " + S.wahdah),
           scopePicker(() => setup()),
+          levelPicker(() => setup()),
           h("div", { class: "row" }, h("span", { class: "sub", style: { minWidth: "88px" } }, "Jumlah"), cnt),
           h("div", null, h("div", { class: "sub", style: { marginBottom: "8px" } }, "Jenis soal"), catBox),
           info, startBtn,
@@ -760,8 +783,9 @@
       drawCats(); upd();
     }
     function buildSet() {
-      const sc = getScope(); const all = shuffle(cfg.cats.flatMap((c) => D().bank[c].filter(inScope(sc)).map((q) => ({ q, c }))));
-      return (cfg.count ? all.slice(0, cfg.count) : all).map(({ q, c }) => prepare({ ...q, _k: c + ":" + D().bank[c].indexOf(q) }, c));
+      const sc = getScope(), lv = getLevel(); const all = shuffle(cfg.cats.flatMap((c) => bankOf(c).filter(inScope(sc)).filter(inLevel(lv)).map((q) => ({ q, c }))));
+      let set = cfg.count ? all.slice(0, cfg.count) : all; if (!lv) set = byLevel(set, (x) => x.q); // Campuran: dari mudah ke sulit
+      return set.map(({ q, c }) => prepare({ ...q, _k: c + ":" + bankOf(c).indexOf(q) }, c));
     }
     function run(set, retry) {
       let k = 0, right = 0, streak = 0, ans = 0; const wrong = []; const t0 = Date.now();
@@ -792,7 +816,7 @@
       const sent = h("p", { class: "sub lat-sent", style: { margin: 0 } });
       if (n && online && me.name) {
         sent.textContent = "Mengirim hasil ke dosen…";
-        sendResult({ n, right, scope: getScope(), retry: !!retry, dur: Math.round((Date.now() - (t0 || Date.now())) / 1000), w: wrong.map((x) => x.q._k).filter(Boolean).slice(0, 60) })
+        sendResult({ n, right, scope: getScope(), lv: getLevel(), retry: !!retry, dur: Math.round((Date.now() - (t0 || Date.now())) / 1000), w: wrong.map((x) => x.q._k).filter(Boolean).slice(0, 60) })
           .then((st) => { sent.textContent = st === "ok" ? "✓ Hasil tercatat untuk dosen" : st === "wait" ? "Hasil akan terkirim saat koneksi tersambung (biarkan halaman ini terbuka)" : st === "off" ? "" : "Hasil belum terkirim. Periksa koneksi internet."; sent.classList.toggle("ok", st === "ok"); });
       }
       if (!retry && n) { const b = store.get(bestKey(), null); if (!b || p > pct(b.r, b.n) || (p === pct(b.r, b.n) && n > b.n)) store.set(bestKey(), { r: right, n, at: Date.now() }); }
@@ -906,23 +930,24 @@
 
   // ---------- BANK SOAL ----------
   SCREENS.bank = (root) => {
-    let cat = "fahm", nf = 0;
+    let cat = "fahm", nf = 0, lf = 0;
     const tabs = h("div", { class: "tabs" }); const list = h("div", { class: "panel" });
+    const lSel = dropdown([{ value: 0, label: "Semua tingkat" }].concat(LEVELS.slice(1).map((l) => ({ value: l.v, label: () => h("span", null, l.id_ + " · ", h("span", { class: "ar dd-ar" }, l.ar)) }))), 0, (v) => { lf = v; draw(); }, "Filter tingkat", "end");
     const nSel = dropdown([{ value: 0, label: "Semua nash" }].concat(D().nusus.map((u) => ({ value: u.n, label: "Nash " + u.n }))), 0, (v) => { nf = v; draw(); }, "Filter nash", "end");
     function draw() {
-      tabs.innerHTML = ""; CATS.forEach((c) => tabs.append(h("button", { class: "tab" + (cat === c.id ? " on" : ""), type: "button", onclick: () => { cat = c.id; draw(); } }, c.id_ + " (" + D().bank[c.id].length + ")")));
-      list.innerHTML = ""; const qs = D().bank[cat].filter((q) => !nf || !q.n || q.n === nf);
+      tabs.innerHTML = ""; CATS.forEach((c) => tabs.append(h("button", { class: "tab" + (cat === c.id ? " on" : ""), type: "button", onclick: () => { cat = c.id; draw(); } }, c.id_ + " (" + bankOf(c.id).length + ")")));
+      list.innerHTML = ""; const qs = bankOf(cat).filter((q) => !nf || !q.n || q.n === nf).filter(inLevel(lf));
       if (!qs.length) list.append(h("p", { class: "empty" }, "Tidak ada soal."));
       qs.forEach((q, i) => list.append(h("div", { class: "bank-q" },
-        h("div", { class: "sub" }, "#" + (i + 1) + (q.n ? " · Nash " + q.n : "")),
+        h("div", { class: "sub" }, "#" + (i + 1) + (q.n ? " · Nash " + q.n : ""), " ", levelTag(q)),
         h("div", { class: "qq" }, q.q, q.s ? h("div", null, q.s[0], h("span", { class: cat === "tasykil" ? "hl" : "blank" }, cat === "tasykil" ? q.bare : "…"), q.s[1]) : null),
         h("div", { class: "oo" }, q.o.map((o, k) => h("span", { class: k === q.a ? "ok" : "" }, (k === q.a ? "✓ " : "") + o))),
         q.fix ? h("div", { class: "x" }, "Pembetulan: ", h("span", { class: "ar", style: { fontSize: "18px" } }, q.fix)) : null,
         q.x ? h("div", { class: "x" }, q.x) : null)));
     }
-    root.append(h("div", { class: "wrap" }, topbar("بَنْكُ الْأَسْئِلَةِ", "Bank Soal & Kunci"), h("div", { class: "row" }, tabs, h("span", { class: "grow" }), nSel,
+    root.append(h("div", { class: "wrap" }, topbar("بَنْكُ الْأَسْئِلَةِ", "Bank Soal & Kunci"), h("div", { class: "row" }, tabs, h("span", { class: "grow" }), lSel, nSel,
       PIN ? h("button", { class: "btn small ghost", type: "button", id: "relock", title: "Kunci Bank Soal lagi di perangkat ini", onclick: () => { lockPin(); toast("Bank Soal dikunci lagi"); go("home"); } }, "Kunci lagi") : null),
-      h("p", { class: "sub" }, "Soal makna, sinonim/antonim, isian, dan harakat dibangkitkan dari data mufradat dan nash; soal pemahaman dan tarakib ditulis manual. Saat kuis, urutan pilihan selalu diacak."), list));
+      h("p", { class: "sub" }, "Soal makna, sinonim/antonim, isian, harakat, tashrif, dan mufrad-jamak dibangkitkan dari data mufradat dan nash; soal pemahaman dan tarakib ditulis manual. Label tingkat (سَهْلٌ · مُتَوَسِّطٌ · صَعْبٌ) adalah penilaian awal menurut aturan, belum diuji di kelas. Saat kuis, urutan pilihan selalu diacak."), list));
     draw();
   };
 

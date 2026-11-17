@@ -784,3 +784,11 @@ a.brand.link:hover .seal { transform: rotate(45deg) scale(1.05); }
 }
 .late-h { animation: rise .5s var(--ease) 2.6s backwards; }
 @media (prefers-reduced-motion: reduce) { .late-h { animation: none; } }
+
+/* ===== v1.9.0: label tingkat soal ===== */
+.lvl { display: inline-flex; align-items: center; font-family: var(--font-ar); font-size: 17px; line-height: 1.5; padding: 0 12px; border-radius: 999px; font-weight: 700; vertical-align: middle; border: 1px solid transparent; }
+.lvl.l1 { color: #062B1B; background: color-mix(in srgb, var(--good) 85%, #fff); }
+.lvl.l2 { color: #2A1E05; background: linear-gradient(180deg, var(--gold-hi), var(--saffron)); }
+.lvl.l3 { color: #fff; background: color-mix(in srgb, var(--bad) 85%, #000); }
+.qhead .lvl { font-size: 18px; padding: 2px 14px; }
+.bank-q .sub .lvl { font-size: 15px; margin-inline-start: 6px; }

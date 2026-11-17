@@ -1296,7 +1296,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 1,
-    "k": "ذات"
+    "k": "ذات",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -1309,7 +1310,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 1,
-    "k": "قلق"
+    "k": "قلق",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -1322,7 +1324,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 1,
-    "k": "أراد"
+    "k": "أراد",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -1335,7 +1338,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 1,
-    "k": "زواج"
+    "k": "زواج",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -1348,7 +1352,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 1,
-    "k": "فتاة"
+    "k": "فتاة",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -1361,7 +1366,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 1,
-    "k": "مناسب"
+    "k": "مناسب",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -1374,7 +1380,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 1,
-    "k": "فقير"
+    "k": "فقير",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -1387,7 +1394,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 1,
-    "k": "مال"
+    "k": "مال",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -1400,7 +1408,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 1,
-    "k": "أسرة"
+    "k": "أسرة",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -1413,7 +1422,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 1,
-    "k": "غني"
+    "k": "غني",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -1426,7 +1436,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 1,
-    "k": "جمال"
+    "k": "جمال",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -1439,7 +1450,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 1,
-    "k": "حسب"
+    "k": "حسب",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -1452,7 +1464,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 1,
-    "k": "نسب"
+    "k": "نسب",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -1465,7 +1478,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 1,
-    "k": "حقق"
+    "k": "حقق",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -1478,7 +1492,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 1,
-    "k": "سعادة"
+    "k": "سعادة",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -1491,7 +1506,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 1,
-    "k": "دين"
+    "k": "دين",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -1504,7 +1520,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 1,
-    "k": "ظفر"
+    "k": "ظفر",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -1517,7 +1534,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 2,
-    "k": "زوج"
+    "k": "زوج",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -1530,7 +1548,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 2,
-    "k": "ظهر"
+    "k": "ظهر",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -1543,7 +1562,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 2,
-    "k": "حقيقة"
+    "k": "حقيقة",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -1556,7 +1576,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 2,
-    "k": "خلاف"
+    "k": "خلاف",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -1569,7 +1590,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 2,
-    "k": "عجز"
+    "k": "عجز",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -1582,7 +1604,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 2,
-    "k": "حل"
+    "k": "حل",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -1595,7 +1618,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 2,
-    "k": "اعتقد"
+    "k": "اعتقد",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -1608,7 +1632,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 2,
-    "k": "شاب"
+    "k": "شاب",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -1621,7 +1646,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 2,
-    "k": "قابل"
+    "k": "قابل",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -1634,7 +1660,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 2,
-    "k": "ثار"
+    "k": "ثار",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -1647,7 +1674,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 2,
-    "k": "فكر"
+    "k": "فكر",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -1660,7 +1688,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 2,
-    "k": "طلاق"
+    "k": "طلاق",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -1673,7 +1702,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 2,
-    "k": "رحلة"
+    "k": "رحلة",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -1686,7 +1716,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 2,
-    "k": "سبيل"
+    "k": "سبيل",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -1699,7 +1730,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 2,
-    "k": "نجاح"
+    "k": "نجاح",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -1712,7 +1744,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 2,
-    "k": "حوار"
+    "k": "حوار",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -1725,7 +1758,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 2,
-    "k": "عاد"
+    "k": "عاد",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -1738,7 +1772,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 2,
-    "k": "سبب"
+    "k": "سبب",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -1751,7 +1786,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 2,
-    "k": "شخصية"
+    "k": "شخصية",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -1764,7 +1800,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 2,
-    "k": "مرحلة"
+    "k": "مرحلة",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -1777,7 +1814,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 2,
-    "k": "طفولة"
+    "k": "طفولة",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -1790,7 +1828,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 2,
-    "k": "زاد"
+    "k": "زاد",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -1803,7 +1842,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 2,
-    "k": "أخذ"
+    "k": "أخذ",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -1816,7 +1856,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 2,
-    "k": "شكا"
+    "k": "شكا",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -1829,7 +1870,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 2,
-    "k": "استمع"
+    "k": "استمع",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -1842,7 +1884,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 2,
-    "k": "هاتف"
+    "k": "هاتف",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -1855,7 +1898,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 2,
-    "k": "سياسة"
+    "k": "سياسة",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -1868,7 +1912,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 2,
-    "k": "صحيفة"
+    "k": "صحيفة",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -1881,7 +1926,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 2,
-    "k": "مجلة"
+    "k": "مجلة",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -1894,7 +1940,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 3,
-    "k": "سهر"
+    "k": "سهر",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -1907,7 +1954,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 3,
-    "k": "ترك"
+    "k": "ترك",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -1920,7 +1968,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 3,
-    "k": "عاش"
+    "k": "عاش",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -1933,7 +1982,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 3,
-    "k": "سنة"
+    "k": "سنة",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -1946,7 +1996,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 3,
-    "k": "درى"
+    "k": "درى",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -1959,7 +2010,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 3,
-    "k": "مؤدب"
+    "k": "مؤدب",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -1972,7 +2024,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 3,
-    "k": "مطيع"
+    "k": "مطيع",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -1985,7 +2038,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 3,
-    "k": "تغير"
+    "k": "تغير",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -1998,7 +2052,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 3,
-    "k": "أصبح"
+    "k": "أصبح",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -2011,7 +2066,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 3,
-    "k": "مهمل"
+    "k": "مهمل",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2024,7 +2080,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 3,
-    "k": "اهتم"
+    "k": "اهتم",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -2037,7 +2094,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 3,
-    "k": "صديقة"
+    "k": "صديقة",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2050,7 +2108,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 3,
-    "k": "تكلم"
+    "k": "تكلم",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -2063,7 +2122,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 3,
-    "k": "عنيد"
+    "k": "عنيد",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2076,7 +2136,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 4,
-    "k": "ماض"
+    "k": "ماض",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2089,7 +2150,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 4,
-    "k": "حاضر"
+    "k": "حاضر",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2102,7 +2164,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 4,
-    "k": "نظام"
+    "k": "نظام",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2115,7 +2178,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 4,
-    "k": "اختفى"
+    "k": "اختفى",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -2128,7 +2192,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 4,
-    "k": "مجتمع"
+    "k": "مجتمع",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2141,7 +2206,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 4,
-    "k": "سكن"
+    "k": "سكن",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -2154,7 +2220,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 4,
-    "k": "ضم"
+    "k": "ضم",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -2167,7 +2234,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 4,
-    "k": "فرد"
+    "k": "فرد",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2180,7 +2248,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 4,
-    "k": "ولد"
+    "k": "ولد",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2193,7 +2262,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 4,
-    "k": "ضعف"
+    "k": "ضعف",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -2206,7 +2276,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 4,
-    "k": "علاقة"
+    "k": "علاقة",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2219,7 +2290,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 4,
-    "k": "معظم"
+    "k": "معظم",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2232,7 +2304,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 4,
-    "k": "خرج"
+    "k": "خرج",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -2245,7 +2318,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 4,
-    "k": "نائم"
+    "k": "نائم",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2258,7 +2332,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 4,
-    "k": "رجع"
+    "k": "رجع",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -2271,7 +2346,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 4,
-    "k": "ناحية"
+    "k": "ناحية",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2284,7 +2360,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 4,
-    "k": "غادر"
+    "k": "غادر",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -2297,7 +2374,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 4,
-    "k": "بقي"
+    "k": "بقي",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -2310,7 +2388,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 4,
-    "k": "نساء"
+    "k": "نساء",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2323,7 +2402,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 4,
-    "k": "ضرورة"
+    "k": "ضرورة",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2336,7 +2416,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 4,
-    "k": "متعب"
+    "k": "متعب",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2349,7 +2430,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 4,
-    "k": "قام"
+    "k": "قام",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -2362,7 +2444,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 4,
-    "k": "نظافة"
+    "k": "نظافة",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2375,7 +2458,8 @@ window.ARENA_DATA[3] = {
     ],
     "a": 0,
     "n": 4,
-    "k": "حديث"
+    "k": "حديث",
+    "d": 1
    }
   ],
   "muradif": [
@@ -2391,7 +2475,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 1,
     "k": "ذات",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2405,7 +2490,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 1,
     "k": "قلق",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2419,7 +2505,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 1,
     "k": "قلق",
-    "sub": "md"
+    "sub": "md",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -2433,7 +2520,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 1,
     "k": "أراد",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -2447,7 +2535,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 1,
     "k": "أراد",
-    "sub": "md"
+    "sub": "md",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -2461,7 +2550,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 1,
     "k": "زواج",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2475,7 +2565,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 1,
     "k": "زواج",
-    "sub": "md"
+    "sub": "md",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -2489,7 +2580,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 1,
     "k": "فتاة",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2503,7 +2595,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 1,
     "k": "فتاة",
-    "sub": "md"
+    "sub": "md",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -2517,7 +2610,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 1,
     "k": "مناسب",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2531,7 +2625,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 1,
     "k": "فقير",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2545,7 +2640,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 1,
     "k": "فقير",
-    "sub": "md"
+    "sub": "md",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -2559,7 +2655,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 1,
     "k": "مال",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2573,7 +2670,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 1,
     "k": "أسرة",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2587,7 +2685,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 1,
     "k": "غني",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2601,7 +2700,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 1,
     "k": "غني",
-    "sub": "md"
+    "sub": "md",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -2615,7 +2715,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 1,
     "k": "جمال",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2629,7 +2730,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 1,
     "k": "جمال",
-    "sub": "md"
+    "sub": "md",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -2643,7 +2745,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 1,
     "k": "حسب",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2657,7 +2760,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 1,
     "k": "نسب",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2671,7 +2775,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 1,
     "k": "حقق",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -2685,7 +2790,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 1,
     "k": "سعادة",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2699,7 +2805,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 1,
     "k": "سعادة",
-    "sub": "md"
+    "sub": "md",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -2713,7 +2820,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 1,
     "k": "دين",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2727,7 +2835,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 1,
     "k": "ظفر",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -2741,7 +2850,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 1,
     "k": "ظفر",
-    "sub": "md"
+    "sub": "md",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -2755,7 +2865,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "زوج",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2769,7 +2880,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "ظهر",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -2783,7 +2895,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "ظهر",
-    "sub": "md"
+    "sub": "md",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -2797,7 +2910,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "حقيقة",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2811,7 +2925,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "حقيقة",
-    "sub": "md"
+    "sub": "md",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -2825,7 +2940,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "خلاف",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2839,7 +2955,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "خلاف",
-    "sub": "md"
+    "sub": "md",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -2853,7 +2970,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "عجز",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -2867,7 +2985,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "عجز",
-    "sub": "md"
+    "sub": "md",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -2881,7 +3000,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "حل",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2895,7 +3015,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "اعتقد",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -2909,7 +3030,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "شاب",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -2923,7 +3045,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "شاب",
-    "sub": "md"
+    "sub": "md",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -2937,7 +3060,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "قابل",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -2951,7 +3075,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "ثار",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -2965,7 +3090,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "ثار",
-    "sub": "md"
+    "sub": "md",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -2979,7 +3105,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "فكر",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -2993,7 +3120,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "طلاق",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -3007,7 +3135,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "طلاق",
-    "sub": "md"
+    "sub": "md",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -3021,7 +3150,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "رحلة",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -3035,7 +3165,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "رحلة",
-    "sub": "md"
+    "sub": "md",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -3049,7 +3180,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "سبيل",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -3063,7 +3195,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "نجاح",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -3077,7 +3210,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "نجاح",
-    "sub": "md"
+    "sub": "md",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -3091,7 +3225,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "حوار",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -3105,7 +3240,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "عاد",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -3119,7 +3255,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "عاد",
-    "sub": "md"
+    "sub": "md",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -3133,7 +3270,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "سبب",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -3147,7 +3285,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "سبب",
-    "sub": "md"
+    "sub": "md",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -3161,7 +3300,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "شخصية",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -3175,7 +3315,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "مرحلة",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -3189,7 +3330,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "طفولة",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -3203,7 +3345,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "طفولة",
-    "sub": "md"
+    "sub": "md",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -3217,7 +3360,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "زاد",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -3231,7 +3375,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "زاد",
-    "sub": "md"
+    "sub": "md",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -3245,7 +3390,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "أخذ",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -3259,7 +3405,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "أخذ",
-    "sub": "md"
+    "sub": "md",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -3273,7 +3420,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "شكا",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -3287,7 +3435,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "شكا",
-    "sub": "md"
+    "sub": "md",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -3301,7 +3450,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "استمع",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -3315,7 +3465,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "هاتف",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -3329,7 +3480,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "سياسة",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -3343,7 +3495,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "صحيفة",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -3357,7 +3510,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 2,
     "k": "مجلة",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -3371,7 +3525,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 3,
     "k": "سهر",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -3385,7 +3540,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 3,
     "k": "سهر",
-    "sub": "md"
+    "sub": "md",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -3399,7 +3555,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 3,
     "k": "ترك",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -3413,7 +3570,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 3,
     "k": "ترك",
-    "sub": "md"
+    "sub": "md",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -3427,7 +3585,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 3,
     "k": "عاش",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -3441,7 +3600,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 3,
     "k": "عاش",
-    "sub": "md"
+    "sub": "md",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -3455,7 +3615,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 3,
     "k": "سنة",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -3469,7 +3630,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 3,
     "k": "درى",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -3483,7 +3645,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 3,
     "k": "درى",
-    "sub": "md"
+    "sub": "md",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -3497,7 +3660,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 3,
     "k": "مؤدب",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -3511,7 +3675,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 3,
     "k": "مؤدب",
-    "sub": "md"
+    "sub": "md",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -3525,7 +3690,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 3,
     "k": "مطيع",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -3539,7 +3705,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 3,
     "k": "مطيع",
-    "sub": "md"
+    "sub": "md",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -3553,7 +3720,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 3,
     "k": "تغير",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -3567,7 +3735,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 3,
     "k": "تغير",
-    "sub": "md"
+    "sub": "md",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -3581,7 +3750,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 3,
     "k": "أصبح",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -3595,7 +3765,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 3,
     "k": "أصبح",
-    "sub": "md"
+    "sub": "md",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -3609,7 +3780,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 3,
     "k": "مهمل",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -3623,7 +3795,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 3,
     "k": "مهمل",
-    "sub": "md"
+    "sub": "md",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -3637,7 +3810,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 3,
     "k": "اهتم",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -3651,7 +3825,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 3,
     "k": "اهتم",
-    "sub": "md"
+    "sub": "md",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -3665,7 +3840,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 3,
     "k": "صديقة",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -3679,7 +3855,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 3,
     "k": "صديقة",
-    "sub": "md"
+    "sub": "md",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -3693,7 +3870,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 3,
     "k": "تكلم",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -3707,7 +3885,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 3,
     "k": "تكلم",
-    "sub": "md"
+    "sub": "md",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -3721,7 +3900,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 3,
     "k": "عنيد",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -3735,7 +3915,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 3,
     "k": "عنيد",
-    "sub": "md"
+    "sub": "md",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -3749,7 +3930,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "ماض",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -3763,7 +3945,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "ماض",
-    "sub": "md"
+    "sub": "md",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -3777,7 +3960,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "حاضر",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -3791,7 +3975,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "حاضر",
-    "sub": "md"
+    "sub": "md",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -3805,7 +3990,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "نظام",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -3819,7 +4005,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "نظام",
-    "sub": "md"
+    "sub": "md",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -3833,7 +4020,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "اختفى",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -3847,7 +4035,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "اختفى",
-    "sub": "md"
+    "sub": "md",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -3861,7 +4050,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "مجتمع",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -3875,7 +4065,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "سكن",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -3889,7 +4080,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "سكن",
-    "sub": "md"
+    "sub": "md",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -3903,7 +4095,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "ضم",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -3917,7 +4110,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "ضم",
-    "sub": "md"
+    "sub": "md",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -3931,7 +4125,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "فرد",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -3945,7 +4140,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "فرد",
-    "sub": "md"
+    "sub": "md",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -3959,7 +4155,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "ولد",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -3973,7 +4170,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "ولد",
-    "sub": "md"
+    "sub": "md",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -3987,7 +4185,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "ضعف",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -4001,7 +4200,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "ضعف",
-    "sub": "md"
+    "sub": "md",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -4015,7 +4215,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "علاقة",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -4029,7 +4230,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "علاقة",
-    "sub": "md"
+    "sub": "md",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -4043,7 +4245,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "معظم",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -4057,7 +4260,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "معظم",
-    "sub": "md"
+    "sub": "md",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -4071,7 +4275,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "خرج",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -4085,7 +4290,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "خرج",
-    "sub": "md"
+    "sub": "md",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -4099,7 +4305,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "نائم",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -4113,7 +4320,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "نائم",
-    "sub": "md"
+    "sub": "md",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -4127,7 +4335,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "رجع",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -4141,7 +4350,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "رجع",
-    "sub": "md"
+    "sub": "md",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -4155,7 +4365,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "ناحية",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -4169,7 +4380,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "غادر",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -4183,7 +4395,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "غادر",
-    "sub": "md"
+    "sub": "md",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -4197,7 +4410,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "بقي",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -4211,7 +4425,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "بقي",
-    "sub": "md"
+    "sub": "md",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -4225,7 +4440,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "نساء",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -4239,7 +4455,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "نساء",
-    "sub": "md"
+    "sub": "md",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -4253,7 +4470,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "ضرورة",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -4267,7 +4485,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "متعب",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -4281,7 +4500,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "متعب",
-    "sub": "md"
+    "sub": "md",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -4295,7 +4515,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "قام",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -4309,7 +4530,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "قام",
-    "sub": "md"
+    "sub": "md",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -4323,7 +4545,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "نظافة",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    },
    {
     "type": "mcq",
@@ -4337,7 +4560,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "نظافة",
-    "sub": "md"
+    "sub": "md",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -4351,7 +4575,8 @@ window.ARENA_DATA[3] = {
     "a": 0,
     "n": 4,
     "k": "حديث",
-    "sub": "mr"
+    "sub": "mr",
+    "d": 1
    }
   ],
   "akmil": [
@@ -4370,7 +4595,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "أَنْتَ ",
      " يَا وَلَدِي، مَاذَا بِكَ؟!"
-    ]
+    ],
+    "d": 2
    },
    {
     "type": "mcq",
@@ -4387,7 +4613,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "",
      " الزَّوَاجَ يَا أُمِّي، وَلَا أَجِدُ الْفَتَاةَ الْمُنَاسِبَةَ."
-    ]
+    ],
+    "d": 3
    },
    {
     "type": "mcq",
@@ -4404,7 +4631,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "أُرِيدُ الزَّوَاجَ يَا أُمِّي، وَلَا أَجِدُ ",
      " الْمُنَاسِبَةَ."
-    ]
+    ],
+    "d": 2
    },
    {
     "type": "mcq",
@@ -4421,7 +4649,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "هُنَاكَ ",
      " كَثِيرَاتٌ مُنَاسِبَاتٌ لِلزَّوَاجِ."
-    ]
+    ],
+    "d": 2
    },
    {
     "type": "mcq",
@@ -4438,7 +4667,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "إِنَّهَا ",
      "، لَا مَالَ لَهَا."
-    ]
+    ],
+    "d": 2
    },
    {
     "type": "mcq",
@@ -4455,7 +4685,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "نَعَمْ، هِيَ مِنْ ",
      " غَنِيَّةٍ، وَلَكِنِّي سَمِعْتُ أَنَّهَا غَيْرُ جَمِيلَةٍ."
-    ]
+    ],
+    "d": 3
    },
    {
     "type": "mcq",
@@ -4472,7 +4703,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "سَمِعْتُ أَنَّهَا ",
      " مَالٍ وَجَمَالٍ، وَلَكِنِّي أُرِيدُ الْحَسَبَ وَالنَّسَبَ."
-    ]
+    ],
+    "d": 2
    },
    {
     "type": "mcq",
@@ -4489,7 +4721,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "سَمِعْتُ أَنَّهَا ذَاتُ مَالٍ وَجَمَالٍ، وَلَكِنِّي أُرِيدُ ",
      " وَالنَّسَبَ."
-    ]
+    ],
+    "d": 2
    },
    {
     "type": "mcq",
@@ -4506,7 +4739,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "هَذِهِ لَا ",
      " السَّعَادَةَ!"
-    ]
+    ],
+    "d": 3
    },
    {
     "type": "mcq",
@@ -4523,7 +4757,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "هَذَا قَوْلُ الرَّسُولِ ﷺ: «فَ",
      " بِذَاتِ الدِّينِ، تَرِبَتْ يَدَاكَ»."
-    ]
+    ],
+    "d": 3
    },
    {
     "type": "mcq",
@@ -4540,7 +4775,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "وَمَعَ ذَلِكَ ",
      " -أَحْيَانًا- بَعْضُ الْمُشْكِلَاتِ فِي حَيَاةِ الزَّوْجَيْنِ."
-    ]
+    ],
+    "d": 3
    },
    {
     "type": "mcq",
@@ -4557,7 +4793,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "عَلَيْنَا أَنْ نَعْرِفَ هَذِهِ ",
      " قَبْلَ الزَّوَاجِ."
-    ]
+    ],
+    "d": 2
    },
    {
     "type": "mcq",
@@ -4574,7 +4811,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "نَعَمْ، قَدْ تَحْدُثُ ",
      " بَيْنَ الزَّوْجَيْنِ، وَلَيْسَتْ هَذِهِ هِيَ الْمُشْكِلَةَ، وَإِنَّمَا الْمُشْكِلَةُ أَنْ نَعْجِزَ عَنْ حَلِّ تِلْكَ الْمُشْكِلَاتِ."
-    ]
+    ],
+    "d": 3
    },
    {
     "type": "mcq",
@@ -4591,7 +4829,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "نَعَمْ، قَدْ تَحْدُثُ خِلَافَاتٌ بَيْنَ الزَّوْجَيْنِ، وَلَيْسَتْ هَذِهِ هِيَ الْمُشْكِلَةَ، وَإِنَّمَا الْمُشْكِلَةُ أَنْ نَعْجِزَ عَنْ ",
      " تِلْكَ الْمُشْكِلَاتِ."
-    ]
+    ],
+    "d": 3
    },
    {
     "type": "mcq",
@@ -4608,7 +4847,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "",
      " كَثِيرٌ مِنَ الشَّبَابِ أَنَّ الْحَيَاةَ الزَّوْجِيَّةَ بِلَا مُشْكِلَاتٍ، فَإِذَا قَابَلُوا مُشْكِلَةً ثَارُوا، وَفَكَّرُوا فِي الطَّلَاقِ."
-    ]
+    ],
+    "d": 3
    },
    {
     "type": "mcq",
@@ -4625,7 +4865,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "يَعْتَقِدُ كَثِيرٌ مِنَ الشَّبَابِ أَنَّ الْحَيَاةَ الزَّوْجِيَّةَ بِلَا مُشْكِلَاتٍ، فَإِذَا ",
      " مُشْكِلَةً ثَارُوا، وَفَكَّرُوا فِي الطَّلَاقِ."
-    ]
+    ],
+    "d": 3
    },
    {
     "type": "mcq",
@@ -4642,7 +4883,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "يَعْتَقِدُ كَثِيرٌ مِنَ الشَّبَابِ أَنَّ الْحَيَاةَ الزَّوْجِيَّةَ بِلَا مُشْكِلَاتٍ، فَإِذَا قَابَلُوا مُشْكِلَةً ثَارُوا، ",
      " فِي الطَّلَاقِ."
-    ]
+    ],
+    "d": 3
    },
    {
     "type": "mcq",
@@ -4659,7 +4901,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "عَلَى الشَّبَابِ أَنْ يَعْرِفُوا أَنَّ الْحَيَاةَ الزَّوْجِيَّةَ ",
      " طَوِيلَةٌ، وَأَنَّ السَّبِيلَ إِلَى النَّجَاحِ فِي الْحَيَاةِ الزَّوْجِيَّةِ، هُوَ الْحِوَارُ."
-    ]
+    ],
+    "d": 3
    },
    {
     "type": "mcq",
@@ -4676,7 +4919,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "عَلَى الشَّبَابِ أَنْ يَعْرِفُوا أَنَّ الْحَيَاةَ الزَّوْجِيَّةَ رِحْلَةٌ طَوِيلَةٌ، وَأَنَّ السَّبِيلَ إِلَى ",
      " فِي الْحَيَاةِ الزَّوْجِيَّةِ، هُوَ الْحِوَارُ."
-    ]
+    ],
+    "d": 3
    },
    {
     "type": "mcq",
@@ -4693,7 +4937,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "",
      " السَّبَبُ إِلَى وُجُودِ اخْتِلَافَاتٍ كَثِيرَةٍ بَيْنَ شَخْصِيَّةِ الرَّجُلِ، وَشَخْصِيَّةِ الْمَرْأَةِ."
-    ]
+    ],
+    "d": 3
    },
    {
     "type": "mcq",
@@ -4710,7 +4955,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "يَعُودُ السَّبَبُ إِلَى وُجُودِ اخْتِلَافَاتٍ كَثِيرَةٍ بَيْنَ ",
      " الرَّجُلِ، وَشَخْصِيَّةِ الْمَرْأَةِ."
-    ]
+    ],
+    "d": 3
    },
    {
     "type": "mcq",
@@ -4727,7 +4973,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "وَتَظْهَرُ هَذِهِ الِاخْتِلَافَاتُ بَعْدَ ",
      " الطُّفُولَةِ، وَتَزِيدُ فِي مَرْحَلَةِ الشَّبَابِ؛"
-    ]
+    ],
+    "d": 3
    },
    {
     "type": "mcq",
@@ -4744,7 +4991,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "وَتَظْهَرُ هَذِهِ الِاخْتِلَافَاتُ بَعْدَ مَرْحَلَةِ الطُّفُولَةِ، وَ",
      " فِي مَرْحَلَةِ الشَّبَابِ؛"
-    ]
+    ],
+    "d": 3
    },
    {
     "type": "mcq",
@@ -4761,7 +5009,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "وَعِنْدَمَا تَظْهَرُ الْمُشْكِلَاتُ فِي الْحَيَاةِ الزَّوْجِيَّةِ، ",
      " الزَّوْجَانِ فِي الشَّكْوَى."
-    ]
+    ],
+    "d": 3
    },
    {
     "type": "mcq",
@@ -4778,7 +5027,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "أُرِيدُ أَنْ ",
      " زَوْجَتِي."
-    ]
+    ],
+    "d": 3
    },
    {
     "type": "mcq",
@@ -4795,7 +5045,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "كَيْفَ ",
      " مَعَهَا كُلَّ هَذِهِ السَّنَوَاتِ؟!"
-    ]
+    ],
+    "d": 3
    },
    {
     "type": "mcq",
@@ -4812,7 +5063,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "كُنْتَ تَقُولُ دَائِمًا: إِنَّهَا زَوْجَةٌ طَيِّبَةٌ، وَ",
      " وَمُطِيعَةٌ."
-    ]
+    ],
+    "d": 2
    },
    {
     "type": "mcq",
@@ -4829,7 +5081,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "كُنْتُ أُحِبُّهَا فِعْلًا، وَلَكِنَّهَا ",
      " كَثِيرًا."
-    ]
+    ],
+    "d": 3
    },
    {
     "type": "mcq",
@@ -4846,7 +5099,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "",
      " مُهْمِلَةً، لَا تَهْتَمُّ بِي، وَلَا بِالْبَيْتِ."
-    ]
+    ],
+    "d": 3
    },
    {
     "type": "mcq",
@@ -4863,7 +5117,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "أَصْبَحَتْ مُهْمِلَةً، لَا ",
      " بِي، وَلَا بِالْبَيْتِ."
-    ]
+    ],
+    "d": 3
    },
    {
     "type": "mcq",
@@ -4880,7 +5135,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "هَلْ ",
      " مَعَهَا فِي هَذَا الْأَمْرِ؟"
-    ]
+    ],
+    "d": 3
    },
    {
     "type": "mcq",
@@ -4897,7 +5153,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "تَكَلَّمْتُ مَعَهَا كَثِيرًا، وَلَكِنَّهَا ",
      "."
-    ]
+    ],
+    "d": 2
    },
    {
     "type": "mcq",
@@ -4914,7 +5171,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "نَعَمْ، أَصْبَحْتُ ",
      " كَثِيرًا خَارِجَ الْبَيْتِ."
-    ]
+    ],
+    "d": 3
    },
    {
     "type": "mcq",
@@ -4931,7 +5189,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "كَانَتِ الْأُسْرَةُ الْكَبِيرَةُ ",
      " فِي بَيْتٍ وَاحِدٍ كَبِيرٍ، يَضُمُّ جَمِيعَ أَفْرَادِهَا."
-    ]
+    ],
+    "d": 3
    },
    {
     "type": "mcq",
@@ -4948,7 +5207,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "كَانَتِ الْأُسْرَةُ الْكَبِيرَةُ تَسْكُنُ فِي بَيْتٍ وَاحِدٍ كَبِيرٍ، يَضُمُّ جَمِيعَ ",
      "."
-    ]
+    ],
+    "d": 3
    },
    {
     "type": "mcq",
@@ -4965,7 +5225,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "اخْتَفَتِ الْأُسْرَةُ الْكَبِيرَةُ، وَظَهَرَتِ الْأُسْرَةُ الصَّغِيرَةُ، الَّتِي تَضُمُّ الزَّوْجَ وَالزَّوْجَةَ ",
      "، أَوِ الْوَلَدَيْنِ."
-    ]
+    ],
+    "d": 3
    },
    {
     "type": "mcq",
@@ -4982,7 +5243,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "لِأَنَّهُمْ ",
      " فِي الصَّبَاحِ، وَيَتْرُكُونَهُمْ نَائِمِينَ، وَيَرْجِعُونَ فِي اللَّيْلِ، وَيَجِدُونَهُمْ نَائِمِينَ."
-    ]
+    ],
+    "d": 3
    },
    {
     "type": "mcq",
@@ -4999,7 +5261,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "لِأَنَّهُمْ يَخْرُجُونَ فِي الصَّبَاحِ، وَيَتْرُكُونَهُمْ نَائِمِينَ، وَ",
      " فِي اللَّيْلِ، وَيَجِدُونَهُمْ نَائِمِينَ."
-    ]
+    ],
+    "d": 3
    },
    {
     "type": "mcq",
@@ -5016,7 +5279,8 @@ window.ARENA_DATA[3] = {
     "s": [
      "مِنْ صُوَرِ الِاخْتِلَافِ أَيْضًا، خُرُوجُ بَعْضِ ",
      " مِنَ الْبَيْتِ إِلَى الْعَمَلِ."
-    ]
+    ],
+    "d": 3
    }
   ],
   "fahm": [
@@ -5030,7 +5294,8 @@ window.ARENA_DATA[3] = {
      "صَوَابٌ",
      "خَطَأٌ"
     ],
-    "tf": true
+    "tf": true,
+    "d": 1
    },
    {
     "n": 1,
@@ -5043,7 +5308,8 @@ window.ARENA_DATA[3] = {
      "صَوَابٌ",
      "خَطَأٌ"
     ],
-    "tf": true
+    "tf": true,
+    "d": 1
    },
    {
     "n": 1,
@@ -5056,7 +5322,8 @@ window.ARENA_DATA[3] = {
      "صَوَابٌ",
      "خَطَأٌ"
     ],
-    "tf": true
+    "tf": true,
+    "d": 1
    },
    {
     "n": 1,
@@ -5068,7 +5335,8 @@ window.ARENA_DATA[3] = {
      "صَوَابٌ",
      "خَطَأٌ"
     ],
-    "tf": true
+    "tf": true,
+    "d": 1
    },
    {
     "n": 1,
@@ -5081,7 +5349,8 @@ window.ARENA_DATA[3] = {
      "صَوَابٌ",
      "خَطَأٌ"
     ],
-    "tf": true
+    "tf": true,
+    "d": 1
    },
    {
     "n": 1,
@@ -5094,7 +5363,8 @@ window.ARENA_DATA[3] = {
      "لِأَنَّ أُمَّهُ لَا تُرِيدُ زَوَاجَهُ"
     ],
     "a": 0,
-    "ev": "وَلَا أَجِدُ الْفَتَاةَ الْمُنَاسِبَةَ"
+    "ev": "وَلَا أَجِدُ الْفَتَاةَ الْمُنَاسِبَةَ",
+    "d": 3
    },
    {
     "n": 1,
@@ -5107,7 +5377,8 @@ window.ARENA_DATA[3] = {
      "لِأَنَّهَا مِنْ أُسْرَةٍ غَنِيَّةٍ"
     ],
     "a": 0,
-    "ev": "إِنَّهَا فَقِيرَةٌ"
+    "ev": "إِنَّهَا فَقِيرَةٌ",
+    "d": 3
    },
    {
     "n": 1,
@@ -5120,7 +5391,8 @@ window.ARENA_DATA[3] = {
      "أَنَّهَا ذَاتُ حَسَبٍ وَنَسَبٍ"
     ],
     "a": 0,
-    "ev": "سَمِعْتُ أَنَّهَا غَيْرُ جَمِيلَةٍ"
+    "ev": "سَمِعْتُ أَنَّهَا غَيْرُ جَمِيلَةٍ",
+    "d": 2
    },
    {
     "n": 1,
@@ -5133,7 +5405,8 @@ window.ARENA_DATA[3] = {
      "الصِّحَّةَ وَالْقُوَّةَ"
     ],
     "a": 0,
-    "ev": "وَلَكِنِّي أُرِيدُ الْحَسَبَ وَالنَّسَبَ"
+    "ev": "وَلَكِنِّي أُرِيدُ الْحَسَبَ وَالنَّسَبَ",
+    "d": 2
    },
    {
     "n": 1,
@@ -5146,7 +5419,8 @@ window.ARENA_DATA[3] = {
      "الزَّوَاجُ بِذَاتِ الْحَسَبِ"
     ],
     "a": 0,
-    "ev": "فَعَلَيْكَ بِذَاتِ الدِّينِ"
+    "ev": "فَعَلَيْكَ بِذَاتِ الدِّينِ",
+    "d": 3
    },
    {
     "n": 2,
@@ -5158,7 +5432,8 @@ window.ARENA_DATA[3] = {
      "صَوَابٌ",
      "خَطَأٌ"
     ],
-    "tf": true
+    "tf": true,
+    "d": 1
    },
    {
     "n": 2,
@@ -5171,7 +5446,8 @@ window.ARENA_DATA[3] = {
      "صَوَابٌ",
      "خَطَأٌ"
     ],
-    "tf": true
+    "tf": true,
+    "d": 1
    },
    {
     "n": 2,
@@ -5183,7 +5459,8 @@ window.ARENA_DATA[3] = {
      "صَوَابٌ",
      "خَطَأٌ"
     ],
-    "tf": true
+    "tf": true,
+    "d": 1
    },
    {
     "n": 2,
@@ -5196,7 +5473,8 @@ window.ARENA_DATA[3] = {
      "صَوَابٌ",
      "خَطَأٌ"
     ],
-    "tf": true
+    "tf": true,
+    "d": 1
    },
    {
     "n": 2,
@@ -5208,7 +5486,8 @@ window.ARENA_DATA[3] = {
      "صَوَابٌ",
      "خَطَأٌ"
     ],
-    "tf": true
+    "tf": true,
+    "d": 1
    },
    {
     "n": 2,
@@ -5221,7 +5500,8 @@ window.ARENA_DATA[3] = {
      "بَعْدَ وِلَادَةِ الْأَوْلَادِ"
     ],
     "a": 0,
-    "ev": "عَلَيْنَا أَنْ نَعْرِفَ هَذِهِ الْحَقِيقَةَ قَبْلَ الزَّوَاجِ"
+    "ev": "عَلَيْنَا أَنْ نَعْرِفَ هَذِهِ الْحَقِيقَةَ قَبْلَ الزَّوَاجِ",
+    "d": 2
    },
    {
     "n": 2,
@@ -5234,7 +5514,8 @@ window.ARENA_DATA[3] = {
      "يُسَافِرُونَ إِلَى بَلَدٍ آخَرَ"
     ],
     "a": 0,
-    "ev": "فَإِذَا قَابَلُوا مُشْكِلَةً ثَارُوا"
+    "ev": "فَإِذَا قَابَلُوا مُشْكِلَةً ثَارُوا",
+    "d": 2
    },
    {
     "n": 2,
@@ -5247,7 +5528,8 @@ window.ARENA_DATA[3] = {
      "الصَّمْتُ"
     ],
     "a": 0,
-    "ev": "هُوَ الْحِوَارُ"
+    "ev": "هُوَ الْحِوَارُ",
+    "d": 2
    },
    {
     "n": 2,
@@ -5260,7 +5542,8 @@ window.ARENA_DATA[3] = {
      "إِلَى السَّكَنِ مَعَ الْأُسْرَةِ الْكَبِيرَةِ"
     ],
     "a": 0,
-    "ev": "يَعُودُ السَّبَبُ إِلَى وُجُودِ اخْتِلَافَاتٍ كَثِيرَةٍ"
+    "ev": "يَعُودُ السَّبَبُ إِلَى وُجُودِ اخْتِلَافَاتٍ كَثِيرَةٍ",
+    "d": 2
    },
    {
     "n": 2,
@@ -5273,7 +5556,8 @@ window.ARENA_DATA[3] = {
      "تَقْضِي الْوَقْتَ مَعَ الْحَاسُوبِ"
     ],
     "a": 0,
-    "ev": "وَتَشْتَرِي أَشْيَاءَ لَا نَحْتَاجُ إِلَيْهَا"
+    "ev": "وَتَشْتَرِي أَشْيَاءَ لَا نَحْتَاجُ إِلَيْهَا",
+    "d": 2
    },
    {
     "n": 3,
@@ -5285,7 +5569,8 @@ window.ARENA_DATA[3] = {
      "صَوَابٌ",
      "خَطَأٌ"
     ],
-    "tf": true
+    "tf": true,
+    "d": 1
    },
    {
     "n": 3,
@@ -5298,7 +5583,8 @@ window.ARENA_DATA[3] = {
      "صَوَابٌ",
      "خَطَأٌ"
     ],
-    "tf": true
+    "tf": true,
+    "d": 1
    },
    {
     "n": 3,
@@ -5310,7 +5596,8 @@ window.ARENA_DATA[3] = {
      "صَوَابٌ",
      "خَطَأٌ"
     ],
-    "tf": true
+    "tf": true,
+    "d": 1
    },
    {
     "n": 3,
@@ -5323,7 +5610,8 @@ window.ARENA_DATA[3] = {
      "صَوَابٌ",
      "خَطَأٌ"
     ],
-    "tf": true
+    "tf": true,
+    "d": 1
    },
    {
     "n": 3,
@@ -5335,7 +5623,8 @@ window.ARENA_DATA[3] = {
      "صَوَابٌ",
      "خَطَأٌ"
     ],
-    "tf": true
+    "tf": true,
+    "d": 1
    },
    {
     "n": 3,
@@ -5348,7 +5637,8 @@ window.ARENA_DATA[3] = {
      "الْحَمْدُ لِلَّهِ"
     ],
     "a": 0,
-    "ev": "إِنَّا لِلَّهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ"
+    "ev": "إِنَّا لِلَّهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ",
+    "d": 2
    },
    {
     "n": 3,
@@ -5361,7 +5651,8 @@ window.ARENA_DATA[3] = {
      "تَسْهَرُ كَثِيرًا خَارِجَ الْبَيْتِ"
     ],
     "a": 0,
-    "ev": "أَصْبَحَتْ مُهْمِلَةً"
+    "ev": "أَصْبَحَتْ مُهْمِلَةً",
+    "d": 3
    },
    {
     "n": 3,
@@ -5374,7 +5665,8 @@ window.ARENA_DATA[3] = {
      "بِأُمِّهَا وَأَبِيهَا"
     ],
     "a": 0,
-    "ev": "تَهْتَمُّ بِنَفْسِهَا وَبِصَدِيقَاتِهَا فَقَطْ"
+    "ev": "تَهْتَمُّ بِنَفْسِهَا وَبِصَدِيقَاتِهَا فَقَطْ",
+    "d": 3
    },
    {
     "n": 3,
@@ -5387,7 +5679,8 @@ window.ARENA_DATA[3] = {
      "كَثْرَةُ الْعَمَلِ"
     ],
     "a": 0,
-    "ev": "قَدْ يَكُونُ هَذَا هُوَ السَّبَبَ"
+    "ev": "قَدْ يَكُونُ هَذَا هُوَ السَّبَبَ",
+    "d": 2
    },
    {
     "n": 3,
@@ -5400,7 +5693,8 @@ window.ARENA_DATA[3] = {
      "أَنْ يَتَكَلَّمَ مَعَ أُمِّ زَوْجَتِهِ"
     ],
     "a": 0,
-    "ev": "لَا تَسْهَرْ خَارِجَ الْبَيْتِ"
+    "ev": "لَا تَسْهَرْ خَارِجَ الْبَيْتِ",
+    "d": 3
    },
    {
     "n": 4,
@@ -5412,7 +5706,8 @@ window.ARENA_DATA[3] = {
      "صَوَابٌ",
      "خَطَأٌ"
     ],
-    "tf": true
+    "tf": true,
+    "d": 1
    },
    {
     "n": 4,
@@ -5425,7 +5720,8 @@ window.ARENA_DATA[3] = {
      "صَوَابٌ",
      "خَطَأٌ"
     ],
-    "tf": true
+    "tf": true,
+    "d": 1
    },
    {
     "n": 4,
@@ -5438,7 +5734,8 @@ window.ARENA_DATA[3] = {
      "صَوَابٌ",
      "خَطَأٌ"
     ],
-    "tf": true
+    "tf": true,
+    "d": 1
    },
    {
     "n": 4,
@@ -5450,7 +5747,8 @@ window.ARENA_DATA[3] = {
      "صَوَابٌ",
      "خَطَأٌ"
     ],
-    "tf": true
+    "tf": true,
+    "d": 1
    },
    {
     "n": 4,
@@ -5462,7 +5760,8 @@ window.ARENA_DATA[3] = {
      "صَوَابٌ",
      "خَطَأٌ"
     ],
-    "tf": true
+    "tf": true,
+    "d": 1
    },
    {
     "n": 4,
@@ -5475,7 +5774,8 @@ window.ARENA_DATA[3] = {
      "الْأُسْرَةُ الْفَقِيرَةُ"
     ],
     "a": 0,
-    "ev": "اخْتِفَاءُ الْأُسْرَةِ الْكَبِيرَةِ"
+    "ev": "اخْتِفَاءُ الْأُسْرَةِ الْكَبِيرَةِ",
+    "d": 2
    },
    {
     "n": 4,
@@ -5488,7 +5788,8 @@ window.ARENA_DATA[3] = {
      "فِي السُّوقِ"
     ],
     "a": 0,
-    "ev": "يَقْضُونَ مُعْظَمَ الْوَقْتِ فِي أَمَاكِنِ الْعَمَلِ"
+    "ev": "يَقْضُونَ مُعْظَمَ الْوَقْتِ فِي أَمَاكِنِ الْعَمَلِ",
+    "d": 2
    },
    {
     "n": 4,
@@ -5501,7 +5802,8 @@ window.ARENA_DATA[3] = {
      "لِأَنَّ الْأَطْفَالَ يَدْرُسُونَ فِي الْمَدْرَسَةِ لَيْلًا"
     ],
     "a": 0,
-    "ev": "لِأَنَّهُمْ يَخْرُجُونَ فِي الصَّبَاحِ"
+    "ev": "لِأَنَّهُمْ يَخْرُجُونَ فِي الصَّبَاحِ",
+    "d": 3
    },
    {
     "n": 4,
@@ -5514,7 +5816,8 @@ window.ARENA_DATA[3] = {
      "قُوَّةُ الْعَلَاقَةِ بَيْنَ أَفْرَادِ الْأُسْرَةِ"
     ],
     "a": 0,
-    "ev": "خُرُوجُ بَعْضِ النِّسَاءِ مِنَ الْبَيْتِ إِلَى الْعَمَلِ"
+    "ev": "خُرُوجُ بَعْضِ النِّسَاءِ مِنَ الْبَيْتِ إِلَى الْعَمَلِ",
+    "d": 2
    },
    {
     "n": 4,
@@ -5527,7 +5830,8 @@ window.ARENA_DATA[3] = {
      "لِأَنَّ أَوْلَادَهَا يَقُومُونَ بِهِ"
     ],
     "a": 0,
-    "ev": "تَكُونُ مُتْعَبَةً"
+    "ev": "تَكُونُ مُتْعَبَةً",
+    "d": 3
    }
   ],
   "tarakib": [
@@ -5542,7 +5846,8 @@ window.ARENA_DATA[3] = {
      "زَائِدَةٌ"
     ],
     "a": 0,
-    "x": "لا nafiyah lil-jins: menafikan seluruh jenis (tidak punya harta sama sekali). Isimnya (مَالَ) mabni 'ala al-fath."
+    "x": "لا nafiyah lil-jins: menafikan seluruh jenis (tidak punya harta sama sekali). Isimnya (مَالَ) mabni 'ala al-fath.",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -5555,7 +5860,8 @@ window.ARENA_DATA[3] = {
      "اسْمُ فِعْلٍ مُضَارِعٍ"
     ],
     "a": 0,
-    "x": "عَلَيْكَ بِـ = isim fi'il amr bermakna الْزَمْ / تَمَسَّكْ (peganglah, pilihlah); asalnya jar-majrur yang dipindah ke makna perintah."
+    "x": "عَلَيْكَ بِـ = isim fi'il amr bermakna الْزَمْ / تَمَسَّكْ (peganglah, pilihlah); asalnya jar-majrur yang dipindah ke makna perintah.",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -5568,7 +5874,8 @@ window.ARENA_DATA[3] = {
      "صِفَةٌ مَرْفُوعَةٌ"
     ],
     "a": 0,
-    "x": "إِنَّ menashabkan isim (dhamir هَا) dan merafa'kan khabar (فَقِيرَةٌ)."
+    "x": "إِنَّ menashabkan isim (dhamir هَا) dan merafa'kan khabar (فَقِيرَةٌ).",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -5581,7 +5888,8 @@ window.ARENA_DATA[3] = {
      "مَجْرُورَةٌ بِحَرْفِ جَرٍّ"
     ],
     "a": 0,
-    "x": "غَيْرُ = khabar أَنَّ sekaligus mudhaf; جَمِيلَةٍ = mudhaf ilaih (majrur)."
+    "x": "غَيْرُ = khabar أَنَّ sekaligus mudhaf; جَمِيلَةٍ = mudhaf ilaih (majrur).",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -5594,7 +5902,8 @@ window.ARENA_DATA[3] = {
      "ذَاتُ"
     ],
     "a": 0,
-    "x": "ذَاتٌ adalah mu'annats dari ذُو. Sebagai khabar (marfu') bentuknya ذُو; ذَا untuk nashab, ذِي untuk jar (asmaul khamsah)."
+    "x": "ذَاتٌ adalah mu'annats dari ذُو. Sebagai khabar (marfu') bentuknya ذُو; ذَا untuk nashab, ذِي untuk jar (asmaul khamsah).",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -5607,7 +5916,8 @@ window.ARENA_DATA[3] = {
      "زَائِدَةٌ"
     ],
     "a": 0,
-    "x": "إِذَا = syarth; jawabnya berupa kalimat perintah/insya' (عَلَيْكَ) sehingga wajib diawali fa'."
+    "x": "إِذَا = syarth; jawabnya berupa kalimat perintah/insya' (عَلَيْكَ) sehingga wajib diawali fa'.",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -5620,7 +5930,8 @@ window.ARENA_DATA[3] = {
      "حَتَّى"
     ],
     "a": 0,
-    "x": "أَنْ mashdariyyah menashabkan mudhari'. Bandingkan dengan أَنَّ (menashabkan isim) di paragraf 2."
+    "x": "أَنْ mashdariyyah menashabkan mudhari'. Bandingkan dengan أَنَّ (menashabkan isim) di paragraf 2.",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -5633,7 +5944,8 @@ window.ARENA_DATA[3] = {
      "خَبَرُ كَانَ"
     ],
     "a": 0,
-    "x": "أَنَّ menashabkan isimnya (الْحَيَاةَ); khabarnya syibhu jumlah بِلَا مُشْكِلَاتٍ."
+    "x": "أَنَّ menashabkan isimnya (الْحَيَاةَ); khabarnya syibhu jumlah بِلَا مُشْكِلَاتٍ.",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -5646,7 +5958,8 @@ window.ARENA_DATA[3] = {
      "مَبْنِيَّةٌ عَلَى الْفَتْحِ"
     ],
     "a": 0,
-    "x": "بِلَا = بِ + لَا. لَا di sini terletak antara huruf jar dan majrurnya, maka isim sesudahnya tetap majrur oleh بِ."
+    "x": "بِلَا = بِ + لَا. لَا di sini terletak antara huruf jar dan majrurnya, maka isim sesudahnya tetap majrur oleh بِ.",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -5659,7 +5972,8 @@ window.ARENA_DATA[3] = {
      "النُّونُ"
     ],
     "a": 0,
-    "x": "Mutsanna: rafa' dengan alif (الزَّوْجَانِ), nashab/jar dengan ya (الزَّوْجَيْنِ) seperti di judul."
+    "x": "Mutsanna: rafa' dengan alif (الزَّوْجَانِ), nashab/jar dengan ya (الزَّوْجَيْنِ) seperti di judul.",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -5672,7 +5986,8 @@ window.ARENA_DATA[3] = {
      "يَنْتَهِي"
     ],
     "a": 0,
-    "x": "أَخَذَ فِي + mashdar = mulai melakukan (termasuk af'al syuru'). Dilatih juga di tadrib mufradat 2."
+    "x": "أَخَذَ فِي + mashdar = mulai melakukan (termasuk af'al syuru'). Dilatih juga di tadrib mufradat 2.",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -5685,7 +6000,8 @@ window.ARENA_DATA[3] = {
      "إِلَى"
     ],
     "a": 0,
-    "x": "عَجَزَ عَنْ = tidak mampu (bukan عَجَزَ عَلَى)."
+    "x": "عَجَزَ عَنْ = tidak mampu (bukan عَجَزَ عَلَى).",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -5698,7 +6014,8 @@ window.ARENA_DATA[3] = {
      "زَائِدَةٌ"
     ],
     "a": 0,
-    "x": "لا nahiyah menjazmkan mudhari': تَسْهَرُ → لَا تَسْهَرْ."
+    "x": "لا nahiyah menjazmkan mudhari': تَسْهَرُ → لَا تَسْهَرْ.",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -5711,7 +6028,8 @@ window.ARENA_DATA[3] = {
      "مَبْنِيٌّ عَلَى السُّكُونِ"
     ],
     "a": 0,
-    "x": "لا nafiyah tidak beramal: mudhari' tetap marfu'. Bandingkan dengan لَا تَسْهَرْ (nahiyah, majzum)."
+    "x": "لا nafiyah tidak beramal: mudhari' tetap marfu'. Bandingkan dengan لَا تَسْهَرْ (nahiyah, majzum).",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -5724,7 +6042,8 @@ window.ARENA_DATA[3] = {
      "حَالٌ"
     ],
     "a": 0,
-    "x": "أَصْبَحَ saudara كَانَ: isimnya dhamir هِيَ (marfu'), khabarnya مُهْمِلَةً (manshub)."
+    "x": "أَصْبَحَ saudara كَانَ: isimnya dhamir هِيَ (marfu'), khabarnya مُهْمِلَةً (manshub).",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -5737,7 +6056,8 @@ window.ARENA_DATA[3] = {
      "مِنْ"
     ],
     "a": 0,
-    "x": "اِهْتَمَّ بِـ selalu dengan بِـ: تَهْتَمُّ بِي، بِالْبَيْتِ، بِنَفْسِهَا (tadrib mufradat 1)."
+    "x": "اِهْتَمَّ بِـ selalu dengan بِـ: تَهْتَمُّ بِي، بِالْبَيْتِ، بِنَفْسِهَا (tadrib mufradat 1).",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -5750,7 +6070,8 @@ window.ARENA_DATA[3] = {
      "النَّهْيَ"
     ],
     "a": 0,
-    "x": "قَدْ + mudhari' = mungkin / kadang-kadang; قَدْ + madhi = sungguh (tahqiq)."
+    "x": "قَدْ + mudhari' = mungkin / kadang-kadang; قَدْ + madhi = sungguh (tahqiq).",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -5763,7 +6084,8 @@ window.ARENA_DATA[3] = {
      "إِنَّمَا"
     ],
     "a": 0,
-    "x": "إِنَّا = إِنَّنَا: إِنَّ + dhamir نَا (salah satu nun dibuang untuk meringankan)."
+    "x": "إِنَّا = إِنَّنَا: إِنَّ + dhamir نَا (salah satu nun dibuang untuk meringankan).",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -5776,7 +6098,8 @@ window.ARENA_DATA[3] = {
      "التَّعَجُّبَ"
     ],
     "a": 0,
-    "x": "Nafi + istitsna' = hashr (hanya): mereka hanya sedikit melihat anak-anaknya."
+    "x": "Nafi + istitsna' = hashr (hanya): mereka hanya sedikit melihat anak-anaknya.",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -5789,7 +6112,8 @@ window.ARENA_DATA[3] = {
      "نَعْتٌ"
     ],
     "a": 0,
-    "x": "وَحْدَ selalu manshub sebagai hal dan bersambung dhamir: وَحْدَهُ، وَحْدَهَا، وَحْدِي."
+    "x": "وَحْدَ selalu manshub sebagai hal dan bersambung dhamir: وَحْدَهُ، وَحْدَهَا، وَحْدِي.",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -5802,7 +6126,8 @@ window.ARENA_DATA[3] = {
      "زَائِدَةٌ"
     ],
     "a": 0,
-    "x": "أَمَّا ... فَـ: jawab أَمَّا wajib diawali fa'."
+    "x": "أَمَّا ... فَـ: jawab أَمَّا wajib diawali fa'.",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -5815,7 +6140,8 @@ window.ARENA_DATA[3] = {
      "لَا النَّاهِيَةِ"
     ],
     "a": 0,
-    "x": "لِـ ta'lil + mudhari' manshub (dengan أَنْ yang tersembunyi): لِتَجْلِسَ = agar ia duduk."
+    "x": "لِـ ta'lil + mudhari' manshub (dengan أَنْ yang tersembunyi): لِتَجْلِسَ = agar ia duduk.",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -5828,7 +6154,8 @@ window.ARENA_DATA[3] = {
      "«بَيْتٍ»"
     ],
     "a": 0,
-    "x": "Isim كَانَ = الْأُسْرَةُ (الْكَبِيرَةُ na'tnya); khabarnya jumlah fi'liyyah تَسْكُنُ ... (fi mahalli nashb)."
+    "x": "Isim كَانَ = الْأُسْرَةُ (الْكَبِيرَةُ na'tnya); khabarnya jumlah fi'liyyah تَسْكُنُ ... (fi mahalli nashb).",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -5841,7 +6168,8 @@ window.ARENA_DATA[3] = {
      "السَّبَبِيَّةِ"
     ],
     "a": 0,
-    "x": "مِنْ bayaniyyah: menjelaskan apa yang dimaksud عَمَلُ الْبَيْتِ (kebersihan dan menyiapkan makanan)."
+    "x": "مِنْ bayaniyyah: menjelaskan apa yang dimaksud عَمَلُ الْبَيْتِ (kebersihan dan menyiapkan makanan).",
+    "d": 2
    }
   ],
   "tasykil": [
@@ -5860,7 +6188,8 @@ window.ARENA_DATA[3] = {
      "أَنْتَ ",
      " يَا وَلَدِي، مَاذَا بِكَ؟!"
     ],
-    "bare": "قلق"
+    "bare": "قلق",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -5877,7 +6206,8 @@ window.ARENA_DATA[3] = {
      "أُرِيدُ الزَّوَاجَ يَا أُمِّي، وَلَا أَجِدُ ",
      " الْمُنَاسِبَةَ."
     ],
-    "bare": "الفتاة"
+    "bare": "الفتاة",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -5894,7 +6224,8 @@ window.ARENA_DATA[3] = {
      "هُنَاكَ ",
      " كَثِيرَاتٌ مُنَاسِبَاتٌ لِلزَّوَاجِ."
     ],
-    "bare": "فتيات"
+    "bare": "فتيات",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -5911,7 +6242,8 @@ window.ARENA_DATA[3] = {
      "إِنَّهَا ",
      "، لَا مَالَ لَهَا."
     ],
-    "bare": "فقيرة"
+    "bare": "فقيرة",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -5928,7 +6260,8 @@ window.ARENA_DATA[3] = {
      "نَعَمْ، هِيَ مِنْ أُسْرَةٍ ",
      "، وَلَكِنِّي سَمِعْتُ أَنَّهَا غَيْرُ جَمِيلَةٍ."
     ],
-    "bare": "غنية"
+    "bare": "غنية",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -5945,7 +6278,8 @@ window.ARENA_DATA[3] = {
      "سَمِعْتُ أَنَّهَا ذَاتُ مَالٍ وَجَمَالٍ، وَلَكِنِّي أُرِيدُ ",
      " وَالنَّسَبَ."
     ],
-    "bare": "الحسب"
+    "bare": "الحسب",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -5962,7 +6296,8 @@ window.ARENA_DATA[3] = {
      "هَذِهِ لَا تُحَقِّقُ ",
      "!"
     ],
-    "bare": "السعادة"
+    "bare": "السعادة",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -5979,7 +6314,8 @@ window.ARENA_DATA[3] = {
      "عَلَيْنَا أَنْ نَعْرِفَ هَذِهِ ",
      " قَبْلَ الزَّوَاجِ."
     ],
-    "bare": "الحقيقة"
+    "bare": "الحقيقة",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -5996,7 +6332,8 @@ window.ARENA_DATA[3] = {
      "يَعْتَقِدُ كَثِيرٌ مِنَ الشَّبَابِ أَنَّ الْحَيَاةَ الزَّوْجِيَّةَ بِلَا مُشْكِلَاتٍ، فَإِذَا قَابَلُوا مُشْكِلَةً ثَارُوا، وَفَكَّرُوا فِي ",
      "."
     ],
-    "bare": "الطلاق"
+    "bare": "الطلاق",
+    "d": 2
    },
    {
     "type": "mcq",
@@ -6013,7 +6350,8 @@ window.ARENA_DATA[3] = {
      "وَتَظْهَرُ هَذِهِ الِاخْتِلَافَاتُ بَعْدَ مَرْحَلَةِ ",
      "، وَتَزِيدُ فِي مَرْحَلَةِ الشَّبَابِ؛"
     ],
-    "bare": "الطفولة"
+    "bare": "الطفولة",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -6030,7 +6368,8 @@ window.ARENA_DATA[3] = {
      "كُنْتَ تَقُولُ دَائِمًا: إِنَّهَا زَوْجَةٌ طَيِّبَةٌ، وَ",
      " وَمُطِيعَةٌ."
     ],
-    "bare": "مؤدبة"
+    "bare": "مؤدبة",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -6047,7 +6386,8 @@ window.ARENA_DATA[3] = {
      "أَصْبَحَتْ ",
      "، لَا تَهْتَمُّ بِي، وَلَا بِالْبَيْتِ."
     ],
-    "bare": "مهملة"
+    "bare": "مهملة",
+    "d": 3
    },
    {
     "type": "mcq",
@@ -6064,7 +6404,1467 @@ window.ARENA_DATA[3] = {
      "مِنْ صُوَرِ الِاخْتِلَافِ أَيْضًا، خُرُوجُ بَعْضِ ",
      " مِنَ الْبَيْتِ إِلَى الْعَمَلِ."
     ],
-    "bare": "النساء"
+    "bare": "النساء",
+    "d": 3
+   }
+  ],
+  "tashrif": [
+   {
+    "type": "mcq",
+    "q": "مَا الْمُضَارِعُ مِنَ الْفِعْلِ «أَرَادَ»؟",
+    "o": [
+     "يُرِيدُ",
+     "يَزِيدُ",
+     "يَشْكُو",
+     "يَتَكَلَّمُ"
+    ],
+    "a": 0,
+    "n": 1,
+    "k": "أراد",
+    "sub": "mudari",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا مَصْدَرُ الْفِعْلِ «أَرَادَ»؟",
+    "o": [
+     "إِرَادَةٌ",
+     "اِخْتِفَاءٌ",
+     "بَقَاءٌ",
+     "رُجُوعٌ"
+    ],
+    "a": 0,
+    "n": 1,
+    "k": "أراد",
+    "sub": "masdar",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمُضَارِعُ مِنَ الْفِعْلِ «حَقَّقَ»؟",
+    "o": [
+     "يُحَقِّقُ",
+     "يَحَقِّقُ",
+     "يَتَكَلَّمُ",
+     "يُغَادِرُ"
+    ],
+    "a": 0,
+    "n": 1,
+    "k": "حقق",
+    "sub": "mudari",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْأَمْرُ مِنَ الْفِعْلِ «حَقَّقَ»؟",
+    "o": [
+     "حَقِّقْ",
+     "أَرِدْ",
+     "اِخْتَفِ",
+     "ثُرْ"
+    ],
+    "a": 0,
+    "n": 1,
+    "k": "حقق",
+    "sub": "amr",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمُضَارِعُ مِنَ الْفِعْلِ «ظَفِرَ»؟",
+    "o": [
+     "يَظْفَرُ",
+     "يَظْفُرُ",
+     "يَظْفِرُ",
+     "يَقُومُ"
+    ],
+    "a": 0,
+    "n": 1,
+    "k": "ظفر",
+    "sub": "mudari",
+    "d": 3
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمَاضِي مِنَ الْفِعْلِ «يَظْفَرُ»؟",
+    "o": [
+     "ظَفِرَ",
+     "رَجَعَ",
+     "زَادَ",
+     "دَرَى"
+    ],
+    "a": 0,
+    "n": 1,
+    "k": "ظفر",
+    "sub": "madi",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمُضَارِعُ مِنَ الْفِعْلِ «ظَهَرَ»؟",
+    "o": [
+     "يَظْهَرُ",
+     "يَظْهُرُ",
+     "يَظْهِرُ",
+     "يَضُمُّ"
+    ],
+    "a": 0,
+    "n": 2,
+    "k": "ظهر",
+    "sub": "mudari",
+    "d": 3
+   },
+   {
+    "type": "mcq",
+    "q": "مَا مَصْدَرُ الْفِعْلِ «ظَهَرَ»؟",
+    "o": [
+     "ظُهُورٌ",
+     "عَوْدَةٌ",
+     "دِرَايَةٌ",
+     "قِيَامٌ"
+    ],
+    "a": 0,
+    "n": 2,
+    "k": "ظهر",
+    "sub": "masdar",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمُضَارِعُ مِنَ الْفِعْلِ «عَجَزَ»؟",
+    "o": [
+     "يَعْجِزُ",
+     "يَظْفَرُ",
+     "يَزِيدُ",
+     "يَعُودُ"
+    ],
+    "a": 0,
+    "n": 2,
+    "k": "عجز",
+    "sub": "mudari",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْأَمْرُ مِنَ الْفِعْلِ «عَجَزَ»؟",
+    "o": [
+     "اِعْجِزْ",
+     "اِهْتَمَّ",
+     "غَادِرْ",
+     "اُشْكُ"
+    ],
+    "a": 0,
+    "n": 2,
+    "k": "عجز",
+    "sub": "amr",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمُضَارِعُ مِنَ الْفِعْلِ «اِعْتَقَدَ»؟",
+    "o": [
+     "يَعْتَقِدُ",
+     "يَضْعُفُ",
+     "يَتَغَيَّرُ",
+     "يَرْجِعُ"
+    ],
+    "a": 0,
+    "n": 2,
+    "k": "اعتقد",
+    "sub": "mudari",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمَاضِي مِنَ الْفِعْلِ «يَعْتَقِدُ»؟",
+    "o": [
+     "اِعْتَقَدَ",
+     "شَكَا",
+     "ضَمَّ",
+     "سَهِرَ"
+    ],
+    "a": 0,
+    "n": 2,
+    "k": "اعتقد",
+    "sub": "madi",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمُضَارِعُ مِنَ الْفِعْلِ «قَابَلَ»؟",
+    "o": [
+     "يُقَابِلُ",
+     "يَقَابِلُ",
+     "يَشْكُو",
+     "يَهْتَمُّ"
+    ],
+    "a": 0,
+    "n": 2,
+    "k": "قابل",
+    "sub": "mudari",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا مَصْدَرُ الْفِعْلِ «قَابَلَ»؟",
+    "o": [
+     "مُقَابَلَةٌ",
+     "ضَعْفٌ",
+     "عَيْشٌ",
+     "دِرَايَةٌ"
+    ],
+    "a": 0,
+    "n": 2,
+    "k": "قابل",
+    "sub": "masdar",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمُضَارِعُ مِنَ الْفِعْلِ «ثَارَ»؟",
+    "o": [
+     "يَثُورُ",
+     "يَعْتَقِدُ",
+     "يَأْخُذُ",
+     "يَتَكَلَّمُ"
+    ],
+    "a": 0,
+    "n": 2,
+    "k": "ثار",
+    "sub": "mudari",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْأَمْرُ مِنَ الْفِعْلِ «ثَارَ»؟",
+    "o": [
+     "ثُرْ",
+     "عُدْ",
+     "زِدْ",
+     "اِهْتَمَّ"
+    ],
+    "a": 0,
+    "n": 2,
+    "k": "ثار",
+    "sub": "amr",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمُضَارِعُ مِنَ الْفِعْلِ «فَكَّرَ»؟",
+    "o": [
+     "يُفَكِّرُ",
+     "يَفَكِّرُ",
+     "يَعِيشُ",
+     "يَضُمُّ"
+    ],
+    "a": 0,
+    "n": 2,
+    "k": "فكر",
+    "sub": "mudari",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمَاضِي مِنَ الْفِعْلِ «يُفَكِّرُ»؟",
+    "o": [
+     "فَكَّرَ",
+     "أَرَادَ",
+     "اِخْتَفَى",
+     "أَخَذَ"
+    ],
+    "a": 0,
+    "n": 2,
+    "k": "فكر",
+    "sub": "madi",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمُضَارِعُ مِنَ الْفِعْلِ «عَادَ»؟",
+    "o": [
+     "يَعُودُ",
+     "يَقُومُ",
+     "يَعِيشُ",
+     "يَرْجِعُ"
+    ],
+    "a": 0,
+    "n": 2,
+    "k": "عاد",
+    "sub": "mudari",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا مَصْدَرُ الْفِعْلِ «عَادَ»؟",
+    "o": [
+     "عَوْدَةٌ",
+     "إِرَادَةٌ",
+     "اِخْتِفَاءٌ",
+     "مُقَابَلَةٌ"
+    ],
+    "a": 0,
+    "n": 2,
+    "k": "عاد",
+    "sub": "masdar",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمُضَارِعُ مِنَ الْفِعْلِ «زَادَ»؟",
+    "o": [
+     "يَزِيدُ",
+     "يَهْتَمُّ",
+     "يَتَكَلَّمُ",
+     "يَثُورُ"
+    ],
+    "a": 0,
+    "n": 2,
+    "k": "زاد",
+    "sub": "mudari",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْأَمْرُ مِنَ الْفِعْلِ «زَادَ»؟",
+    "o": [
+     "زِدْ",
+     "اِسْهَرْ",
+     "عُدْ",
+     "اِعْتَقِدْ"
+    ],
+    "a": 0,
+    "n": 2,
+    "k": "زاد",
+    "sub": "amr",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمُضَارِعُ مِنَ الْفِعْلِ «أَخَذَ»؟",
+    "o": [
+     "يَأْخُذُ",
+     "يَأْخَذُ",
+     "يَأْخِذُ",
+     "يَعْجِزُ"
+    ],
+    "a": 0,
+    "n": 2,
+    "k": "أخذ",
+    "sub": "mudari",
+    "d": 3
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمَاضِي مِنَ الْفِعْلِ «يَأْخُذُ»؟",
+    "o": [
+     "أَخَذَ",
+     "اِعْتَقَدَ",
+     "ظَهَرَ",
+     "سَهِرَ"
+    ],
+    "a": 0,
+    "n": 2,
+    "k": "أخذ",
+    "sub": "madi",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمُضَارِعُ مِنَ الْفِعْلِ «شَكَا»؟",
+    "o": [
+     "يَشْكُو",
+     "يَخْتَفِي",
+     "يَبْقَى",
+     "يَرْجِعُ"
+    ],
+    "a": 0,
+    "n": 2,
+    "k": "شكا",
+    "sub": "mudari",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا مَصْدَرُ الْفِعْلِ «شَكَا»؟",
+    "o": [
+     "شَكْوَى",
+     "اِهْتِمَامٌ",
+     "مُغَادَرَةٌ",
+     "أَخْذٌ"
+    ],
+    "a": 0,
+    "n": 2,
+    "k": "شكا",
+    "sub": "masdar",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمُضَارِعُ مِنَ الْفِعْلِ «اِسْتَمَعَ»؟",
+    "o": [
+     "يَسْتَمِعُ",
+     "يَضُمُّ",
+     "يَتَغَيَّرُ",
+     "يَبْقَى"
+    ],
+    "a": 0,
+    "n": 2,
+    "k": "استمع",
+    "sub": "mudari",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْأَمْرُ مِنَ الْفِعْلِ «اِسْتَمَعَ»؟",
+    "o": [
+     "اِسْتَمِعْ",
+     "اِعْجِزْ",
+     "اُشْكُ",
+     "قُمْ"
+    ],
+    "a": 0,
+    "n": 2,
+    "k": "استمع",
+    "sub": "amr",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمُضَارِعُ مِنَ الْفِعْلِ «سَهِرَ»؟",
+    "o": [
+     "يَسْهَرُ",
+     "يَسْهُرُ",
+     "يَسْهِرُ",
+     "يَسْتَمِعُ"
+    ],
+    "a": 0,
+    "n": 3,
+    "k": "سهر",
+    "sub": "mudari",
+    "d": 3
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمَاضِي مِنَ الْفِعْلِ «يَسْهَرُ»؟",
+    "o": [
+     "سَهِرَ",
+     "خَرَجَ",
+     "حَقَّقَ",
+     "تَكَلَّمَ"
+    ],
+    "a": 0,
+    "n": 3,
+    "k": "سهر",
+    "sub": "madi",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمُضَارِعُ مِنَ الْفِعْلِ «تَرَكَ»؟",
+    "o": [
+     "يَتْرُكُ",
+     "يَتْرَكُ",
+     "يَتْرِكُ",
+     "يُفَكِّرُ"
+    ],
+    "a": 0,
+    "n": 3,
+    "k": "ترك",
+    "sub": "mudari",
+    "d": 3
+   },
+   {
+    "type": "mcq",
+    "q": "مَا مَصْدَرُ الْفِعْلِ «تَرَكَ»؟",
+    "o": [
+     "تَرْكٌ",
+     "تَفْكِيرٌ",
+     "عَوْدَةٌ",
+     "اِهْتِمَامٌ"
+    ],
+    "a": 0,
+    "n": 3,
+    "k": "ترك",
+    "sub": "masdar",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمُضَارِعُ مِنَ الْفِعْلِ «عَاشَ»؟",
+    "o": [
+     "يَعِيشُ",
+     "يَضُمُّ",
+     "يَرْجِعُ",
+     "يَعْجِزُ"
+    ],
+    "a": 0,
+    "n": 3,
+    "k": "عاش",
+    "sub": "mudari",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْأَمْرُ مِنَ الْفِعْلِ «عَاشَ»؟",
+    "o": [
+     "عِشْ",
+     "اُخْرُجْ",
+     "اِعْتَقِدْ",
+     "فَكِّرْ"
+    ],
+    "a": 0,
+    "n": 3,
+    "k": "عاش",
+    "sub": "amr",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمُضَارِعُ مِنَ الْفِعْلِ «دَرَى»؟",
+    "o": [
+     "يَدْرِي",
+     "يَضْعُفُ",
+     "يُحَقِّقُ",
+     "يَضُمُّ"
+    ],
+    "a": 0,
+    "n": 3,
+    "k": "درى",
+    "sub": "mudari",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمَاضِي مِنَ الْفِعْلِ «يَدْرِي»؟",
+    "o": [
+     "دَرَى",
+     "عَادَ",
+     "ضَمَّ",
+     "عَجَزَ"
+    ],
+    "a": 0,
+    "n": 3,
+    "k": "درى",
+    "sub": "madi",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمُضَارِعُ مِنَ الْفِعْلِ «تَغَيَّرَ»؟",
+    "o": [
+     "يَتَغَيَّرُ",
+     "يَضْعُفُ",
+     "يَتْرُكُ",
+     "يَعِيشُ"
+    ],
+    "a": 0,
+    "n": 3,
+    "k": "تغير",
+    "sub": "mudari",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا مَصْدَرُ الْفِعْلِ «تَغَيَّرَ»؟",
+    "o": [
+     "تَغَيُّرٌ",
+     "اِسْتِمَاعٌ",
+     "عَوْدَةٌ",
+     "اِعْتِقَادٌ"
+    ],
+    "a": 0,
+    "n": 3,
+    "k": "تغير",
+    "sub": "masdar",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمُضَارِعُ مِنَ الْفِعْلِ «أَصْبَحَ»؟",
+    "o": [
+     "يُصْبِحُ",
+     "يَصْبِحُ",
+     "يَرْجِعُ",
+     "يَدْرِي"
+    ],
+    "a": 0,
+    "n": 3,
+    "k": "أصبح",
+    "sub": "mudari",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْأَمْرُ مِنَ الْفِعْلِ «أَصْبَحَ»؟",
+    "o": [
+     "أَصْبِحْ",
+     "تَكَلَّمْ",
+     "قَابِلْ",
+     "اُشْكُ"
+    ],
+    "a": 0,
+    "n": 3,
+    "k": "أصبح",
+    "sub": "amr",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمُضَارِعُ مِنَ الْفِعْلِ «اِهْتَمَّ»؟",
+    "o": [
+     "يَهْتَمُّ",
+     "يُغَادِرُ",
+     "يَثُورُ",
+     "يَدْرِي"
+    ],
+    "a": 0,
+    "n": 3,
+    "k": "اهتم",
+    "sub": "mudari",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمَاضِي مِنَ الْفِعْلِ «يَهْتَمُّ»؟",
+    "o": [
+     "اِهْتَمَّ",
+     "أَرَادَ",
+     "بَقِيَ",
+     "زَادَ"
+    ],
+    "a": 0,
+    "n": 3,
+    "k": "اهتم",
+    "sub": "madi",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمُضَارِعُ مِنَ الْفِعْلِ «تَكَلَّمَ»؟",
+    "o": [
+     "يَتَكَلَّمُ",
+     "يُرِيدُ",
+     "يَخْتَفِي",
+     "يُقَابِلُ"
+    ],
+    "a": 0,
+    "n": 3,
+    "k": "تكلم",
+    "sub": "mudari",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا مَصْدَرُ الْفِعْلِ «تَكَلَّمَ»؟",
+    "o": [
+     "تَكَلُّمٌ",
+     "عَجْزٌ",
+     "شَكْوَى",
+     "قِيَامٌ"
+    ],
+    "a": 0,
+    "n": 3,
+    "k": "تكلم",
+    "sub": "masdar",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمُضَارِعُ مِنَ الْفِعْلِ «اِخْتَفَى»؟",
+    "o": [
+     "يَخْتَفِي",
+     "يَشْكُو",
+     "يُحَقِّقُ",
+     "يَعْجِزُ"
+    ],
+    "a": 0,
+    "n": 4,
+    "k": "اختفى",
+    "sub": "mudari",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْأَمْرُ مِنَ الْفِعْلِ «اِخْتَفَى»؟",
+    "o": [
+     "اِخْتَفِ",
+     "اِسْهَرْ",
+     "اُضْعُفْ",
+     "اُتْرُكْ"
+    ],
+    "a": 0,
+    "n": 4,
+    "k": "اختفى",
+    "sub": "amr",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمُضَارِعُ مِنَ الْفِعْلِ «سَكَنَ»؟",
+    "o": [
+     "يَسْكُنُ",
+     "يَسْكَنُ",
+     "يَسْكِنُ",
+     "يَسْهَرُ"
+    ],
+    "a": 0,
+    "n": 4,
+    "k": "سكن",
+    "sub": "mudari",
+    "d": 3
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمَاضِي مِنَ الْفِعْلِ «يَسْكُنُ»؟",
+    "o": [
+     "سَكَنَ",
+     "دَرَى",
+     "ظَهَرَ",
+     "أَصْبَحَ"
+    ],
+    "a": 0,
+    "n": 4,
+    "k": "سكن",
+    "sub": "madi",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمُضَارِعُ مِنَ الْفِعْلِ «ضَمَّ»؟",
+    "o": [
+     "يَضُمُّ",
+     "يُصْبِحُ",
+     "يُغَادِرُ",
+     "يَأْخُذُ"
+    ],
+    "a": 0,
+    "n": 4,
+    "k": "ضم",
+    "sub": "mudari",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا مَصْدَرُ الْفِعْلِ «ضَمَّ»؟",
+    "o": [
+     "ضَمٌّ",
+     "خُرُوجٌ",
+     "اِعْتِقَادٌ",
+     "تَفْكِيرٌ"
+    ],
+    "a": 0,
+    "n": 4,
+    "k": "ضم",
+    "sub": "masdar",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمُضَارِعُ مِنَ الْفِعْلِ «ضَعُفَ»؟",
+    "o": [
+     "يَضْعُفُ",
+     "يَضْعَفُ",
+     "يَضْعِفُ",
+     "يُقَابِلُ"
+    ],
+    "a": 0,
+    "n": 4,
+    "k": "ضعف",
+    "sub": "mudari",
+    "d": 3
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْأَمْرُ مِنَ الْفِعْلِ «ضَعُفَ»؟",
+    "o": [
+     "اُضْعُفْ",
+     "اِضْعَفْ",
+     "اِضْعِفْ",
+     "اِعْتَقِدْ"
+    ],
+    "a": 0,
+    "n": 4,
+    "k": "ضعف",
+    "sub": "amr",
+    "d": 3
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمُضَارِعُ مِنَ الْفِعْلِ «خَرَجَ»؟",
+    "o": [
+     "يَخْرُجُ",
+     "يَخْرَجُ",
+     "يَخْرِجُ",
+     "يَأْخُذُ"
+    ],
+    "a": 0,
+    "n": 4,
+    "k": "خرج",
+    "sub": "mudari",
+    "d": 3
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمَاضِي مِنَ الْفِعْلِ «يَخْرُجُ»؟",
+    "o": [
+     "خَرَجَ",
+     "أَرَادَ",
+     "دَرَى",
+     "ضَعُفَ"
+    ],
+    "a": 0,
+    "n": 4,
+    "k": "خرج",
+    "sub": "madi",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمُضَارِعُ مِنَ الْفِعْلِ «رَجَعَ»؟",
+    "o": [
+     "يَرْجِعُ",
+     "يَرْجَعُ",
+     "يَرْجُعُ",
+     "يُفَكِّرُ"
+    ],
+    "a": 0,
+    "n": 4,
+    "k": "رجع",
+    "sub": "mudari",
+    "d": 3
+   },
+   {
+    "type": "mcq",
+    "q": "مَا مَصْدَرُ الْفِعْلِ «رَجَعَ»؟",
+    "o": [
+     "رُجُوعٌ",
+     "اِهْتِمَامٌ",
+     "مُقَابَلَةٌ",
+     "شَكْوَى"
+    ],
+    "a": 0,
+    "n": 4,
+    "k": "رجع",
+    "sub": "masdar",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمُضَارِعُ مِنَ الْفِعْلِ «غَادَرَ»؟",
+    "o": [
+     "يُغَادِرُ",
+     "يَغَادِرُ",
+     "يَخْرُجُ",
+     "يَعُودُ"
+    ],
+    "a": 0,
+    "n": 4,
+    "k": "غادر",
+    "sub": "mudari",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْأَمْرُ مِنَ الْفِعْلِ «غَادَرَ»؟",
+    "o": [
+     "غَادِرْ",
+     "أَصْبِحْ",
+     "اِظْفَرْ",
+     "اِخْتَفِ"
+    ],
+    "a": 0,
+    "n": 4,
+    "k": "غادر",
+    "sub": "amr",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمُضَارِعُ مِنَ الْفِعْلِ «بَقِيَ»؟",
+    "o": [
+     "يَبْقَى",
+     "يَسْهَرُ",
+     "يَرْجِعُ",
+     "يَخْتَفِي"
+    ],
+    "a": 0,
+    "n": 4,
+    "k": "بقي",
+    "sub": "mudari",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمَاضِي مِنَ الْفِعْلِ «يَبْقَى»؟",
+    "o": [
+     "بَقِيَ",
+     "قَابَلَ",
+     "دَرَى",
+     "تَرَكَ"
+    ],
+    "a": 0,
+    "n": 4,
+    "k": "بقي",
+    "sub": "madi",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا الْمُضَارِعُ مِنَ الْفِعْلِ «قَامَ»؟",
+    "o": [
+     "يَقُومُ",
+     "يَسْتَمِعُ",
+     "يَعُودُ",
+     "يَعْتَقِدُ"
+    ],
+    "a": 0,
+    "n": 4,
+    "k": "قام",
+    "sub": "mudari",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا مَصْدَرُ الْفِعْلِ «قَامَ»؟",
+    "o": [
+     "قِيَامٌ",
+     "سَهَرٌ",
+     "ضَمٌّ",
+     "تَرْكٌ"
+    ],
+    "a": 0,
+    "n": 4,
+    "k": "قام",
+    "sub": "masdar",
+    "d": 1
+   }
+  ],
+  "jamak": [
+   {
+    "type": "mcq",
+    "q": "مَا جَمْعُ «قَلِقٌ»؟",
+    "o": [
+     "قَلِقُونَ",
+     "أَوْلَادٌ",
+     "عَلَاقَاتٌ",
+     "فَتَيَاتٌ"
+    ],
+    "a": 0,
+    "n": 1,
+    "k": "قلق",
+    "sub": "jamak",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا جَمْعُ «فَتَاةٌ»؟",
+    "o": [
+     "فَتَيَاتٌ",
+     "ذَوَاتٌ",
+     "مُنَاسِبُونَ",
+     "مَوَاضٍ"
+    ],
+    "a": 0,
+    "n": 1,
+    "k": "فتاة",
+    "sub": "jamak",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا جَمْعُ «مُنَاسِبٌ»؟",
+    "o": [
+     "مُنَاسِبُونَ",
+     "صُحُفٌ",
+     "مَعَاظِمُ",
+     "صَدِيقَاتٌ"
+    ],
+    "a": 0,
+    "n": 1,
+    "k": "مناسب",
+    "sub": "jamak",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا مُفْرَدُ «أَغْنِيَاءُ»؟",
+    "o": [
+     "غَنِيٌّ",
+     "سِيَاسَةٌ",
+     "وَلَدٌ",
+     "مُنَاسِبٌ"
+    ],
+    "a": 0,
+    "n": 1,
+    "k": "غني",
+    "sub": "mufrad",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا جَمْعُ «حَسَبٌ»؟",
+    "o": [
+     "أَحْسَابٌ",
+     "مَوَاضٍ",
+     "أَنْظِمَةٌ",
+     "نَوَاحٍ"
+    ],
+    "a": 0,
+    "n": 1,
+    "k": "حسب",
+    "sub": "jamak",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا مُفْرَدُ «أَنْسَابٌ»؟",
+    "o": [
+     "نَسَبٌ",
+     "وَلَدٌ",
+     "نِظَامٌ",
+     "مُجْتَمَعٌ"
+    ],
+    "a": 0,
+    "n": 1,
+    "k": "نسب",
+    "sub": "mufrad",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا جَمْعُ «خِلَافٌ»؟",
+    "o": [
+     "خِلَافَاتٌ",
+     "سِيَاسَاتٌ",
+     "أَوْلَادٌ",
+     "مُنَاسِبُونَ"
+    ],
+    "a": 0,
+    "n": 2,
+    "k": "خلاف",
+    "sub": "jamak",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا جَمْعُ «رِحْلَةٌ»؟",
+    "o": [
+     "رِحْلَاتٌ",
+     "ضَرُورَاتٌ",
+     "ذَوَاتٌ",
+     "شَخْصِيَّاتٌ"
+    ],
+    "a": 0,
+    "n": 2,
+    "k": "رحلة",
+    "sub": "jamak",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا مُفْرَدُ «سُبُلٌ»؟",
+    "o": [
+     "سَبِيلٌ",
+     "صَدِيقَةٌ",
+     "مُنَاسِبٌ",
+     "قَلِقٌ"
+    ],
+    "a": 0,
+    "n": 2,
+    "k": "سبيل",
+    "sub": "mufrad",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا جَمْعُ «نَجَاحٌ»؟",
+    "o": [
+     "نَجَاحَاتٌ",
+     "مَجَلَّاتٌ",
+     "نَائِمُونَ",
+     "صُحُفٌ"
+    ],
+    "a": 0,
+    "n": 2,
+    "k": "نجاح",
+    "sub": "jamak",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا جَمْعُ «حِوَارٌ»؟",
+    "o": [
+     "حِوَارَاتٌ",
+     "أَفْرَادٌ",
+     "مَعَاظِمُ",
+     "مُهْمِلُونَ"
+    ],
+    "a": 0,
+    "n": 2,
+    "k": "حوار",
+    "sub": "jamak",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا جَمْعُ «شَخْصِيَّةٌ»؟",
+    "o": [
+     "شَخْصِيَّاتٌ",
+     "حُلُولٌ",
+     "رِحْلَاتٌ",
+     "أَمْوَالٌ"
+    ],
+    "a": 0,
+    "n": 2,
+    "k": "شخصية",
+    "sub": "jamak",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا جَمْعُ «مَرْحَلَةٌ»؟",
+    "o": [
+     "مَرَاحِلُ",
+     "أَسْبَابٌ",
+     "حُلُولٌ",
+     "نَوَاحٍ"
+    ],
+    "a": 0,
+    "n": 2,
+    "k": "مرحلة",
+    "sub": "jamak",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا مُفْرَدُ «هَوَاتِفُ»؟",
+    "o": [
+     "هَاتِفٌ",
+     "ضَرُورَةٌ",
+     "صَحِيفَةٌ",
+     "مُتْعَبٌ"
+    ],
+    "a": 0,
+    "n": 2,
+    "k": "هاتف",
+    "sub": "mufrad",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا جَمْعُ «سِيَاسَةٌ»؟",
+    "o": [
+     "سِيَاسَاتٌ",
+     "ذَوَاتٌ",
+     "سُبُلٌ",
+     "أَنْسَابٌ"
+    ],
+    "a": 0,
+    "n": 2,
+    "k": "سياسة",
+    "sub": "jamak",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا مُفْرَدُ «صُحُفٌ»؟",
+    "o": [
+     "صَحِيفَةٌ",
+     "فَرْدٌ",
+     "مُتْعَبٌ",
+     "فَقِيرٌ"
+    ],
+    "a": 0,
+    "n": 2,
+    "k": "صحيفة",
+    "sub": "mufrad",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا جَمْعُ «مَجَلَّةٌ»؟",
+    "o": [
+     "مَجَلَّاتٌ",
+     "أَمْوَالٌ",
+     "مُطِيعُونَ",
+     "رِحْلَاتٌ"
+    ],
+    "a": 0,
+    "n": 2,
+    "k": "مجلة",
+    "sub": "jamak",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا جَمْعُ «سَنَةٌ»؟",
+    "o": [
+     "سَنَوَاتٌ",
+     "ذَوَاتٌ",
+     "صُحُفٌ",
+     "هَوَاتِفُ"
+    ],
+    "a": 0,
+    "n": 3,
+    "k": "سنة",
+    "sub": "jamak",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا جَمْعُ «مُؤَدَّبٌ»؟",
+    "o": [
+     "مُؤَدَّبُونَ",
+     "حِوَارَاتٌ",
+     "نِسَاءٌ",
+     "خِلَافَاتٌ"
+    ],
+    "a": 0,
+    "n": 3,
+    "k": "مؤدب",
+    "sub": "jamak",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا جَمْعُ «مُطِيعٌ»؟",
+    "o": [
+     "مُطِيعُونَ",
+     "ضَرُورَاتٌ",
+     "سِيَاسَاتٌ",
+     "مُتْعَبُونَ"
+    ],
+    "a": 0,
+    "n": 3,
+    "k": "مطيع",
+    "sub": "jamak",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا جَمْعُ «صَدِيقَةٌ»؟",
+    "o": [
+     "صَدِيقَاتٌ",
+     "أَفْرَادٌ",
+     "مُتْعَبُونَ",
+     "فُقَرَاءُ"
+    ],
+    "a": 0,
+    "n": 3,
+    "k": "صديقة",
+    "sub": "jamak",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا جَمْعُ «عَنِيدٌ»؟",
+    "o": [
+     "عُنُدٌ",
+     "أُسَرٌ",
+     "سُبُلٌ",
+     "نِسَاءٌ"
+    ],
+    "a": 0,
+    "n": 3,
+    "k": "عنيد",
+    "sub": "jamak",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا مُفْرَدُ «مَوَاضٍ»؟",
+    "o": [
+     "مَاضٍ",
+     "حَلٌّ",
+     "هَاتِفٌ",
+     "سَنَةٌ"
+    ],
+    "a": 0,
+    "n": 4,
+    "k": "ماض",
+    "sub": "mufrad",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا جَمْعُ «نِظَامٌ»؟",
+    "o": [
+     "أَنْظِمَةٌ",
+     "أَدْيَانٌ",
+     "هَوَاتِفُ",
+     "أَغْنِيَاءُ"
+    ],
+    "a": 0,
+    "n": 4,
+    "k": "نظام",
+    "sub": "jamak",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا جَمْعُ «مُجْتَمَعٌ»؟",
+    "o": [
+     "مُجْتَمَعَاتٌ",
+     "فُقَرَاءُ",
+     "أَحَادِيثُ",
+     "أَحْسَابٌ"
+    ],
+    "a": 0,
+    "n": 4,
+    "k": "مجتمع",
+    "sub": "jamak",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا جَمْعُ «فَرْدٌ»؟",
+    "o": [
+     "أَفْرَادٌ",
+     "أَدْيَانٌ",
+     "أَنْظِمَةٌ",
+     "أَزْوَاجٌ"
+    ],
+    "a": 0,
+    "n": 4,
+    "k": "فرد",
+    "sub": "jamak",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا مُفْرَدُ «أَوْلَادٌ»؟",
+    "o": [
+     "وَلَدٌ",
+     "حَدِيثٌ",
+     "سَنَةٌ",
+     "عَنِيدٌ"
+    ],
+    "a": 0,
+    "n": 4,
+    "k": "ولد",
+    "sub": "mufrad",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا جَمْعُ «عَلَاقَةٌ»؟",
+    "o": [
+     "عَلَاقَاتٌ",
+     "مُؤَدَّبُونَ",
+     "صَدِيقَاتٌ",
+     "سِيَاسَاتٌ"
+    ],
+    "a": 0,
+    "n": 4,
+    "k": "علاقة",
+    "sub": "jamak",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا مُفْرَدُ «مَعَاظِمُ»؟",
+    "o": [
+     "مُعْظَمٌ",
+     "حِوَارٌ",
+     "فَقِيرٌ",
+     "ذَاتٌ"
+    ],
+    "a": 0,
+    "n": 4,
+    "k": "معظم",
+    "sub": "mufrad",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا جَمْعُ «نَائِمٌ»؟",
+    "o": [
+     "نَائِمُونَ",
+     "حُلُولٌ",
+     "نِسَاءٌ",
+     "عُنُدٌ"
+    ],
+    "a": 0,
+    "n": 4,
+    "k": "نائم",
+    "sub": "jamak",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا مُفْرَدُ «نَوَاحٍ»؟",
+    "o": [
+     "نَاحِيَةٌ",
+     "حَسَبٌ",
+     "اِمْرَأَةٌ",
+     "ضَرُورَةٌ"
+    ],
+    "a": 0,
+    "n": 4,
+    "k": "ناحية",
+    "sub": "mufrad",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا جَمْعُ «اِمْرَأَةٌ»؟",
+    "o": [
+     "نِسَاءٌ",
+     "أَنْظِمَةٌ",
+     "سُبُلٌ",
+     "حُلُولٌ"
+    ],
+    "a": 0,
+    "n": 4,
+    "k": "نساء",
+    "sub": "jamak",
+    "d": 2
+   },
+   {
+    "type": "mcq",
+    "q": "مَا جَمْعُ «ضَرُورَةٌ»؟",
+    "o": [
+     "ضَرُورَاتٌ",
+     "أَحَادِيثُ",
+     "سَنَوَاتٌ",
+     "عُنُدٌ"
+    ],
+    "a": 0,
+    "n": 4,
+    "k": "ضرورة",
+    "sub": "jamak",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا جَمْعُ «مُتْعَبٌ»؟",
+    "o": [
+     "مُتْعَبُونَ",
+     "أَوْلَادٌ",
+     "سُبُلٌ",
+     "مَرَاحِلُ"
+    ],
+    "a": 0,
+    "n": 4,
+    "k": "متعب",
+    "sub": "jamak",
+    "d": 1
+   },
+   {
+    "type": "mcq",
+    "q": "مَا مُفْرَدُ «أَحَادِيثُ»؟",
+    "o": [
+     "حَدِيثٌ",
+     "شَابٌّ",
+     "حَسَبٌ",
+     "غَنِيٌّ"
+    ],
+    "a": 0,
+    "n": 4,
+    "k": "حديث",
+    "sub": "mufrad",
+    "d": 2
    }
   ]
  },

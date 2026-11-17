@@ -64,6 +64,7 @@
     const settings = store.get("live-settings", { count: 15, limit: 20, cats: ["makna", "muradif", "akmil", "fahm", "tarakib", "tasykil"] });
     const saved = store.get("live-session", null);
     if (settings.teams == null) settings.teams = 0; if (!settings.assign) settings.assign = "auto";
+    if (!settings.v19) { settings.cats = settings.cats.concat(C.NEW_CATS_19.filter((c) => !settings.cats.includes(c))); settings.v19 = 1; store.set("live-settings", settings); }
     const ensureTeams = (n) => { while (S.teams.length < n) { const k = S.teams.length; S.teams.push({ name: C.TEAM_NAMES[k], color: C.TEAM_COLORS[k], score: 0 }); } C.saveTeams(); };
     let TM = null; // { list:[{name,color}], assign:"auto"|"self" } atau null (individu)
 
@@ -85,7 +86,7 @@
       };
       wrap.append(h("div", { class: "lobby" },
         h("div", { class: "panel", style: { display: "flex", flexDirection: "column", gap: "12px" } }, h("b", null, "Pengaturan"),
-          C.scopePicker(),
+          C.scopePicker(), C.levelPicker(),
           sel("tm", "Mode main", [0, 2, 3, 4, 5, 6], "teams", (v) => (v ? v + " kelompok" : "Individu"), () => drawTeamBox()), teamBox,
           sel("cnt", "Jumlah soal", [10, 15, 20, 25, 50, 75], "count", (v) => v + " soal"), sel("lim", "Waktu per soal", [15, 20, 30, 45, 60], "limit", (v) => (v === 60 ? "1 menit" : v + " detik")),
           h("button", { class: "btn primary", type: "button", disabled: !cfgOK, onclick: () => start("firebase") }, "Buat ruang kuis"),
@@ -97,11 +98,12 @@
 
     function buildQuestions() {
       const cats = shuffle(settings.cats.length ? settings.cats : ["makna", "fahm"]);
-      const sc = C.getScope();
-      const pools = Object.fromEntries(cats.map((c) => [c, shuffle(D().bank[c].filter(C.inScope(sc)))]));
-      const out = []; let k = 0, guard = 0;
-      while (out.length < settings.count && guard++ < 500) { const c = cats[k++ % cats.length]; const q = pools[c].pop(); if (q) out.push(prepare(q, c)); }
-      return out.map((q) => ({ q: q.q, s: q.s || null, bare: q.bare || null, o: q.o, a: q.a, tf: !!q.tf, cat: q.cat, n: q.n || 0, x: q.x || null, fix: q.fix || null }));
+      const sc = C.getScope(), lv = C.getLevel();
+      const pools = Object.fromEntries(cats.map((c) => [c, shuffle(C.bankOf(c).filter(C.inScope(sc)).filter(C.inLevel(lv)))]));
+      let out = []; let k = 0, guard = 0;
+      while (out.length < settings.count && guard++ < 1000) { const c = cats[k++ % cats.length]; const q = pools[c].pop(); if (q) out.push(prepare(q, c)); }
+      if (!lv) out = C.byLevel(out); // Campuran: soal bergerak dari mudah ke sulit
+      return out.map((q) => ({ q: q.q, s: q.s || null, bare: q.bare || null, o: q.o, a: q.a, tf: !!q.tf, cat: q.cat, n: q.n || 0, d: C.qLevel(q), x: q.x || null, fix: q.fix || null }));
     }
 
     let net, code, QS, i = -1, players = {}, unsubAns = null, ST = [];
@@ -168,7 +170,7 @@
         h("div", { class: "qrbox" }, h("b", null, "Pindai untuk bergabung"), qr, h("div", null, "Kode ruang"), h("div", { class: "code" }, code), h("div", { class: "url" }, url),
           h("button", { class: "btn small", type: "button", style: { color: "#0A1B44", background: "#EEF3FF" }, onclick: () => copyText(url) }, "Salin tautan")),
         h("div", { class: "panel", style: { display: "flex", flexDirection: "column", gap: "14px" } },
-          h("div", { class: "row" }, count, h("span", { class: "sub grow" }, "mahasiswa sudah masuk"), h("span", { class: "pill" }, C.scopeName(C.getScope()) + " · " + QS.length + " soal · " + settings.limit + " dtk")),
+          h("div", { class: "row" }, count, h("span", { class: "sub grow" }, "mahasiswa sudah masuk"), h("span", { class: "pill" }, C.scopeName(C.getScope()) + " · " + C.levelName(C.getLevel()) + " · " + QS.length + " soal · " + settings.limit + " dtk")),
           list,
           h("div", { class: "row" }, navBtn("Mulai kuis →", () => ask(0), { class: "btn primary nav-go" }), h("span", { class: "sub" }, TM ? "Klik nama untuk memindah ke kelompok lain. Yang datang terlambat tetap bisa masuk." : "Mahasiswa yang datang terlambat tetap bisa masuk di tengah kuis.")))));
       if (window.QRCode) { try { new window.QRCode(qr, { text: url, width: 560, height: 560, colorDark: "#0A1B44", colorLight: "#ffffff", correctLevel: window.QRCode.CorrectLevel.M }); } catch (e) { /* */ } }
@@ -203,7 +205,7 @@
       const opts = C.optButtons(q, null); opts.querySelectorAll(".opt").forEach((b) => (b.style.cursor = "default"));
       const extra = h("div", { style: { display: "flex", flexDirection: "column", gap: "14px" } });
       wrap.append(h("div", { class: "stage-inner", style: { margin: "0 auto" } },
-        h("div", { class: "qhead" }, h("span", { class: "pill gold" }, "Soal " + (i + 1) + " / " + QS.length), h("span", { class: "pill ar", style: { fontSize: "18px" } }, C.catOf(q.cat).ar), h("span", { class: "grow" }), cnt, timer.el,
+        h("div", { class: "qhead" }, h("span", { class: "pill gold" }, "Soal " + (i + 1) + " / " + QS.length), h("span", { class: "pill ar", style: { fontSize: "18px" } }, C.catOf(q.cat).ar), q.d ? C.levelTag(q) : null, h("span", { class: "grow" }), cnt, timer.el,
           h("button", { class: "btn small", type: "button", id: "skip", onclick: () => reveal() }, "Tutup jawaban")),
         ...C.renderQ({ ...q }), opts, extra));
       let rem = (startedAt + limit * 1000 - net.now()) / 1000;
