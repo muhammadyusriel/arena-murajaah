@@ -202,9 +202,8 @@
     '<svg viewBox="0 0 20 20"><rect x="2" y="2" width="16" height="16" rx="2"/></svg>',
   ];
   const cssVar = (n, f) => { try { return getComputedStyle(document.documentElement).getPropertyValue(n).trim() || f; } catch (e) { return f; } };
-  // Penanda jilid (warna sampul kitab). ABY 3: ganti teks & kelas warna (jilid-biru), ABY 4: jilid-marun.
-  const JILID = '<span class="jilid jilid-hijau" title="Al-\'Arabiyyah Bayna Yadaik Jilid 2" dir="ltr">ABY 2</span>';
-  const JILID_S = JILID.replace('class="jilid ', 'class="jilid jilid-s ');
+  // Penanda jilid (teks). ABY 3 / ABY 4: ganti di sini.
+  const JILID = "ABY 2";
   const SEAL = '<svg class="seal" viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="#E2B862" stroke-width="2"><rect x="11" y="11" width="26" height="26" rx="2"/><rect x="11" y="11" width="26" height="26" rx="2" transform="rotate(45 24 24)"/></g><circle cx="24" cy="24" r="7" style="fill:var(--azure)"/><path d="M20.5 24.5l2.4 2.4 4.8-5" stroke="#FFFFFF" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
   // ---------- state ----------
@@ -242,7 +241,7 @@
     const order = shuffle(q.o.map((_, i) => i));
     return { ...base, o: order.map((i) => q.o[i]), a: order.indexOf(q.a) };
   }
-  window.ArenaCore = { JILID, JILID_S, h, shuffle, sample, rnd, arNum, store, toast, copyText, downloadText, SHAPES, CATS, catOf, prepare, D, S, TEAM_NAMES, TEAM_COLORS, saveTeams, nashTitle, getScope, inScope, scopeName, scopePicker, LEVELS, getLevel, inLevel, qLevel, levelName, byLevel, levelTag, levelPicker, bankOf, NEW_CATS_19, SFX, soundBtn, renderQ: null, timerEl: null, go: null, SEAL, I };
+  window.ArenaCore = { JILID, h, shuffle, sample, rnd, arNum, store, toast, copyText, downloadText, SHAPES, CATS, catOf, prepare, D, S, TEAM_NAMES, TEAM_COLORS, saveTeams, nashTitle, getScope, inScope, scopeName, scopePicker, LEVELS, getLevel, inLevel, qLevel, levelName, byLevel, levelTag, levelPicker, bankOf, NEW_CATS_19, SFX, soundBtn, renderQ: null, timerEl: null, go: null, SEAL, I };
 
   // ---------- render pertanyaan ----------
   function renderQ(q, { compact = false } = {}) {
@@ -313,7 +312,7 @@
   function topbar(title, sub) {
     return h("header", { class: "topbar" },
       h("button", { class: "btn ghost back", type: "button", "aria-label": "Kembali ke beranda", onclick: () => go("home") }, h("span", { class: "bk-a" }, "←"), h("span", { class: "bk-t" }, "Beranda")),
-      h("a", { class: "brand link", href: "#", title: "Kembali ke beranda", onclick: (e) => { e.preventDefault(); go("home"); } }, h("span", { class: "seal-sm", html: SEAL }), h("div", null, h("h1", { class: "ui-ar", dir: "rtl" }, title), h("small", null, h("span", { html: JILID_S, style: { display: "contents" } }), "Arena Muraja'ah" + (sub ? " · " + sub : ""))), h("span", { html: JILID, style: { display: "contents" } })),
+      h("a", { class: "brand link", href: "#", title: "Kembali ke beranda", onclick: (e) => { e.preventDefault(); go("home"); } }, h("span", { class: "seal-sm", html: SEAL }), h("div", null, h("h1", { class: "ui-ar", dir: "rtl" }, title), h("small", null, "Arena Muraja'ah" + (sub ? " · " + sub : "")))),
       h("div", { class: "spacer" }), soundBtn(),
       h("span", { class: "chip" }, h("span", { class: "ar", style: { fontSize: "17px" } }, D().label), " · ", h("span", { class: "ar", style: { fontSize: "17px" } }, D().title)), mnav(false));
   }
@@ -403,7 +402,7 @@
       h("span", { class: "ic", html: icon }), h("span", { class: "ar", dir: "rtl" }, ar), h("span", { class: "t" }, t), h("span", { class: "d" }, d2));
     root.append(h("div", { class: "wrap" },
       h("header", { class: "topbar" },
-        h("a", { class: "brand link", href: "#", title: "Beranda", onclick: (e) => { e.preventDefault(); go("home"); }, html: SEAL + '<div><h1 class="ui-ar">Arena Muraja\'ah</h1><small>Qiraah · <span class="sub-l">Al-\'Arabiyyah Bayna Yadaik 2</span><span class="sub-s">' + JILID_S + '</span></small></div>' + JILID }),
+        h("a", { class: "brand link", href: "#", title: "Beranda", onclick: (e) => { e.preventDefault(); go("home"); }, html: SEAL + '<div><h1 class="ui-ar">Arena Muraja\'ah</h1><small>Qiraah · <span class="sub-l">Al-\'Arabiyyah Bayna Yadaik 2</span><span class="sub-s">ABY Jilid 2</span></small></div>' }),
         h("div", { class: "spacer" }), soundBtn(), h("div", { class: "row materi" }, h("span", { class: "sub" }, "Materi"), sel), mnav(true)),
       h("section", { class: "hero" },
         h("h2", { class: "ar-title", dir: "rtl" }, "سَاحَةُ ", h("em", null, "الْمُرَاجَعَةِ"), " — ", h("span", { class: "wt" }, d.title)),
@@ -744,7 +743,7 @@
 
   SCREENS.latihan = (root, student) => {
     const box = h("div", { class: "player latihan" });
-    if (student) box.append(h("header", { class: "brand", html: SEAL + '<div><h1 class="ui-ar">Arena Muraja\'ah</h1><small>' + JILID_S + 'Latihan mandiri</small></div>' + JILID }, h("span", { class: "spacer", style: { flex: 1 } }), soundBtn()));
+    if (student) box.append(h("header", { class: "brand", html: SEAL + '<div><h1 class="ui-ar">Arena Muraja\'ah</h1><small>Latihan mandiri · ' + JILID + '</small></div>' }, h("span", { class: "spacer", style: { flex: 1 } }), soundBtn()));
     else root.append(h("div", { class: "wrap" }, topbar("التَّدْرِيبُ الذَّاتِيُّ", "Latihan mandiri")));
     const body = h("div", { style: { display: "flex", flexDirection: "column", gap: "14px" } }); box.append(body); root.append(box);
     const say = (...k) => { body.innerHTML = ""; body.append(...k); window.scrollTo(0, 0); };

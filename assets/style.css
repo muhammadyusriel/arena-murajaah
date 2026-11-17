@@ -29,7 +29,7 @@
   --glass: linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,0) 45%);
   color-scheme: dark;
 }
-/* ===== TEMA WARNA (biru = ABY 3). Ganti blok ini untuk tema jilid lain. ===== */
+/* ===== TEMA WARNA biru (default; dipakai ABY 2). Tema lain lewat <html data-tema="...">. ===== */
 :root {
   --tb1: #0A1B44;
   --tb2: #0F2A6A;
@@ -892,12 +892,5 @@ a.brand.link:hover .seal { transform: rotate(45deg) scale(1.05); }
 .qpass.small { font-size: 18px; padding: 8px 12px; margin-bottom: 8px; }
 .lat-wrong .qpass { font-size: 18px; }
 
-/* v1.13.0/1.13.1: lencana jilid (warna sampul kitab) di samping blok judul */
-.brand > .jilid { flex: none; align-self: center; margin-inline-start: 6px; }
-.jilid { display: inline-flex; align-items: center; padding: 4px 10px 3px; border-radius: 999px; font-family: var(--font-ui); font-size: 11px; font-weight: 800; letter-spacing: .08em; line-height: 1.2; white-space: nowrap; box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 2px 6px rgba(0,0,0,.25); }
-.jilid-hijau { background: linear-gradient(180deg, #A9B746, #7F8D26); color: #1C2306; border: 1px solid #C4CF6A; }
-.jilid-biru { background: linear-gradient(180deg, #4F8BF2, #2457CF); color: #fff; border: 1px solid #7FA8F5; }
-.jilid-marun { background: linear-gradient(180deg, #9B2F3E, #6E1A27); color: #fff; border: 1px solid #C0566A; }
+/* v1.13.2: jarak judul-subjudul di bilah atas */
 .brand h1 + small { margin-top: 4px; }
-.jilid-s { display: none; font-size: 9.5px; padding: 2px 7px 1px; margin-inline-end: 7px; letter-spacing: .06em; vertical-align: 1px; box-shadow: none; }
-@media (max-width: 640px) { .brand > .jilid { display: none; } .brand small .jilid-s { display: inline-flex; } }
